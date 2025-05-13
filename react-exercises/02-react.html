@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+
+
+</body>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+<script type="text/javascript">
+    const root = document.getElementById('root');
+    const element = React.createElement(
+        'div', 
+            {
+             className: 'container' , children: 'Hello React'
+            }, "Hello React New"
+        );
+    
+
+    element.textContent = 'Hello World';
+    element.className = 'container';
+
+
+    console.log(element);
+
+    ReactDOM.createRoot(root).render(element);
+</script>
+</html>
