@@ -64,12 +64,12 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
 
 ### Frontend (SPA con React)
 
-#### Rutas
+#### <ul>Rutas</ul>
 
-- Públicas
+- **Públicas**
   - `/login`: LoginPage
 
-- Protegidas (solo usuarios autenticados)
+- **Protegidas** (solo usuarios autenticados)
   - `/`: Redirecciona a `/adverts`
   - `/adverts`: AdvertsPage
   - `/adverts/:id`: AdvertPage
