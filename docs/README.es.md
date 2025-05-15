@@ -64,7 +64,7 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
 
 ### Frontend (SPA con React)
 
-#### <ul>Rutas</ul>
+#### <u>Rutas</u>
 
 - **Públicas**
   - `/login`: LoginPage
