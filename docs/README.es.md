@@ -6,8 +6,9 @@
 - 🇩🇪 [Alemán](README.de.md)
 
 <!-- ------------------------------------------------------------------------------------------- -->
-
 ## Conocimientos aprendidos y trabajados
+
+---
 
 - React: Declarativo y basado en componentes
 - Elementos:
@@ -49,14 +50,16 @@
   - Code splitting para reducir el tamaño del bundle inicial
 
 <!-- ------------------------------------------------------------------------------------------- -->
-
 ## Objetivo del Proyecto
+
+---
 
 Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtuales, en este proyecto se debe crear una aplicación de tipo dashboard que será la interfaz gráfica desde la que podremos gestionar el API de anuncios con el backend llamado Nodepop.
 
 <!-- ------------------------------------------------------------------------------------------- -->
-
 ## Detalles del Proyecto
+
+---
 
 ### Backend (API Nodepop)
 
@@ -86,11 +89,11 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
   - **GET**: Devuelve un anuncio por su ID.
   - **DELETE**: Elimina un anuncio por ID.
 
-**Nota**: Los endpoints bajo `/adverts` requieren token. Enviar en header:
+**Notas**:
 
-Header[‘Authorization’] = `Bearer ${token}`
-
-Los datos del backend son persistidos en una base de datos sqlite en el directorio **/data** (de ese modo no os teneís que preocupar de crear bases de datos). Las fotos subidas al backend son almacenadas en el directorio **/uploads** y servidas por el backend cómo contenido estático en /public (la ruta pública de cada foto es almacenada en la base de datos).
+- Los endpoints bajo `/adverts` requieren token. Enviar en header:
+- Header[‘Authorization’] = `Bearer ${token}`
+- Los datos del backend son persistidos en una base de datos sqlite en el directorio **/data** (de ese modo no os teneís que preocupar de crear bases de datos). Las fotos subidas al backend son almacenadas en el directorio **/uploads** y servidas por el backend cómo contenido estático en /public (la ruta pública de cada foto es almacenada en la base de datos).
 
 ### Frontend (SPA con React)
 
@@ -186,8 +189,9 @@ Opciones para aplicar los filtros:
 ### Objetivos Opcionales
 
 <!-- ------------------------------------------------------------------------------------------- -->
-
 ## Tecnologías
+
+---
 
 ### Lenguajes
 
@@ -199,8 +203,9 @@ Opciones para aplicar los filtros:
 ### Dependencias
 
 <!-- ------------------------------------------------------------------------------------------- -->
-
 ## Instrucciones de Instalación y Uso
+
+---
 
 ### Requisitos de Software
 
@@ -211,9 +216,12 @@ Opciones para aplicar los filtros:
 ### Notas
 
 <!-- ------------------------------------------------------------------------------------------- -->
-
 ## Vista Previa del Proyecto
+
+---
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
 ## Contribuciones y Licencias
+
+---
