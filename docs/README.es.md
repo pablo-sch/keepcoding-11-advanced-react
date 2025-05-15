@@ -23,7 +23,7 @@
 <!-- ------------------------------------------------------------------------------------------- -->
 ## Objetivo del Proyecto
 
-Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtuales, en este proyecto se debe crear una aplicación de tipo dashboard que será la interfaz gráfica desde la que podremos gestionar el API de anuncios con el backend llamado Nodepop.
+Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtuales, en este proyecto se debe crear una aplicación de tipo SPA (Single Page Application) que será la interfaz gráfica desde la que podremos gestionar el API de anuncios con el backend llamado Nodepop.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 ## Detalles del Proyecto
@@ -118,7 +118,9 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
 - React Router para navegación.  
 - Validación de formularios con React.
 
-### Objetivos Opcionales
+### API REST de apoyo para la práctica
+
+Para emular una base de datos se utilizará **nodepop-api**, una API REST creada por el docente David Jiménez (KeepCoding).
 
 <!-- ------------------------------------------------------------------------------------------- -->
 ## Tecnologías Utilizadas
@@ -146,9 +148,21 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
 
 ### Requisitos de Software
 
-### Descripción de los Programas
+- **Visual Studio Code** (testeado en la versión 1.99.0)
 
-### Clonando el Repositorio
+### Clonación del repositorio
+
+```bash
+git clone https://github.com/davidjj76/nodepop-api.git
+```
+
+```bash
+git clone https://github.com/PabloSch26/keepcoding-08-react-fundamentals.git
+```
+
+![Demo](https://github.com/PabloSch26/pablo-abaroa-schilling/blob/main/etc/clone-repository-visual-studio-code.gif)
+
+Se deberá de levantar el servidor y para poner en funcionamiento la API REST para que puedas interactuar con la base de datos simulada.
 
 ### Notas
 
@@ -158,3 +172,5 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
 <!-- ------------------------------------------------------------------------------------------- -->
 
 ## Contribuciones y Licencias
+
+Este proyecto no cuenta con contribuciones externas ni licencias.
