@@ -118,29 +118,25 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
     - Visible si el usuario está logueado.
     - Confirmación para cerrar sesión.
   
-#### Filtros en AdvertsPage
+- **Filtros en AdvertsPage**
+  - Se deben implementar al menos dos filtros:
+    - Por nombre
+    - Por compra/venta
+    - Por precio
+    - Por tags
 
-Se deben implementar al menos dos filtros:
-
-- Por nombre
-- Por compra/venta
-- Por precio
-- Por tags
-
-Opciones para aplicar los filtros:
-
-1. Filtrado en frontend con todos los anuncios cargados.
-2. Filtrado en backend enviando parámetros en la query (recomendado).
-
-### Funcionalidades técnicas clave
-
-- Autenticación con token JWT.
-- Rutas protegidas y redirección automática al login.
-- Persistencia de sesión con localStorage.
-- Axios configurado con interceptor para añadir el token.
-- Estilos con Tailwind CSS.
-- React Router para navegación.
-- Validación de formularios con React.
+  - Opciones para aplicar los filtros:
+      1. Filtrado en frontend con todos los anuncios cargados.
+      2. Filtrado en backend enviando parámetros en la query (recomendado).
+  
+- **Funcionalidades técnicas clave**
+  - Autenticación con token JWT.
+  - Rutas protegidas y redirección automática al login.
+  - Persistencia de sesión con localStorage.
+  - Axios configurado con interceptor para añadir el token.
+  - Estilos con Tailwind CSS.
+  - React Router para navegación.
+  - Validación de formularios con React.
 
 ### Objetivos Opcionales
 
