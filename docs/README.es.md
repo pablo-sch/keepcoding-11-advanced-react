@@ -30,97 +30,94 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
 
 ### Backend (API Nodepop)
 
-#### Endpoints disponibles
-
-- `/api/auth/signup`  
-  - **POST**: Crea usuarios.
-
-- `/api/auth/me`  
-  - **GET**: Devuelve la información del usuario autenticado.
-
-- `/api/auth/login`  
-  - **POST**: Devuelve un token JWT con email y password correctos.
-
-- `/api/v1/adverts`  
-  - **GET**: Listado de anuncios, admite filtros por query string:
-    - `name=coche`
-    - `sale=true/false`
-    - `price=0-25000`
-    - `tags=motor,work`
-  - **POST**: Crea un anuncio.
-
-- `/api/v1/adverts/tags`  
-  - **GET**: Devuelve los tags disponibles.
-
-- `/api/v1/adverts/:id`  
-  - **GET**: Devuelve un anuncio por su ID.
-  - **DELETE**: Elimina un anuncio por ID.
-
-**Notas**:
-
-- Los endpoints bajo `/adverts` requieren token. Enviar en header:
-- Header[‘Authorization’] = `Bearer ${token}`
-- Los datos del backend son persistidos en una base de datos sqlite en el directorio **/data** (de ese modo no os teneís que preocupar de crear bases de datos). Las fotos subidas al backend son almacenadas en el directorio **/uploads** y servidas por el backend cómo contenido estático en /public (la ruta pública de cada foto es almacenada en la base de datos).
+- **Endpoints disponibles**
+  
+  - `/api/auth/signup`  
+    - **POST**: Crea usuarios.
+  
+  - `/api/auth/me`  
+    - **GET**: Devuelve la información del usuario autenticado.
+  
+  - `/api/auth/login`  
+    - **POST**: Devuelve un token JWT con email y password correctos.
+  
+  - `/api/v1/adverts`  
+    - **GET**: Listado de anuncios, admite filtros por query string:
+      - `name=coche`
+      - `sale=true/false`
+      - `price=0-25000`
+      - `tags=motor,work`
+    - **POST**: Crea un anuncio.
+  
+  - `/api/v1/adverts/tags`  
+    - **GET**: Devuelve los tags disponibles.
+  
+  - `/api/v1/adverts/:id`  
+    - **GET**: Devuelve un anuncio por su ID.
+    - **DELETE**: Elimina un anuncio por ID.
+  
+  **Notas**:
+  - Los endpoints bajo `/adverts` requieren token. Enviar en header:
+  - Header[‘Authorization’] = `Bearer ${token}`
+  - Los datos del backend son persistidos en una base de datos sqlite en el directorio **/data** (de ese modo no os teneís que preocupar de crear bases de datos). Las fotos subidas al backend son almacenadas en el directorio **/uploads** y servidas por el backend cómo contenido estático en public (la ruta pública de cada foto es almacenada en la base de datos).
 
 ### Frontend (SPA con React)
 
-#### <u>Rutas</u>
+- **Rutas**
+  - *Públicas*
+    - `/login`: LoginPage
 
-- **Públicas**
-  - `/login`: LoginPage
+  - *Protegidas* (solo usuarios autenticados)
+    - `/`: Redirecciona a `/adverts`
+    - `/adverts`: AdvertsPage
+    - `/adverts/:id`: AdvertPage
+    - `/adverts/new`: NewAdvertPage
+    - `*`: NotFoundPage (página 404)
 
-- **Protegidas** (solo usuarios autenticados)
-  - `/`: Redirecciona a `/adverts`
-  - `/adverts`: AdvertsPage
-  - `/adverts/:id`: AdvertPage
-  - `/adverts/new`: NewAdvertPage
-  - `*`: NotFoundPage (página 404)
-
-#### Componentes
-
-- **LoginPage**
-  - Formulario: email + password.
-  - Checkbox "Recordar sesión".
-  - Guarda token tras login exitoso.
-
-- **AdvertsPage**
-  - Lista anuncios con:
-    - Nombre
-    - Precio
-    - Compra/Venta
-    - Tags
-  - Enlaces a detalle (`/adverts/:id`)
-  - Filtros:
-    - Nombre (input texto)
-    - Tipo (compra/venta/todos)
-    - Rango de precio (inputs o slider)
-    - Tags (checkboxes o select múltiple)
-  - Mostrar mensaje si no hay anuncios.
-  - Enlace a `/adverts/new`.
-
-- **AdvertPage**
-  - Muestra detalle del anuncio (incluye imagen).
-  - Redirige a 404 si no existe.
-  - Botón de borrar (con confirmación elaborada).
-  - Redirige al listado tras borrar.
+- **Componentes**
+  - *LoginPage*
+    - Formulario: email + password.
+    - Checkbox "Recordar sesión".
+    - Guarda token tras login exitoso.
   
-- **NewAdvertPage**
-  - Formulario con:
-    - Nombre
-    - Tipo (compra/venta)
-    - Tags
-    - Precio
-    - Foto (opcional)
-  - Validaciones con React.
-  - Redirige al detalle tras crear.
+  - *AdvertsPage*
+    - Lista anuncios con:
+      - Nombre
+      - Precio
+      - Compra/Venta
+      - Tags
+    - Enlaces a detalle (`/adverts/:id`)
+    - Filtros:
+      - Nombre (input texto)
+      - Tipo (compra/venta/todos)
+      - Rango de precio (inputs o slider)
+      - Tags (checkboxes o select múltiple)
+    - Mostrar mensaje si no hay anuncios.
+    - Enlace a `/adverts/new`.
+  
+  - *AdvertPage*
+    - Muestra detalle del anuncio (incluye imagen).
+    - Redirige a 404 si no existe.
+    - Botón de borrar (con confirmación elaborada).
+    - Redirige al listado tras borrar.
 
-- **NotFoundPage**
-  - Página 404 informativa.
-
-- **LogoutButton**
-  - Visible si el usuario está logueado.
-  - Confirmación para cerrar sesión.
-
+  - *NewAdvertPage*
+    - Formulario con:
+      - Nombre
+      - Tipo (compra/venta)
+      - Tags
+      - Precio
+      - Foto (opcional)
+    - Validaciones con React.
+    - Redirige al detalle tras crear.
+  
+  - *NotFoundPage*
+    - Página 404 informativa.
+  
+  - *LogoutButton*
+    - Visible si el usuario está logueado.
+    - Confirmación para cerrar sesión.
+  
 #### Filtros en AdvertsPage
 
 Se deben implementar al menos dos filtros:
