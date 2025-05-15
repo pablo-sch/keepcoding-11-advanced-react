@@ -118,10 +118,6 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
 - React Router para navegación.  
 - Validación de formularios con React.
 
-### API REST de apoyo para la práctica
-
-Para emular una base de datos se utilizará **nodepop-api**, una API REST creada por el docente David Jiménez (KeepCoding).
-
 <!-- ------------------------------------------------------------------------------------------- -->
 ## Tecnologías Utilizadas
 
@@ -148,7 +144,8 @@ Para emular una base de datos se utilizará **nodepop-api**, una API REST creada
 
 ### Requisitos de Software
 
-- **Visual Studio Code** (testeado en la versión 1.99.0)
+- **[Visual Studio Code](https://code.visualstudio.com/)** (testeado en la versión 1.99.0)
+- **[nodepop-api (API REST)](https://github.com/davidjj76/nodepop-api)** (creada por el docente David Jiménez - KeepCoding)
 
 ### Clonación del repositorio
 
@@ -163,8 +160,6 @@ git clone https://github.com/PabloSch26/keepcoding-08-react-fundamentals.git
 ![Demo](https://github.com/PabloSch26/pablo-abaroa-schilling/blob/main/etc/clone-repository-visual-studio-code.gif)
 
 Se deberá de levantar el servidor y para poner en funcionamiento la API REST para que puedas interactuar con la base de datos simulada.
-
-### Notas
 
 <!-- ------------------------------------------------------------------------------------------- -->
 ## Vista Previa del Proyecto
