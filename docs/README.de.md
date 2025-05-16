@@ -173,6 +173,7 @@ Ziel dieses Projekts ist es, eine Single Page Application (SPA) zu erstellen, um
 
 - **React:** Bibliothek für die Entwicklung von Benutzeroberflächen mit wiederverwendbaren Komponenten.
 - **Vite:** Build-Tool und schneller Entwicklungsserver für moderne Frontend-Projekte.
+- **TypeScript:** Eine Obermenge von JavaScript, die statische Typisierung hinzufügt und so eine skalierbarere und fehlerärmere Entwicklung ermöglicht.
 - **Tailwind CSS:** Utility-First CSS-Framework für schnelles, individuelles Design.
 - **ESLint:** Analysewerkzeug zur Qualitätssicherung von JavaScript-/TypeScript-Code.
 - **Axios:** HTTP-Client zur einfachen Kommunikation mit APIs.
@@ -201,14 +202,15 @@ git clone https://github.com/davidjj76/nodepop-api.git
 Projekt
 
 ```bash
-git clone https://github.com/PabloSch26/keepcoding-08-react-fundamentals.git
+git clone https://github.com/pablo-sch/keepcoding-08-react-fundamentals.git
 ```
 
-![Demo](https://github.com/PabloSch26/pablo-abaroa-schilling/blob/main/etc/clone-repository-visual-studio-code.gif)
+![Demo](https://github.com/pablo-sch/pablo-sch/blob/main/etc/clone-tutorial.gif)
 
 ### Hinweise
 
-Der Backend-Server muss gestartet werden, damit die REST-API funktionsfähig ist und auf die simulierte Datenbank zugegriffen werden kann.
+- Sobald das Repository geklont wurde, kannst du die `.html`-Dateien mit **Live Server** öffnen, um sie im Browser vorzuschauen.
+- Der Backend-Server muss gestartet werden, damit die REST-API funktionsfähig ist und auf die simulierte Datenbank zugegriffen werden kann.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 ## Projektvorschau

@@ -173,6 +173,7 @@ To practice and demonstrate the knowledge acquired in virtual classes, this proj
 
 - **React:** Library for building user interfaces using reusable components.
 - **Vite:** Build tool and fast development server for modern frontend projects.
+- **TypeScript:** A superset of JavaScript that adds static typing, making development more scalable and less error-prone.
 - **Tailwind CSS:** Utility-first CSS framework for rapid, customizable design.
 - **ESLint:** Tool to analyze and identify problems in JavaScript/TypeScript code, ensuring quality and consistency.
 - **Axios:** HTTP client for making API requests easily and efficiently.
@@ -201,14 +202,15 @@ git clone https://github.com/davidjj76/nodepop-api.git
 Project
 
 ```bash
-git clone https://github.com/PabloSch26/keepcoding-08-react-fundamentals.git
+git clone https://github.com/pablo-sch/keepcoding-08-react-fundamentals.git
 ```
 
-![Demo](https://github.com/PabloSch26/pablo-abaroa-schilling/blob/main/etc/clone-repository-visual-studio-code.gif)
+![Demo](https://github.com/pablo-sch/pablo-sch/blob/main/etc/clone-tutorial.gif)
 
 ### Notes
 
-You must run the backend server to make the REST API operational and interact with the simulated database.
+- Once the repository is cloned, you can open the `.html` files with **Live Server** to preview them in the browser.
+- You must run the backend server to make the REST API operational and interact with the simulated database.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 ## Project Preview
