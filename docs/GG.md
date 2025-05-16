@@ -1,11 +1,6 @@
 # REACT Fundamentals Project Submission
 
-## Select Your Language
-
-- 🇪🇸 [Spanish](README.es.md)
-- 🇩🇪 [German](README.de.md)
-
-# React + TypeScript + Vite
+## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
