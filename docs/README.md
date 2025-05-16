@@ -1,61 +1,221 @@
-# REACT Fundamentals Project Submission
+# React Fundamentals Project Submission
 
 ## Select Your Language
 
 - 🇪🇸 [Spanish](README.es.md)
 - 🇩🇪 [German](README.de.md)
 
-# React + TypeScript + Vite
+<!-- ------------------------------------------------------------------------------------------- -->
+## Project Objective
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+To practice and demonstrate the knowledge acquired in virtual classes, this project requires creating a Single Page Application (SPA) that serves as a graphical interface to manage the ads API using the backend called Nodepop.
 
-Currently, two official plugins are available:
+<!-- ------------------------------------------------------------------------------------------- -->
+## Skills Learned and Applied
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React Fundamentals:**
+  - React: Declarative library for building user interfaces.
+  - Components: Reusable, independent, hierarchical.
 
-## Expanding the ESLint configuration
+- **Elements:**
+  - `React.createElement(type, props, children)`
+  - `ReactDOM.render(element, container)`
+  - *JSX:*
+    - Syntax similar to `HTML`.
+    - *Attributes:* `className`, `htmlFor`, etc.
+    - *Spread attributes:* <Component {...props} />
+    - *children:* Inner content between tags.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Components:**
+  - *Props:* Parameters received by a component (`props.name`)
+  - Nested components
+  - *React.Fragment:* Groups elements without adding extra nodes.
+  - *Conditional rendering:* `if`, `? :`, `&&`
+  - *Lists:* Using `.map()` and unique keys (`key`)
+  - *Events:* `onClick`, `onChange`, etc.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **State:**
+  - `useState(initialValue)` for managing local state.
+  - *Lifting state up:* sharing state between components.
+
+- **Forms:**
+  - *Controlled inputs:* managed by useState
+  - *Uncontrolled inputs:* accessed via useRef
+  - Checkbox / Radio Buttons
+  - *Form submission:* `onSubmit`, `event.preventDefault()`
+
+- **Effects:**
+  - Using `useEffect` and its anatomy (dependencies, cleanup), and behavior in `StrictMode`.
+
+- **Hooks:**
+  - Custom hooks for reusable logic.
+
+- **Context:**
+  - Creating contexts with `React.createContext`, providing with `Context.Provider`, and consuming with `useContext`.
+
+- **Refs:**
+  - *useRef:* access the DOM or persist values between renders.
+  - *forwardRef:* forward references to child components.
+
+- **Performance Optimization:**
+  - *React.memo:* avoids unnecessary renders if props don't change.
+  - *useCallback(fn, deps):* memoizes functions.
+  - *useMemo(fn, deps):* memoizes expensive computed values.
+
+- **Load Optimization:**
+  - Use `React.lazy` and `Suspense` for lazy loading components.
+  - `Code splitting` to reduce initial bundle size.
+
+<!-- ------------------------------------------------------------------------------------------- -->
+## Project Details
+
+### Backend (Nodepop API)
+
+**Available endpoints:**
+
+- `/api/auth/signup`  
+  - **POST**: Creates users.
+
+- `/api/auth/me`  
+  - **GET**: Returns authenticated user's info.
+
+- `/api/auth/login`  
+  - **POST**: Returns a JWT token with correct email and password.
+
+- `/api/v1/adverts`  
+  - **GET**: Lists ads, supports query filters: `name=car`, `sale=true/false`, `price=0-25000`, `tags=motor,work`  
+  - **POST**: Creates a new ad.
+
+- `/api/v1/adverts/tags`  
+  - **GET**: Returns available tags.
+
+- `/api/v1/adverts/:id`  
+  - **GET**: Returns ad by ID.  
+  - **DELETE**: Deletes ad by ID.
+
+**Important notes:**
+
+- Endpoints under `/adverts` require a token. Send via header: `Header['Authorization'] = Bearer ${token}`.
+- Data is stored in an SQLite database under `/data`.  
+- Uploaded images are saved in `/uploads` and served statically from `/public`.
+
+### Frontend (SPA with React)
+
+**Public routes:**
+
+- `/login` —> LoginPage
+
+**Protected routes (authenticated users only):**
+
+- `/` —> Redirects to `/adverts`  
+- `/adverts` —> AdvertsPage  
+- `/adverts/:id` —> AdvertPage  
+- `/adverts/new` —> NewAdvertPage  
+- Any other route —> `NotFoundPage (404)`
+
+**Main components:**
+
+- **LoginPage**  
+  Form with email, password, and "Remember me" checkbox. Saves token after successful login.
+
+- **AdvertsPage**  
+  Lists ads showing name, price, buy/sell status, and tags.  
+  Includes filters (name, type, price, tags).  
+  Link to ad details and to create new ad.  
+  Shows a message if no ads are available.
+
+- **AdvertPage**  
+  Shows ad details with image or placeholder.  
+  Redirects to 404 if not found.  
+  Delete button with confirmation. Redirects to list after deletion.
+
+- **NewAdvertPage**  
+  Form with name, type, tags, price, and optional photo.  
+  React validations. Redirects to details after creation.
+
+- **NotFoundPage**  
+  Informative 404 page.
+
+- **LogoutButton**  
+  Visible if user is logged in.  
+  Confirmation before logging out.
+
+**Filters on AdvertsPage:**
+
+- At least two filters: name, buy/sell, price, or tags.  
+- *Two ways to apply filters:*
+  1. Frontend filtering after loading all ads.  
+  2. Backend filtering by sending query parameters (recommended).
+
+**Key technical features:**
+
+- Authentication with JWT token.  
+- Protected routes and automatic redirection to login.  
+- Session persistence with localStorage.  
+- Axios with token-injecting interceptor.  
+- Styling with Tailwind CSS.  
+- Navigation using React Router.  
+- Form validation using React.
+
+<!-- ------------------------------------------------------------------------------------------- -->
+## Technologies Used
+
+### Languages
+
+- **HTML:** For content structuring and creating the layout of the webpage.
+- **CSS:** For visual design and styling, ensuring a cohesive and appealing user experience.
+- **JavaScript:** For adding interactivity and dynamic features, improving the user experience with things like form validation, animations, and event handling.
+- **TypeScript:** A statically typed language that compiles to JavaScript, improving code quality and maintainability.
+
+- **JSX Pseudolanguage:** Used in React, it's a JavaScript syntax extension that allows writing HTML-like structures within JavaScript code.
+
+### Dependencies
+
+- **React:** Library for building user interfaces using reusable components.
+- **Vite:** Build tool and fast development server for modern frontend projects.
+- **Tailwind CSS:** Utility-first CSS framework for rapid, customizable design.
+- **ESLint:** Tool to analyze and identify problems in JavaScript/TypeScript code, ensuring quality and consistency.
+- **Axios:** HTTP client for making API requests easily and efficiently.
+- **clsx:** Utility to conditionally combine CSS classes in a clean and simple way.
+- **Globals:** Global variable definitions to support and maintain compatibility in the codebase.
+- **Prettier:** Automatic code formatter that helps maintain a consistent style throughout the project.
+
+<!-- ------------------------------------------------------------------------------------------- -->
+## Installation and Usage Instructions
+
+### Software Requirements
+
+- **[Git](https://git-scm.com/downloads)** (tested with version **2.47.1.windows.1**)
+- **[Visual Studio Code](https://code.visualstudio.com/)** (tested with version **1.99.0**)
+- **[nodepop-api (REST API)](https://github.com/davidjj76/nodepop-api)** (created by instructor **David Jiménez** - **KeepCoding**)
+- **Live Server** (VS Code addon, *optional*)
+
+### Clone the Repositories
+
+Nodepop API
+
+```bash
+git clone https://github.com/davidjj76/nodepop-api.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Project
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+git clone https://github.com/PabloSch26/keepcoding-08-react-fundamentals.git
 ```
+
+![Demo](https://github.com/PabloSch26/pablo-abaroa-schilling/blob/main/etc/clone-repository-visual-studio-code.gif)
+
+### Notes
+
+You must run the backend server to make the REST API operational and interact with the simulated database.
+
+<!-- ------------------------------------------------------------------------------------------- -->
+## Project Preview
+
+...
+
+<!-- ------------------------------------------------------------------------------------------- -->
+## Contributions and Licenses
+
+This project has no external contributions or licenses.

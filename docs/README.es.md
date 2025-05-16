@@ -1,24 +1,9 @@
 # Entrega Proyecto de Fundamentos de REACT
 
-## Selecciona tu lenguaje
+## Selecciona tu Idioma
 
 - 🇺🇸 [Inglés](README.md)
 - 🇩🇪 [Alemán](README.de.md)
-
-<!-- ------------------------------------------------------------------------------------------- -->
-## Conocimientos aprendidos y trabajados
-
-- **React:** Declarativo y basado en componentes.
-- **Elementos:** `createElement`, `render()`, JSX: atributos, atributos spread, `children`.
-- **Componentes:** Uso de propiedades (`props`), Componentes anidados, `React.Fragment`, Renderizado condicional, Listas con `key`, Manejo de eventos.
-- **Estado:** `useState`, Compartición del estado entre componentes.
-- **Formularios:** Inputs controlados y no controlados, Checkbox y radio buttons, Envío de formularios (`onSubmit`).
-- **Efectos:** `useEffect` y su anatomía (dependencias, limpieza), Comportamiento en `StrictMode`.
-- **Hooks:** Personalización de lógica reutilizable.
-- **Context:** Crear contextos con `React.createContext`, Proveer contextos con `Context.Provider`, Consumir contextos con `useContext`.
-- **Refs:** Acceso al DOM con `useRef`, Referencias reenviadas con `forwardRef`.
-- **Rendimiento en React:** `React.memo` para evitar renders innecesarios, `useCallback` para memorizar funciones, `useMemo` para memorizar valores computados.
-- **Optimización de carga:** `React.lazy` y `Suspense` para carga diferida de componentes, Code splitting para reducir el tamaño del bundle inicial.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 ## Objetivo del Proyecto
@@ -26,6 +11,62 @@
 Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtuales, en este proyecto se debe crear una aplicación de tipo SPA (Single Page Application) que será la interfaz gráfica desde la que podremos gestionar el API de anuncios con el backend llamado Nodepop.
 
 <!-- ------------------------------------------------------------------------------------------- -->
+## Conocimientos Aprendidos y Trabajados
+
+- **Fundamentos de React:**
+  - React: Biblioteca declarativa para construir interfaces de usuario.
+  - Componentes: Reutilizables, independientes, jerárquicos.
+
+- **Elementos:**
+  - `React.createElement(type, props, children)`
+  - `ReactDOM.render(element, container)`
+  - *JSX:*
+    - Sintaxis similar a `HTML`.
+    - *Atributos:* `className`, `htmlFor`, etc.
+    - *Atributos spread:* <Component {...props} />
+    - *children:* Contenido interno entre etiquetas.
+
+- **Componentes:**
+  - *Props:* Parámetros que recibe un componente (`props.nombre`)
+  - Componentes anidados
+  - *React.Fragment:* Agrupa sin añadir nodos extra.
+  - *Renderizado condicional:* `if`, `? :`, `&&`
+  - *Listas:* Uso de `.map()` y claves únicas (`key`)
+  - *Eventos:* `onClick`, `onChange`, etc.
+
+- **Estado:**
+  - `useState(valorInicial)` para manejar estado local.
+  - *Lifting state up:* compartir estado entre componentes.
+
+- **Formularios:**
+  - *Inputs controlados:* manejados por useState
+  - *Inputs no controlados:* acceso mediante useRef
+  - Checkbox / Radio Buttons
+  - *Envío de formularios:* `onSubmit`, `event.preventDefault()`
+
+- **Efectos:**
+  - Uso de `useEffect` y su anatomía (dependencias, limpieza) y su comportamiento en `StrictMode`.
+
+- **Hooks:**
+  - Hooks personalizados para lógica reutilizable.
+
+- **Context:**
+  - Creación de contextos con `React.createContext`, proveer contextos con `Context.Provider` y consumir contextos con `useContext`.
+
+- **Refs:**
+  - *useRef:* acceso al DOM o valores persistentes entre renders.
+  - *forwardRef:* reenviar referencias a componentes hijos.
+
+- **Optimización de rendimiento:**
+  - *React.memo:* evita renders innecesarios si las props no cambian.
+  - *useCallback(fn, deps):* memoriza funciones.
+  - *useMemo(fn, deps):* memoriza valores computados costosos.
+
+- **Optimización de carga:**
+- Uso de `React.lazy` y `Suspense` para carga diferida de componentes y `Code splitting` para reducir el tamaño del bundle inicial.
+
+<!-- ------------------------------------------------------------------------------------------- -->
+
 ## Detalles del Proyecto
 
 ### Backend (API Nodepop)
@@ -42,8 +83,7 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
   - **POST**: Devuelve un token JWT con email y password correctos.
 
 - `/api/v1/adverts`  
-  - **GET**: Listado de anuncios, admite filtros por query string:  
-    `name=coche`, `sale=true/false`, `price=0-25000`, `tags=motor,work`  
+  - **GET**: Listado de anuncios, admite filtros por query string: `name=coche`, `sale=true/false`, `price=0-25000`, `tags=motor,work`  
   - **POST**: Crea un anuncio.
 
 - `/api/v1/adverts/tags`  
@@ -55,8 +95,7 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
 
 **Notas importantes:**
 
-- Los endpoints bajo `/adverts` requieren token. Enviar en header:
-  `Header['Authorization'] = Bearer ${token}`  
+- Los endpoints bajo `/adverts` requieren token. Enviar en header: `Header['Authorization'] = Bearer ${token}`.
 - Los datos se almacenan en base de datos SQLite en `/data`.  
 - Fotos subidas se guardan en `/uploads` y se sirven estáticamente desde `/public`.  
 
@@ -64,39 +103,34 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
 
 **Rutas públicas:**
 
-- `/login` — LoginPage
+- `/login` —> LoginPage
 
 **Rutas protegidas (solo usuarios autenticados):**
 
-- `/` — Redirecciona a `/adverts`  
-- `/adverts` — AdvertsPage  
-- `/adverts/:id` — AdvertPage  
-- `/adverts/new` — NewAdvertPage  
-- Cualquier otra ruta — NotFoundPage (404)
+- `/` —> Redirecciona a `/adverts`  
+- `/adverts` —> AdvertsPage  
+- `/adverts/:id` —> AdvertPage  
+- `/adverts/new` —> NewAdvertPage  
+- Cualquier otra ruta —> `NotFoundPage (404)`
 
 **Componentes principales:**
 
 - **LoginPage**  
   Formulario con email, password y checkbox “Recordar sesión”. Guarda token tras login exitoso.
-
 - **AdvertsPage**  
   Lista anuncios mostrando nombre, precio, compra/venta y tags.  
   Incluye filtros (nombre, tipo, precio, tags).  
   Enlace a detalle del anuncio y a crear nuevo anuncio.  
   Muestra mensaje si no hay anuncios.
-
 - **AdvertPage**  
   Muestra detalle con imagen o placeholder.  
   Redirige a 404 si no existe.  
   Botón para borrar con confirmación. Redirige al listado tras borrar.
-
 - **NewAdvertPage**  
   Formulario con nombre, tipo, tags, precio y foto (opcional).  
   Validaciones React. Redirige a detalle tras creación.
-
 - **NotFoundPage**  
   Página 404 informativa.
-
 - **LogoutButton**  
   Visible si el usuario está logueado.  
   Confirmación para cerrar sesión.
@@ -104,7 +138,7 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
 **Filtros en AdvertsPage:**
 
 - Al menos dos filtros: nombre, compra/venta, precio o tags.  
-- Dos formas de aplicar filtros:  
+- *Dos formas de aplicar filtros:*
   1. Filtrado en frontend con todos los anuncios cargados.  
   2. Filtrado en backend enviando parámetros en la query (recomendado).
 
@@ -128,6 +162,8 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
 - **JavaScript:** Para agregar interactividad y características dinámicas al sitio web, mejorando la experiencia del usuario con funcionalidades como validación de formularios, animaciones y manejo de eventos.
 - **TypeScript:** Lenguaje de programación con tipado estático que se compila a JavaScript, mejorando la calidad y mantenibilidad del código.
 
+- **Pseudolenguaje JSX:** Utilizado en React, es una extensión de sintaxis de JavaScript que permite escribir estructuras similares a HTML dentro del código JavaScript.
+
 ### Dependencias
 
 - **React:** Librería para construir interfaces de usuario basadas en componentes reutilizables.
@@ -144,14 +180,20 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
 
 ### Requisitos de Software
 
-- **[Visual Studio Code](https://code.visualstudio.com/)** (testeado en la versión 1.99.0)
-- **[nodepop-api (API REST)](https://github.com/davidjj76/nodepop-api)** (creada por el docente David Jiménez - KeepCoding)
+- **[Git](https://git-scm.com/downloads)** (testeado en la versión **2.47.1.windows.1**)
+- **[Visual Studio Code](https://code.visualstudio.com/)** (testeado en la versión **1.99.0**)
+- **[nodepop-api (API REST)](https://github.com/davidjj76/nodepop-api)** (creada por el docente **David Jiménez** - **KeepCoding**)
+- **Live Server** (Addon de Visual Studio Code, *opcional*)
 
-### Clonación del repositorio
+### Clonación del Repositorio
+
+API REST Nodepop-API
 
 ```bash
 git clone https://github.com/davidjj76/nodepop-api.git
 ```
+
+Poyecto
 
 ```bash
 git clone https://github.com/PabloSch26/keepcoding-08-react-fundamentals.git
@@ -159,13 +201,16 @@ git clone https://github.com/PabloSch26/keepcoding-08-react-fundamentals.git
 
 ![Demo](https://github.com/PabloSch26/pablo-abaroa-schilling/blob/main/etc/clone-repository-visual-studio-code.gif)
 
-Se deberá de levantar el servidor y para poner en funcionamiento la API REST para que puedas interactuar con la base de datos simulada.
+### Notas
+
+Se debe de levantar el servidor para poner en funcionamiento la API REST para que puedas interactuar con la base de datos simulada.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 ## Vista Previa del Proyecto
 
-<!-- ------------------------------------------------------------------------------------------- -->
+...
 
+<!-- ------------------------------------------------------------------------------------------- -->
 ## Contribuciones y Licencias
 
 Este proyecto no cuenta con contribuciones externas ni licencias.
