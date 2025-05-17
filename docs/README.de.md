@@ -9,97 +9,115 @@ Die vollständige Liste der Repositories und Beschreibungen findest du in [repos
 - 🇪🇸 [Spanisch](README.es.md)
 
 <!-- ------------------------------------------------------------------------------------------- -->
+
 ## Projektziel
 
 Ziel dieses Projekts ist es, eine Single Page Application (SPA) zu erstellen, um die im Online-Unterricht erworbenen Kenntnisse zu üben und zu demonstrieren. Diese SPA dient als grafische Oberfläche zur Verwaltung der Anzeigen-API mit dem Backend namens Nodepop.
 
 <!-- ------------------------------------------------------------------------------------------- -->
+
 ## Erlernte und angewandte Kenntnisse
 
 - **Grundlagen von React:**
+
   - React: Deklarative Bibliothek zum Erstellen von Benutzeroberflächen.
   - Komponenten: Wiederverwendbar, unabhängig, hierarchisch.
 
 - **Elemente:**
+
   - `React.createElement(type, props, children)`
   - `ReactDOM.render(element, container)`
-  - *JSX:*
+  - _JSX:_
     - HTML-ähnliche Syntax.
-    - *Attribute:* `className`, `htmlFor`, usw.
-    - *Spread-Attribute:* <Component {...props} />
-    - *children:* Inhalt zwischen Tags.
+    - _Attribute:_ `className`, `htmlFor`, usw.
+    - _Spread-Attribute:_ <Component {...props} />
+    - _children:_ Inhalt zwischen Tags.
 
 - **Komponenten:**
-  - *Props:* Parameter, die eine Komponente empfängt (`props.name`)
+
+  - _Props:_ Parameter, die eine Komponente empfängt (`props.name`)
   - Verschachtelte Komponenten
-  - *React.Fragment:* Gruppiert Elemente ohne zusätzliche Knoten.
-  - *Bedingtes Rendern:* `if`, `? :`, `&&`
-  - *Listen:* Verwendung von `.map()` mit eindeutigen Schlüsseln (`key`)
-  - *Events:* `onClick`, `onChange`, usw.
+  - _React.Fragment:_ Gruppiert Elemente ohne zusätzliche Knoten.
+  - _Bedingtes Rendern:_ `if`, `? :`, `&&`
+  - _Listen:_ Verwendung von `.map()` mit eindeutigen Schlüsseln (`key`)
+  - _Events:_ `onClick`, `onChange`, usw.
 
 - **State (Zustand):**
+
   - `useState(initialValue)` zur Verwaltung von lokalem Zustand.
-  - *Lifting state up:* Zustandsweitergabe zwischen Komponenten.
+  - _Lifting state up:_ Zustandsweitergabe zwischen Komponenten.
 
 - **Formulare:**
-  - *Kontrollierte Eingaben:* über useState gesteuert.
-  - *Unkontrollierte Eingaben:* Zugriff über useRef.
+
+  - _Kontrollierte Eingaben:_ über useState gesteuert.
+  - _Unkontrollierte Eingaben:_ Zugriff über useRef.
   - Checkboxen / Radiobuttons
-  - *Formularübermittlung:* `onSubmit`, `event.preventDefault()`
+  - _Formularübermittlung:_ `onSubmit`, `event.preventDefault()`
 
 - **Effekte:**
+
   - Verwendung von `useEffect` mit Abhängigkeiten und Cleanup. Verhalten in `StrictMode`.
 
 - **Hooks:**
+
   - Benutzerdefinierte Hooks für wiederverwendbare Logik.
 
 - **Context:**
+
   - Erstellen von Context mit `React.createContext`, Bereitstellen mit `Context.Provider` und Verwenden mit `useContext`.
 
 - **Refs:**
-  - *useRef:* Zugriff auf das DOM oder persistente Werte zwischen Rendern.
-  - *forwardRef:* Referenzweitergabe an Kindkomponenten.
+
+  - _useRef:_ Zugriff auf das DOM oder persistente Werte zwischen Rendern.
+  - _forwardRef:_ Referenzweitergabe an Kindkomponenten.
 
 - **Leistungsoptimierung:**
-  - *React.memo:* Vermeidet unnötige Renders, wenn Props sich nicht ändern.
-  - *useCallback(fn, deps):* Merkt sich Funktionen.
-  - *useMemo(fn, deps):* Merkt sich teure berechnete Werte.
+
+  - _React.memo:_ Vermeidet unnötige Renders, wenn Props sich nicht ändern.
+  - _useCallback(fn, deps):_ Merkt sich Funktionen.
+  - _useMemo(fn, deps):_ Merkt sich teure berechnete Werte.
 
 - **Ladeoptimierung:**
   - Verwendung von `React.lazy` und `Suspense` für Lazy Loading.
   - `Code Splitting`, um die Bundle-Größe zu reduzieren.
 
 <!-- ------------------------------------------------------------------------------------------- -->
+
 ## Projektdetails
 
 ### Backend (Nodepop API)
 
 **Verfügbare Endpunkte:**
 
-- `/api/auth/signup`  
+- `/api/auth/signup`
+
   - **POST**: Erstellt Benutzer.
 
-- `/api/auth/me`  
+- `/api/auth/me`
+
   - **GET**: Gibt Informationen des authentifizierten Benutzers zurück.
 
-- `/api/auth/login`  
+- `/api/auth/login`
+
   - **POST**: Gibt ein JWT-Token bei korrekter E-Mail und Passwort zurück.
 
-- `/api/v1/adverts`  
-  - **GET**: Listet Anzeigen mit optionalen Filtern: `name=auto`, `sale=true/false`, `price=0-25000`, `tags=motor,work`  
+- `/api/v1/adverts`
+
+  - **GET**: Listet Anzeigen mit optionalen Filtern: `name=auto`, `sale=true/false`, `price=0-25000`, `tags=motor,work`
   - **POST**: Erstellt eine neue Anzeige.
 
-- `/api/v1/adverts/tags`  
+- `/api/v1/adverts/tags`
+
   - **GET**: Gibt verfügbare Tags zurück.
 
-- `/api/v1/adverts/:id`  
-  - **GET**: Gibt Anzeige per ID zurück.  
+- `/api/v1/adverts/:id`
+  - **GET**: Gibt Anzeige per ID zurück.
   - **DELETE**: Löscht Anzeige per ID.
 
 **Wichtige Hinweise:**
 
 - Endpunkte unter `/adverts` erfordern ein Token. Im Header senden: `Header['Authorization'] = Bearer ${token}`.
-- Daten werden in einer SQLite-Datenbank unter `/data` gespeichert.  
+- Daten werden in einer SQLite-Datenbank unter `/data` gespeichert.
 - Hochgeladene Bilder werden unter `/uploads` gespeichert und über `/public` statisch bereitgestellt.
 
 ### Frontend (SPA mit React)
@@ -110,10 +128,10 @@ Ziel dieses Projekts ist es, eine Single Page Application (SPA) zu erstellen, um
 
 **Geschützte Routen (nur authentifizierte Benutzer):**
 
-- `/` —> Weiterleitung zu `/adverts`  
-- `/adverts` —> AdvertsPage  
-- `/adverts/:id` —> AdvertPage  
-- `/adverts/new` —> NewAdvertPage  
+- `/` —> Weiterleitung zu `/adverts`
+- `/adverts` —> AdvertsPage
+- `/adverts/:id` —> AdvertPage
+- `/adverts/new` —> NewAdvertPage
 - Alle anderen Routen —> `NotFoundPage (404)`
 
 **Hauptkomponenten:**
@@ -145,22 +163,23 @@ Ziel dieses Projekts ist es, eine Single Page Application (SPA) zu erstellen, um
 
 **Filter auf der AdvertsPage:**
 
-- Mindestens zwei Filter: Name, Kauf/Verkauf, Preis oder Tags.  
-- *Zwei Arten der Filteranwendung:*
-  1. Frontend-Filterung nach dem Laden aller Anzeigen.  
+- Mindestens zwei Filter: Name, Kauf/Verkauf, Preis oder Tags.
+- _Zwei Arten der Filteranwendung:_
+  1. Frontend-Filterung nach dem Laden aller Anzeigen.
   2. Backend-Filterung durch Übergabe von Query-Parametern (empfohlen).
 
 **Wichtige technische Features:**
 
-- Authentifizierung mit JWT-Token.  
-- Geschützte Routen mit automatischer Weiterleitung zum Login.  
-- Sitzungspersistenz mit localStorage.  
-- Axios mit Token-Interceptor.  
-- Styling mit Tailwind CSS.  
-- Navigation mit React Router.  
+- Authentifizierung mit JWT-Token.
+- Geschützte Routen mit automatischer Weiterleitung zum Login.
+- Sitzungspersistenz mit localStorage.
+- Axios mit Token-Interceptor.
+- Styling mit Tailwind CSS.
+- Navigation mit React Router.
 - Formularvalidierung mit React.
 
 <!-- ------------------------------------------------------------------------------------------- -->
+
 ## Verwendete Technologien
 
 ### Sprachen
@@ -185,6 +204,7 @@ Ziel dieses Projekts ist es, eine Single Page Application (SPA) zu erstellen, um
 - **Prettier:** Automatischer Code-Formatter für einheitlichen Stil im Projekt.
 
 <!-- ------------------------------------------------------------------------------------------- -->
+
 ## Installations- und Nutzungshinweise
 
 ### Softwareanforderungen
@@ -192,7 +212,7 @@ Ziel dieses Projekts ist es, eine Single Page Application (SPA) zu erstellen, um
 - **[Git](https://git-scm.com/downloads)** (getestet mit Version **2.47.1.windows.1**)
 - **[Visual Studio Code](https://code.visualstudio.com/)** (getestet mit Version **1.99.0**)
 - **[nodepop-api (REST-API)](https://github.com/davidjj76/nodepop-api)** (entwickelt von **David Jiménez** – **KeepCoding**)
-- **Live Server** (VS Code Addon, *optional*)
+- **Live Server** (VS Code Addon, _optional_)
 
 ### Repositories klonen
 
@@ -216,11 +236,13 @@ git clone https://github.com/pablo-sch/keepcoding-08-react-fundamentals.git
 - Der Backend-Server muss gestartet werden, damit die REST-API funktionsfähig ist und auf die simulierte Datenbank zugegriffen werden kann.
 
 <!-- ------------------------------------------------------------------------------------------- -->
+
 ## Projektvorschau
 
 ...
 
 <!-- ------------------------------------------------------------------------------------------- -->
+
 ## Beiträge und Lizenzen
 
 Dieses Projekt enthält keine externen Beiträge oder Lizenzen.

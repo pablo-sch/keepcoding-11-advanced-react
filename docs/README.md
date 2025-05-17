@@ -9,97 +9,115 @@ Check the full list of repositories and descriptions in [repos-kc-web-18.md](htt
 - 🇩🇪 [German](README.de.md)
 
 <!-- ------------------------------------------------------------------------------------------- -->
+
 ## Project Objective
 
 To practice and demonstrate the knowledge acquired in virtual classes, this project requires creating a Single Page Application (SPA) that serves as a graphical interface to manage the ads API using the backend called Nodepop.
 
 <!-- ------------------------------------------------------------------------------------------- -->
+
 ## Skills Learned and Applied
 
 - **React Fundamentals:**
+
   - React: Declarative library for building user interfaces.
   - Components: Reusable, independent, hierarchical.
 
 - **Elements:**
+
   - `React.createElement(type, props, children)`
   - `ReactDOM.render(element, container)`
-  - *JSX:*
+  - _JSX:_
     - Syntax similar to `HTML`.
-    - *Attributes:* `className`, `htmlFor`, etc.
-    - *Spread attributes:* <Component {...props} />
-    - *children:* Inner content between tags.
+    - _Attributes:_ `className`, `htmlFor`, etc.
+    - _Spread attributes:_ <Component {...props} />
+    - _children:_ Inner content between tags.
 
 - **Components:**
-  - *Props:* Parameters received by a component (`props.name`)
+
+  - _Props:_ Parameters received by a component (`props.name`)
   - Nested components
-  - *React.Fragment:* Groups elements without adding extra nodes.
-  - *Conditional rendering:* `if`, `? :`, `&&`
-  - *Lists:* Using `.map()` and unique keys (`key`)
-  - *Events:* `onClick`, `onChange`, etc.
+  - _React.Fragment:_ Groups elements without adding extra nodes.
+  - _Conditional rendering:_ `if`, `? :`, `&&`
+  - _Lists:_ Using `.map()` and unique keys (`key`)
+  - _Events:_ `onClick`, `onChange`, etc.
 
 - **State:**
+
   - `useState(initialValue)` for managing local state.
-  - *Lifting state up:* sharing state between components.
+  - _Lifting state up:_ sharing state between components.
 
 - **Forms:**
-  - *Controlled inputs:* managed by useState
-  - *Uncontrolled inputs:* accessed via useRef
+
+  - _Controlled inputs:_ managed by useState
+  - _Uncontrolled inputs:_ accessed via useRef
   - Checkbox / Radio Buttons
-  - *Form submission:* `onSubmit`, `event.preventDefault()`
+  - _Form submission:_ `onSubmit`, `event.preventDefault()`
 
 - **Effects:**
+
   - Using `useEffect` and its anatomy (dependencies, cleanup), and behavior in `StrictMode`.
 
 - **Hooks:**
+
   - Custom hooks for reusable logic.
 
 - **Context:**
+
   - Creating contexts with `React.createContext`, providing with `Context.Provider`, and consuming with `useContext`.
 
 - **Refs:**
-  - *useRef:* access the DOM or persist values between renders.
-  - *forwardRef:* forward references to child components.
+
+  - _useRef:_ access the DOM or persist values between renders.
+  - _forwardRef:_ forward references to child components.
 
 - **Performance Optimization:**
-  - *React.memo:* avoids unnecessary renders if props don't change.
-  - *useCallback(fn, deps):* memoizes functions.
-  - *useMemo(fn, deps):* memoizes expensive computed values.
+
+  - _React.memo:_ avoids unnecessary renders if props don't change.
+  - _useCallback(fn, deps):_ memoizes functions.
+  - _useMemo(fn, deps):_ memoizes expensive computed values.
 
 - **Load Optimization:**
   - Use `React.lazy` and `Suspense` for lazy loading components.
   - `Code splitting` to reduce initial bundle size.
 
 <!-- ------------------------------------------------------------------------------------------- -->
+
 ## Project Details
 
 ### Backend (Nodepop API)
 
 **Available endpoints:**
 
-- `/api/auth/signup`  
+- `/api/auth/signup`
+
   - **POST**: Creates users.
 
-- `/api/auth/me`  
+- `/api/auth/me`
+
   - **GET**: Returns authenticated user's info.
 
-- `/api/auth/login`  
+- `/api/auth/login`
+
   - **POST**: Returns a JWT token with correct email and password.
 
-- `/api/v1/adverts`  
-  - **GET**: Lists ads, supports query filters: `name=car`, `sale=true/false`, `price=0-25000`, `tags=motor,work`  
+- `/api/v1/adverts`
+
+  - **GET**: Lists ads, supports query filters: `name=car`, `sale=true/false`, `price=0-25000`, `tags=motor,work`
   - **POST**: Creates a new ad.
 
-- `/api/v1/adverts/tags`  
+- `/api/v1/adverts/tags`
+
   - **GET**: Returns available tags.
 
-- `/api/v1/adverts/:id`  
-  - **GET**: Returns ad by ID.  
+- `/api/v1/adverts/:id`
+  - **GET**: Returns ad by ID.
   - **DELETE**: Deletes ad by ID.
 
 **Important notes:**
 
 - Endpoints under `/adverts` require a token. Send via header: `Header['Authorization'] = Bearer ${token}`.
-- Data is stored in an SQLite database under `/data`.  
+- Data is stored in an SQLite database under `/data`.
 - Uploaded images are saved in `/uploads` and served statically from `/public`.
 
 ### Frontend (SPA with React)
@@ -110,10 +128,10 @@ To practice and demonstrate the knowledge acquired in virtual classes, this proj
 
 **Protected routes (authenticated users only):**
 
-- `/` —> Redirects to `/adverts`  
-- `/adverts` —> AdvertsPage  
-- `/adverts/:id` —> AdvertPage  
-- `/adverts/new` —> NewAdvertPage  
+- `/` —> Redirects to `/adverts`
+- `/adverts` —> AdvertsPage
+- `/adverts/:id` —> AdvertPage
+- `/adverts/new` —> NewAdvertPage
 - Any other route —> `NotFoundPage (404)`
 
 **Main components:**
@@ -145,22 +163,23 @@ To practice and demonstrate the knowledge acquired in virtual classes, this proj
 
 **Filters on AdvertsPage:**
 
-- At least two filters: name, buy/sell, price, or tags.  
-- *Two ways to apply filters:*
-  1. Frontend filtering after loading all ads.  
+- At least two filters: name, buy/sell, price, or tags.
+- _Two ways to apply filters:_
+  1. Frontend filtering after loading all ads.
   2. Backend filtering by sending query parameters (recommended).
 
 **Key technical features:**
 
-- Authentication with JWT token.  
-- Protected routes and automatic redirection to login.  
-- Session persistence with localStorage.  
-- Axios with token-injecting interceptor.  
-- Styling with Tailwind CSS.  
-- Navigation using React Router.  
+- Authentication with JWT token.
+- Protected routes and automatic redirection to login.
+- Session persistence with localStorage.
+- Axios with token-injecting interceptor.
+- Styling with Tailwind CSS.
+- Navigation using React Router.
 - Form validation using React.
 
 <!-- ------------------------------------------------------------------------------------------- -->
+
 ## Technologies Used
 
 ### Languages
@@ -185,6 +204,7 @@ To practice and demonstrate the knowledge acquired in virtual classes, this proj
 - **Prettier:** Automatic code formatter that helps maintain a consistent style throughout the project.
 
 <!-- ------------------------------------------------------------------------------------------- -->
+
 ## Installation and Usage Instructions
 
 ### Software Requirements
@@ -192,7 +212,7 @@ To practice and demonstrate the knowledge acquired in virtual classes, this proj
 - **[Git](https://git-scm.com/downloads)** (tested with version **2.47.1.windows.1**)
 - **[Visual Studio Code](https://code.visualstudio.com/)** (tested with version **1.99.0**)
 - **[nodepop-api (REST API)](https://github.com/davidjj76/nodepop-api)** (created by instructor **David Jiménez** - **KeepCoding**)
-- **Live Server** (VS Code addon, *optional*)
+- **Live Server** (VS Code addon, _optional_)
 
 ### Clone the Repositories
 
@@ -216,11 +236,13 @@ git clone https://github.com/pablo-sch/keepcoding-08-react-fundamentals.git
 - You must run the backend server to make the REST API operational and interact with the simulated database.
 
 <!-- ------------------------------------------------------------------------------------------- -->
+
 ## Project Preview
 
 ...
 
 <!-- ------------------------------------------------------------------------------------------- -->
+
 ## Contributions and Licenses
 
 This project has no external contributions or licenses.
