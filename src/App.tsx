@@ -1,36 +1,19 @@
-import { useState } from "react";
-import nodepopLogo from "../public/web-icon.webp";
-import viteLogo from "../public/vite.svg";
-/* import './App.css'
- */
-function App() {
-  const [count, setCount] = useState(0);
+import PostsPage from "./pages/posts/posts-page";
+import LoginPage from "./pages/auth/login-page";
 
-  return (
-    <>
-      <div>
-        {/*  */}
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={nodepopLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+import "./App.css";
+import { useState } from "react";
+
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+function handleLogin() { 
+    setIsLoggedIn(true);
+  }
+
+  return isLoggedIn ? <PostsPage /> : <LoginPage onLogin= {handleLogin}/>;
+
+  //return ;
 }
 
 export default App;
