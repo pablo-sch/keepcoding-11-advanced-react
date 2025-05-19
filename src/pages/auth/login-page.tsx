@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { login } from "./service";
 
 interface LoginPageProps {
@@ -6,12 +6,33 @@ interface LoginPageProps {
 }
 
 function LoginPage({ onLogin }: LoginPageProps) {
+  /* 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  */
+
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
+
+  const { username, password } = credentials;
   const disableSubmit = username === "" || password === "";
 
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
+  }
+
+  //************************************************************************************* */
   // Asynchronous function that handles the form submission event for the login form.
   // It receives a FormEvent specific to an HTMLFormElement to provide type safety.
+  //************************************************************************************* */
+
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -21,7 +42,6 @@ function LoginPage({ onLogin }: LoginPageProps) {
     */
 
     try {
-      
       /*    
       const form = event.currentTarget;
       const formData = new FormData(form);
@@ -30,12 +50,15 @@ function LoginPage({ onLogin }: LoginPageProps) {
       const password = formData.get("password") as string;
       */
 
-      await login({ username, password });
+      await login(credentials);
 
       //console.log(response);
 
+      //************************************************************************************* */
       // If successful, trigger the onLogin callback to update app state
       // and redirect the user to the posts page.
+      //************************************************************************************* */
+
       onLogin();
     } catch (error) {
       console.error("Login failed", error);
@@ -57,7 +80,7 @@ function LoginPage({ onLogin }: LoginPageProps) {
             type="text"
             name="username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleChange}
           />
         </label>
         <label>
@@ -66,7 +89,7 @@ function LoginPage({ onLogin }: LoginPageProps) {
             type="password"
             name="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleChange}
           />
         </label>
         <button type="submit" disabled={disableSubmit}>
