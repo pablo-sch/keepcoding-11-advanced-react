@@ -1,15 +1,12 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { login } from "./service";
 
+// Function to call when login is successful
 interface LoginPageProps {
-  onLogin: () => void; // Function to call when login is successful
+  onLogin: () => void; 
 }
 
 function LoginPage({ onLogin }: LoginPageProps) {
-  /* 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  */
 
   const [credentials, setCredentials] = useState({
     username: "",
@@ -19,6 +16,11 @@ function LoginPage({ onLogin }: LoginPageProps) {
   const { username, password } = credentials;
   const disableSubmit = username === "" || password === "";
 
+  //************************************************************************************* */
+  // Handles changes in input fields (e.g., username, password)
+  // Extracts the input's name and value, and updates the corresponding state
+  // Ensures the credentials state remains up-to-date with user input
+  //*************************************************************************************
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
 
@@ -32,44 +34,22 @@ function LoginPage({ onLogin }: LoginPageProps) {
   // Asynchronous function that handles the form submission event for the login form.
   // It receives a FormEvent specific to an HTMLFormElement to provide type safety.
   //************************************************************************************* */
-
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    /* 
-    console.log(event.target.username.value);
-    console.log(event.target.password.value); 
-    */
-
     try {
-      /*    
-      const form = event.currentTarget;
-      const formData = new FormData(form);
-
-      const username = formData.get("username") as string;
-      const password = formData.get("password") as string;
-      */
 
       await login(credentials);
-
-      //console.log(response);
 
       //************************************************************************************* */
       // If successful, trigger the onLogin callback to update app state
       // and redirect the user to the posts page.
       //************************************************************************************* */
-
       onLogin();
     } catch (error) {
       console.error("Login failed", error);
     }
   }
-
-  /* 
-  <input type="text" name="username" defaultValue="example-default-value"/>
-  <input type="text" name="username" value="example-value"/>
-  */
-
   return (
     <div>
       <h1>Login Page</h1>

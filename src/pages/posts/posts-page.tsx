@@ -4,36 +4,26 @@ import { getLatestPosts } from "./service";
 import { useState, useEffect } from "react";
 import type { Post } from "./types";
 
-/* const posts = [
-  {
-    id: 1,
-    title: "Post 1",
-    content: "This is the content of post 1",
-  },
-  {
-    id: 2,
-    title: "Post 2",
-    content: "This is the content of post 2",
-  },
-]; */
+interface PostsPageProps {
+  active: boolean;
+  onLogout: () => void;
+}
 
-function postsPage() {
+function postsPage({ onLogout }: PostsPageProps) {
   const [posts, setPosts] = useState<Post[]>([]);
 
-  useEffect(() => {
-    getLatestPosts().then((posts) => {
-      setPosts(posts);
-    });
-  }, []);
-
-  /* 
   useEffect(() => {
     async function getPosts() {
       const posts = await getLatestPosts();
       setPosts(posts);
     }
-  });
-  */
+    getPosts();
+  }, []);
+
+  const hadleLogoutClick = async () => {
+     await onLogout();
+     onLogout();
+  };
 
   return (
     <div className="posts-page">
@@ -43,7 +33,9 @@ function postsPage() {
           <li key={post.id}>{post.content}</li>
         ))}
       </ul>
-      <button disabled={false}> Click Me</button>
+      <button disabled={false} onClick={hadleLogoutClick}>
+        Logout
+      </button>
     </div>
   );
 }
