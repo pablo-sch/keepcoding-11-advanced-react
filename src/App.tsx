@@ -5,15 +5,16 @@ import "./App.css";
 import { useState } from "react";
 
 function App() {
+  // State to track whether the user is logged in or not
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-function handleLogin() { 
+  // Function to handle login logic by updating the login state
+  function handleLogin() {
     setIsLoggedIn(true);
   }
 
-  return isLoggedIn ? <PostsPage /> : <LoginPage onLogin= {handleLogin}/>;
-
-  //return ;
+  // Conditionally render either the PostsPage or LoginPage based on login status
+  return isLoggedIn ? <PostsPage /> : <LoginPage onLogin={handleLogin} />;
 }
 
 export default App;
