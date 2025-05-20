@@ -22,7 +22,7 @@ function App({defaultIsLoggedIn}: AppProps) {
   }
 
   // Conditionally render either the PostsPage or LoginPage based on login status
-  return isLoggedIn ? <PostsPage onLogout={handleLogout} active/> : <LoginPage onLogin={handleLogin} />;
+  return isLoggedIn ? <PostsPage isLoggedIn={isLoggedIn} onLogout={handleLogout} active/> : <LoginPage onLogin={handleLogin} />;
 }
 
 export default App;

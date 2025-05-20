@@ -3,13 +3,15 @@ import { getLatestPosts } from "./service";
 
 import { useState, useEffect } from "react";
 import type { Post } from "./types";
+import Layout from "../../components/layout/layout";
 
 interface PostsPageProps {
   active: boolean;
+  isLoggedIn: boolean;
   onLogout: () => void;
 }
 
-function postsPage({ onLogout }: PostsPageProps) {
+function postsPage({ isLoggedIn, onLogout }: PostsPageProps) {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
@@ -20,23 +22,22 @@ function postsPage({ onLogout }: PostsPageProps) {
     getPosts();
   }, []);
 
-  const hadleLogoutClick = async () => {
-     await onLogout();
-     onLogout();
-  };
+  /*   const hadleLogoutClick = async () => {
+    await onLogout();
+    onLogout();
+  }; */
 
   return (
-    <div className="posts-page">
-      <h1>Posts</h1>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>{post.content}</li>
-        ))}
-      </ul>
-      <button disabled={false} onClick={hadleLogoutClick}>
-        Logout
-      </button>
-    </div>
+    <Layout title="Nice Title" isLoggedIn={isLoggedIn} onLogout={onLogout}>
+      <div className="posts-page">
+        <h1>Posts</h1>
+        <ul>
+          {posts.map((post) => (
+            <li key={post.id}>{post.content}</li>
+          ))}
+        </ul>
+      </div>
+    </Layout>
   );
 }
 
