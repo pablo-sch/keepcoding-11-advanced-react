@@ -3,12 +3,13 @@ import LoginPage from "./pages/auth/login-page";
 
 import "./App.css";
 import { useState } from "react";
+import { AuthContext } from "./pages/auth/context";
 
 interface AppProps {
   defaultIsLoggedIn: boolean;
 }
 
-function App({defaultIsLoggedIn}: AppProps) {
+function App({ defaultIsLoggedIn }: AppProps) {
   // State to track whether the user is logged in or not
   const [isLoggedIn, setIsLoggedIn] = useState(defaultIsLoggedIn);
 
@@ -21,8 +22,20 @@ function App({defaultIsLoggedIn}: AppProps) {
     setIsLoggedIn(false);
   }
 
-  // Conditionally render either the PostsPage or LoginPage based on login status
-  return isLoggedIn ? <PostsPage isLoggedIn={isLoggedIn} onLogout={handleLogout} active/> : <LoginPage onLogin={handleLogin} />;
-}
+  const authValue = {
+    isloggedIn: isLoggedIn, 
+    onLogin: handleLogin,
+    onLogout: handleLogout,
+  };
 
+  return (
+    <AuthContext.Provider value={authValue}>
+      {isLoggedIn ? (
+        <PostsPage active isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+      ) : (
+        <LoginPage onLogin={handleLogin} />
+      )}
+    </AuthContext.Provider>
+  );
+}
 export default App;

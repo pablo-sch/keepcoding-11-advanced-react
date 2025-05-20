@@ -2,7 +2,6 @@ import { type ReactNode } from "react";
 import Footer from "./footer";
 import Header, {type HeaderProps} from "./header";
 
-
 interface LayoutProps extends HeaderProps{
   title: string;
   children: ReactNode;
