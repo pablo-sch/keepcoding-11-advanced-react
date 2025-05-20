@@ -1,10 +1,9 @@
-import { useContext } from "react";
+import { useAuth } from "../../pages/auth/context";
 import { logout } from "../../pages/auth/service";
 import Button from "../button";
-import { AuthContext } from "../../pages/auth/context";
 
 function Header() {
-  const { isloggedIn, onLogout } = useContext(AuthContext);
+  const { isLoggedIn, onLogout } = useAuth();
   const hadleLogoutClick = async () => {
     await logout();
     onLogout();
@@ -14,7 +13,7 @@ function Header() {
     <header>
       <div></div>
       <nav>
-        {isloggedIn ? (
+        {isLoggedIn ? (
           <Button $variant="secondary" onClick={hadleLogoutClick}>
             Logout
           </Button>

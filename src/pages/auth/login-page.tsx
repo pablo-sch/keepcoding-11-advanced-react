@@ -1,13 +1,14 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { login } from "./service";
+import { useAuth } from "./context";
 
-// Function to call when login is successful
+/* // Function to call when login is successful
 interface LoginPageProps {
   onLogin: () => void; 
-}
+} */
 
-function LoginPage({ onLogin }: LoginPageProps) {
-
+function LoginPage(/* { onLogin }: LoginPageProps */) {
+  const { onLogin } = useAuth();
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -38,7 +39,6 @@ function LoginPage({ onLogin }: LoginPageProps) {
     event.preventDefault();
 
     try {
-
       await login(credentials);
 
       //************************************************************************************* */
