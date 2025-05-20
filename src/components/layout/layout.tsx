@@ -8,10 +8,10 @@ interface LayoutProps extends HeaderProps{
   children: ReactNode;
 }
 
-function Layout({ title, children, isLoggedIn, onLogout }: LayoutProps) {
+function Layout({ title, children, ...rest }: LayoutProps) {
   return (
     <div>
-      <Header isLoggedIn={isLoggedIn} onLogout={onLogout}/>
+      <Header {...rest} />
       <main>
         <h2>{title}</h2>
         {children}

@@ -11,7 +11,9 @@ interface PostsPageProps {
   onLogout: () => void;
 }
 
-function postsPage({ isLoggedIn, onLogout }: PostsPageProps) {
+function postsPage({ ...rest }: PostsPageProps) {
+
+  //console.log(rest)
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
@@ -22,13 +24,8 @@ function postsPage({ isLoggedIn, onLogout }: PostsPageProps) {
     getPosts();
   }, []);
 
-  /*   const hadleLogoutClick = async () => {
-    await onLogout();
-    onLogout();
-  }; */
-
   return (
-    <Layout title="Nice Title" isLoggedIn={isLoggedIn} onLogout={onLogout}>
+    <Layout title="Nice Title" {...rest}>
       <div className="posts-page">
         <h1>Posts</h1>
         <ul>

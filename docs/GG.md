@@ -1,4 +1,4 @@
-# REACT Fundamentals Project Submission
+<!-- # REACT Fundamentals Project Submission
 
 ## React + TypeScript + Vite
 
@@ -54,3 +54,4 @@ export default tseslint.config({
   },
 });
 ```
+ -->
