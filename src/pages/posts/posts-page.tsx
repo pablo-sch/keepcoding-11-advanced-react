@@ -4,6 +4,7 @@ import { getLatestPosts } from "./service";
 import { useState, useEffect } from "react";
 import type { Post } from "./types";
 import Layout from "../../components/layout/layout";
+import defaultProfileImage from "../../assets/default-profile.png";
 
 function postsPage() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -18,6 +19,7 @@ function postsPage() {
 
   return (
     <Layout title="Nice Title">
+      <img src={defaultProfileImage} alt="Default profile" />
       <div className="posts-page">
         <h1>Posts</h1>
         <ul>
