@@ -1,9 +1,10 @@
 import { client } from "../../api/client";
 import type { Post } from "./types";
 
-const POSTS_URL = '/api/posts';
+const POSTS_URL = "/api/posts";
 
 export const getLatestPosts = async () => {
-  const posts = await client.get<Post[]>(POSTS_URL);
-  return posts.data;
+  const url = `${POSTS_URL}?_expand=user&_embed=likes&_sort=updatedAt&_order=desc`;
+  const response = await client.get<Post[]>(url);
+  return response.data;
 };

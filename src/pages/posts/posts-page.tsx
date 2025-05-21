@@ -1,15 +1,26 @@
-import "./posts-page.css";
-import { getLatestPosts } from "./service";
-
 import { useState, useEffect } from "react";
+
+import { getLatestPosts } from "./service";
 import type { Post } from "./types";
 import Layout from "../../components/layout/layout";
-import defaultProfileImage from "../../assets/default-profile.png";
+
+import Button from "../../components/ui/button";
+import PostItem from "./post-item";
+import "./posts-page.css";
+
+
+const EmptyList = () => (
+  <div className="posts-page-empty">
+    <p>Be the first one!</p>
+    <Button $variant="primary">Create post</Button>
+  </div>
+);
 
 function postsPage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
+
     async function getPosts() {
       const posts = await getLatestPosts();
       setPosts(posts);
@@ -19,14 +30,18 @@ function postsPage() {
 
   return (
     <Layout title="Nice Title">
-      <img src={defaultProfileImage} alt="Default profile" />
       <div className="posts-page">
-        <h1>Posts</h1>
-        <ul>
-          {posts.map((post) => (
-            <li key={post.id}>{post.content}</li>
-          ))}
-        </ul>
+        {posts.length ? (
+          <ul>
+            {posts.map((post) => (
+              <li key={post.id}>
+                <PostItem post={post} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <EmptyList />
+        )}
       </div>
     </Layout>
   );

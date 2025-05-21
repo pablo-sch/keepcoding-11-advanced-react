@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-const accentColor = "rgb(var(--color-twitter))";
-
+/* const accentColor = "rgb(var(--color-twitter))";
+ */
 interface ButtonProps {
   $variant: "primary" | "secondary";
 }
 
-const Button = styled.button<ButtonProps>`
+const Button = styled.button<ButtonProps>``/* `
   cursor: pointer;
   border-radius: 9999px;
   background-color: ${(props) =>
@@ -35,7 +35,7 @@ const Button = styled.button<ButtonProps>`
         ? "rgb(26, 145, 218)"
         : "rgba(var(--color-twitter), 0.1)"};
   }
-`;
+` */;
 
 Button.displayName = "Button";
 
