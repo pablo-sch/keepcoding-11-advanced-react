@@ -1,24 +1,24 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { AuthContext } from "./context";
 
-interface AppPtoviderProps {
-  defaultIsLoggedIn: boolean;
-  children: React.ReactNode;
+interface AuthProviderProps {
+  defaultIsLogged: boolean;
+  children: ReactNode;
 }
 
-function AuthProvider({ defaultIsLoggedIn, children }: AppPtoviderProps) {
-  const [isLoggedIn, setIsLoggedIn] = useState(defaultIsLoggedIn);
+function AuthProvider({ defaultIsLogged, children }: AuthProviderProps) {
+  const [isLogged, setIsLogged] = useState(defaultIsLogged);
 
   function handleLogin() {
-    setIsLoggedIn(true);
+    setIsLogged(true);
   }
 
   function handleLogout() {
-    setIsLoggedIn(false);
+    setIsLogged(false);
   }
 
   const authValue = {
-    isLoggedIn,
+    isLogged,
     onLogin: handleLogin,
     onLogout: handleLogout,
   };

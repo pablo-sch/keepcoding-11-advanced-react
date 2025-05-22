@@ -1,36 +1,20 @@
-/* import { useAuth } from "../../pages/auth/context";
-import { logout } from "../../pages/auth/service";
-import Button from "../button"; */
-/* import logo from "../../assets/nodepop-react-icon.svg";*/
-
 import AuthButton from "../../pages/auth/auth-button";
-import NodePopIcon from "../icons/nodepop-icon";
-import "./header.css";
+import { Link, NavLink } from "react-router-dom";
+import NodepopIcon from "../icons/nodepop-icon";
 
 function Header() {
-  /*   const { isLoggedIn, onLogout } = useAuth();
-  const hadleLogoutClick = async () => {
-    await logout();
-    onLogout();
-  }; */
-
   return (
     <header className="header">
-      <div className="header-logo">
-        <NodePopIcon width={32} height={32} />
-      </div>
-
-      {/*
-        <nav>
-        {isLoggedIn ? (
-          <Button $variant="secondary" onClick={hadleLogoutClick}>
-            Logout
-          </Button>
-        ) : (
-          <Button $variant="primary">Login</Button>
-        )} 
-        */}
+      <Link to="/">
+        <div className="header-logo">
+          <NodepopIcon width={32} height={32} />
+        </div>
+      </Link>
       <nav className="header-nav">
+        <NavLink to="/adverts/new">Nuevo Anuncio</NavLink>
+        <NavLink to="/adverts" end>
+          Anuncios Recientes
+        </NavLink>
         <AuthButton />
       </nav>
     </header>

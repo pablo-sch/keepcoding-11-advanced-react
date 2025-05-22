@@ -1,4 +1,3 @@
-import "./textarea.css";
 import clsx from "clsx";
 import type { ComponentProps } from "react";
 

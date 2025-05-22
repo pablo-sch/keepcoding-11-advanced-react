@@ -1,14 +1,8 @@
-interface User {
-  name: string;
-  username: string;
-}
-
 export interface Advert {
-  id: string;
+  id: number;
   name: string;
   price: number;
   sale: boolean;
   tags: string[];
   photo?: string;
-  user: User;
 }

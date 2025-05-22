@@ -1,5 +1,4 @@
 import type { ComponentProps } from "react";
-import "./form-field.css";
 
 interface FormFieldProps extends ComponentProps<"input"> {
   label: string;

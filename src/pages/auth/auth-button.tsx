@@ -1,18 +1,23 @@
+//import { Link } from "react-router-dom";
 import Button from "../../components/ui/button";
 import { useAuth } from "../../pages/auth/context";
 import { logout } from "../../pages/auth/service";
 
 export default function AuthButton() {
-  const { isLoggedIn, onLogout } = useAuth();
+  const { isLogged, onLogout } = useAuth();
+
   const handleLogoutClick = async () => {
     await logout();
     onLogout();
   };
-  return isLoggedIn ? (
-    <Button onClick={handleLogoutClick} $variant="secondary">
+
+  return isLogged ? (
+    <Button onClick={handleLogoutClick} variant="secondary">
       Logout
     </Button>
   ) : (
-    <Button $variant="primary">Login</Button>
+    <Button variant="primary" /* as={Link} */ to="/login">
+      Login
+    </Button>
   );
 }
