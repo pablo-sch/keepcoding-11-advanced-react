@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import Button from "../../components/ui/button";
 import { login } from "./service";
 import { useAuth } from "./context";
 import FormField from "../../components/ui/form-field";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import { AxiosError } from "axios";
 
 function LoginPage() {
@@ -11,47 +11,29 @@ function LoginPage() {
   const navigate = useNavigate();
   const { onLogin } = useAuth();
 
-  const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
-  });
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
-  const [error, setError] = useState<{ message: string } | null>(null);
+  const [canSubmit, setCanSubmit] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const timeoutRef = useRef<number | null>(null);
+  const [error, setError] = useState<{ message: string } | null>(null);
 
-  useEffect(() => {
-    timeoutRef.current = setTimeout(() => {
-      console.log("Timeout", timeoutRef.current);
-    }, 20000);
-
-    return () => {
-      if (timeoutRef.current) {
-        clearInterval(timeoutRef.current);
-      }
-    };
-  }, []);
-
-  const { username, password } = credentials;
-  const isDisabled = !username || !password || isFetching;
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setCredentials((prev) => ({
-      ...prev,
-      [event.target.name]: event.target.value,
-    }));
+  const handleInput = () => {
+    const username = usernameRef.current?.value.trim() ?? "";
+    const password = passwordRef.current?.value.trim() ?? "";
+    setCanSubmit(username !== "" && password !== "");
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const username = usernameRef.current?.value.trim() ?? "";
+    const password = passwordRef.current?.value.trim() ?? "";
+    if (!username || !password) return;
 
     try {
-      if (timeoutRef.current) {
-        clearInterval(timeoutRef.current);
-      }
-
       setIsFetching(true);
-      await login(credentials);
+      await login({ username, password });
       onLogin();
 
       const to = location.state?.from ?? "/";
@@ -59,7 +41,7 @@ function LoginPage() {
     } catch (error) {
       if (error instanceof AxiosError) {
         setError({
-          message: error.response?.data?.message ?? error.message ?? "Error logging in",
+          message: error.response?.data?.message ?? error.message ?? "Error al iniciar sesión",
         });
       }
     } finally {
@@ -69,11 +51,11 @@ function LoginPage() {
 
   return (
     <div className="login-page">
-      <h1 className="login-page-title">Login</h1>
+      <h1 className="login-page-title">Inicia sesión</h1>
       <form onSubmit={handleSubmit}>
-        <FormField type="text" name="username" label="Nombre de usuario" value={username} onChange={handleChange} />
-        <FormField type="password" name="password" label="Contraseña" value={password} onChange={handleChange} />
-        <Button type="submit" variant="primary" disabled={isDisabled} className="login-form-submit">
+        <FormField id="username" name="username" label="Nombre de usuario" type="text" ref={usernameRef} onInput={handleInput} />
+        <FormField id="password" name="password" label="Contraseña" type="password" ref={passwordRef} onInput={handleInput} />
+        <Button type="submit" variant="primary" className="login-form-submit" disabled={!canSubmit || isFetching}>
           Entrar
         </Button>
       </form>

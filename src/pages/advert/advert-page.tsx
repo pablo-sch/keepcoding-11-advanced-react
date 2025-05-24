@@ -32,9 +32,9 @@ function AdvertPage() {
 
       <p>
         <span>
-          <strong>pablo</strong>
+          <strong>Name</strong>
         </span>
-        <span>Abaroa</span>
+        <span>Surname</span>
       </p>
 
       <p>
