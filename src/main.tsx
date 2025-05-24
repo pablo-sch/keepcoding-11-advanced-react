@@ -4,7 +4,7 @@ import App from "./App";
 import storage from "./utils/storage";
 import { setAuthorizationHeader } from "./api/client";
 import AuthProvider from "./pages/auth/auth-provider";
-import { BrowserRouter } from "react-router";
+import { BrowserRouter } from "react-router-dom";
 
 const accessToken = storage.get("auth");
 if (accessToken) {

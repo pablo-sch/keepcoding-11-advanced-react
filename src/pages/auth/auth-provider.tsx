@@ -23,9 +23,7 @@ function AuthProvider({ defaultIsLogged, children }: AuthProviderProps) {
     onLogout: handleLogout,
   };
 
-  return (
-    <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>;
 }
 
 export default AuthProvider;

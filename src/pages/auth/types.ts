@@ -1,14 +1,8 @@
-interface User {
-  name: string;
+export interface Credentials {
   username: string;
+  password: string;
 }
 
-export interface Advert {
-  id: string;
-  name: string;
-  price: number;
-  sale: boolean;
-  tags: string[];
-  photo?: string;
-  user: User;
+export interface Login {
+  accessToken: string;
 }

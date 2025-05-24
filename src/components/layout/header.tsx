@@ -11,9 +11,9 @@ function Header() {
         </div>
       </Link>
       <nav className="header-nav">
-        <NavLink to="/adverts/new">Nuevo Anuncio</NavLink>
+        <NavLink to="/adverts/new">New Advert</NavLink>
         <NavLink to="/adverts" end>
-          Anuncios Recientes
+          Latest Adverts
         </NavLink>
         <AuthButton />
       </nav>

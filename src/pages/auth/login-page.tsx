@@ -1,15 +1,9 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  type ChangeEvent,
-  type FormEvent,
-} from "react";
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import Button from "../../components/ui/button";
 import { login } from "./service";
 import { useAuth } from "./context";
 import FormField from "../../components/ui/form-field";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 
 function LoginPage() {
@@ -65,7 +59,7 @@ function LoginPage() {
     } catch (error) {
       if (error instanceof AxiosError) {
         setError({
-          message: error.response?.data?.message ?? error.message ?? "Error al iniciar sesión",
+          message: error.response?.data?.message ?? error.message ?? "Error logging in",
         });
       }
     } finally {
@@ -75,37 +69,16 @@ function LoginPage() {
 
   return (
     <div className="login-page">
-      <h1 className="login-page-title">Inicia sesión</h1>
+      <h1 className="login-page-title">Login</h1>
       <form onSubmit={handleSubmit}>
-        <FormField
-          type="text"
-          name="username"
-          label="Nombre de usuario"
-          value={username}
-          onChange={handleChange}
-        />
-        <FormField
-          type="password"
-          name="password"
-          label="Contraseña"
-          value={password}
-          onChange={handleChange}
-        />
-        <Button
-          type="submit"
-          variant="primary"
-          disabled={isDisabled}
-          className="login-form-submit"
-        >
+        <FormField type="text" name="username" label="Nombre de usuario" value={username} onChange={handleChange} />
+        <FormField type="password" name="password" label="Contraseña" value={password} onChange={handleChange} />
+        <Button type="submit" variant="primary" disabled={isDisabled} className="login-form-submit">
           Entrar
         </Button>
       </form>
       {error && (
-        <div
-          className="login-page-error"
-          role="alert"
-          onClick={() => setError(null)}
-        >
+        <div className="login-page-error" role="alert" onClick={() => setError(null)}>
           {error.message}
         </div>
       )}

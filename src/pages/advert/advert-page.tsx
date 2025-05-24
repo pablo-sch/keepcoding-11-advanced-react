@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { getAdvert } from "./service";
 import type { Advert } from "./types";
@@ -23,14 +23,32 @@ function AdvertPage() {
       });
   }, [advertId, navigate]);
 
-  if (!advert) return <p>Cargando anuncio...</p>;
+  if (!advert) return <p>Loading ad...</p>;
 
   return (
     <div>
-      <h1>{advert.name}</h1>
-      <p><strong>Precio:</strong> {advert.price}€</p>
-      <p><strong>Tipo:</strong> {advert.sale ? "Venta" : "Compra"}</p>
-      <p><strong>Tags:</strong> {advert.tags.join(", ")}</p>
+      <h1>Advert Detail</h1>
+      <h2>{advert.name}</h2>
+
+      <p>
+        <span>
+          <strong>pablo</strong>
+        </span>
+        <span>Abaroa</span>
+      </p>
+
+      <p>
+        <strong>Price:</strong> {advert.price}€
+      </p>
+
+      <p>
+        <strong>Type:</strong> {advert.sale ? "Sale" : "Purchase"}
+      </p>
+
+      <p>
+        <strong>Tags:</strong> {advert.tags.join(", ")}
+      </p>
+
       {advert.photo && <img src={advert.photo} alt={advert.name} style={{ maxWidth: "300px" }} />}
     </div>
   );

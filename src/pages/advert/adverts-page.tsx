@@ -8,9 +8,9 @@ import Page from "../../components/layout/page";
 
 const EmptyList = () => (
   <div className="adverts-page-empty">
-    <p>¡Sé el primero en publicar!</p>
+    <p>Be the first to publish!</p>
     <Link to="/adverts/new">
-      <Button variant="primary">Crear anuncio</Button>
+      <Button variant="primary">Create Advert</Button>
     </Link>
   </div>
 );

@@ -1,5 +1,14 @@
 function Footer() {
-  return <footer className="footer">© 2025 Mi Aplicación de Anuncios</footer>;
+  return (
+    <footer className="footer">
+      <p>
+        © 2025 –{" "}
+        <a href="https://github.com/pablo-sch" className="GitHub Link" target="_blank" rel="noopener noreferrer">
+          GitHub Profile – pablo-sch
+        </a>
+      </p>
+    </footer>
+  );
 }
 
 export default Footer;
