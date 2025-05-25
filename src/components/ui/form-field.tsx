@@ -6,7 +6,7 @@ interface FormFieldProps extends ComponentProps<"input"> {
   label: string;
 }
 
-const FormField = ({ label, ...props }: FormFieldProps) => {
+/* const FormField = ({ label, ...props }: FormFieldProps) => {
   return (
     <div className="form-field">
       <label className="form-field-label">
@@ -15,9 +15,9 @@ const FormField = ({ label, ...props }: FormFieldProps) => {
       </label>
     </div>
   );
-};
+}; */
 
-/* const FormField = forwardRef<HTMLInputElement, FormFieldProps>(({ label, ...props }, ref) => {
+const FormField = forwardRef<HTMLInputElement, FormFieldProps>(({ label, ...props }, ref) => {
   return (
     <div className="form-field">
       <label className="form-field-label">
@@ -26,6 +26,6 @@ const FormField = ({ label, ...props }: FormFieldProps) => {
       </label>
     </div>
   );
-}); */
+});
 
 export default FormField;

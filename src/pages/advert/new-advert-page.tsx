@@ -4,37 +4,7 @@ import { createAdvert } from "./service";
 import Button from "../../components/ui/button";
 import Page from "../../components/layout/page";
 
-const tagOptions = ["motor", "lifestyle", "mobile", "work"];
-
-function TagsDropdown({ selectedTags, onChange }: { selectedTags: string[]; onChange: (selected: string[]) => void }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleDropdown = () => setIsOpen((prev) => !prev);
-
-  const handleCheckboxChange = (tag: string) => {
-    const updated = selectedTags.includes(tag) ? selectedTags.filter((t) => t !== tag) : [...selectedTags, tag];
-    onChange(updated);
-  };
-
-  return (
-    <div>
-      <button type="button" onClick={toggleDropdown}>
-        Select tags
-      </button>
-
-      {isOpen && (
-        <ul>
-          {tagOptions.map((tag) => (
-            <li key={tag}>
-              <input type="checkbox" id={`tag-${tag}`} onChange={() => handleCheckboxChange(tag)} checked={selectedTags.includes(tag)} />
-              <label htmlFor={`tag-${tag}`}>{tag}</label>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-}
+import TagsDropdown from "../../components/ui/tags-dropdown";
 
 function NewAdvertPageForm() {
   const navigate = useNavigate();

@@ -8,3 +8,4 @@
 - hacer un refactor a las peticiones al servidor.
 - hacer un refactor a los errores que puedan ocurrir
 - crear e estilizar la pantalla 404.
+- Realizar ejemplos de useMemo y de useCallback

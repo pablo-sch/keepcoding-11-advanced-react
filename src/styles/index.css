@@ -1,4 +1,3 @@
-
 @import "./login-page.css";
 @import "./advert-page.css";
 @import "./adverts-page.css";
@@ -12,3 +11,4 @@
 @import "./form-field.css";
 @import "./photo.css";
 @import "./text-area.css";
+@import "./error-boundary.css";
