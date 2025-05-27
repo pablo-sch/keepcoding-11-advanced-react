@@ -92,6 +92,8 @@ function NewAdvertPageForm() {
           validateForm();
         }}
       />
+
+      <input type="file" name="photo" />
       <br />
 
       <Button type="submit" disabled={!canSubmit || isSubmitting}>

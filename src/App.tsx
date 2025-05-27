@@ -15,17 +15,17 @@ function App() {
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/adverts" element={<Layout />}>
+        <Route
+          path="/adverts"
+          element={
+            <RequireAuth>
+              <Layout />{" "}
+            </RequireAuth>
+          }
+        >
           <Route index element={<AdvertsPage />} />
           <Route path=":advertId" element={<AdvertPage />} />
-          <Route
-            path="new"
-            element={
-              <RequireAuth>
-                <NewAdvertPage />
-              </RequireAuth>
-            }
-          />
+          <Route path="new" element={<NewAdvertPage />} />
         </Route>
         <Route path="/" element={<Navigate to="/adverts" />} />
         <Route path="/not-found" element={<div>404 | Not Found</div>} />

@@ -1,11 +1,12 @@
 # TODO List
 
-- Crear un "Crear Usuario".
-- Implementar un icono de carga.
-- Redirigir la pagina de login a Advets si el usuario ya esta logeado.
-- Editar y eliminar un anuncio
-- implementar likes a un anuncio.
-- hacer un refactor a las peticiones al servidor.
-- hacer un refactor a los errores que puedan ocurrir
-- crear e estilizar la pantalla 404.
-- Realizar ejemplos de useMemo y de useCallback
+- Create a “Create User”.
+- D - Implement a loading icon.
+- D - Redirect the “Login” page to “Adverts” if the user is already logged in.
+- Edit and delete an “Advert”.
+- Implement likes to an “Advert”.
+- Refactor server requests.
+- Refactor errors that may occur.
+- Create and style the “404” screen.
+- Make examples of “useMemo” and “useCallback”.
+- Control the input data of my forms.

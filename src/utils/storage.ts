@@ -1,4 +1,4 @@
-type StorageKey = "auth";
+type StorageKey = "auth" | "remember";
 
 export default {
   get(key: StorageKey) {
