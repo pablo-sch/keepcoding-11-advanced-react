@@ -1,12 +1,12 @@
 # TODO List
 
 - Create a “Create User”.
-- D - Implement a loading icon.
+- D - Implement a loading system.
 - D - Redirect the “Login” page to “Adverts” if the user is already logged in.
-- Edit and delete an “Advert”.
+- Filter and delete an “Adverts”.
 - Implement likes to an “Advert”.
 - Refactor server requests.
 - Refactor errors that may occur.
 - Create and style the “404” screen.
 - Make examples of “useMemo” and “useCallback”.
-- Control the input data of my forms.
+- Control the input data of the forms.

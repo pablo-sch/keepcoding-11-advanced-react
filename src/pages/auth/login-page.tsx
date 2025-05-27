@@ -1,6 +1,5 @@
 import { useRef, useState, type FormEvent } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router";
-
 import { AxiosError } from "axios";
 
 import { login } from "./service";
@@ -9,14 +8,14 @@ import { useAuth } from "./context";
 import Button from "../../components/ui/button";
 import FormField from "../../components/ui/form-field";
 
-//import { emailRegex } from "../../utils/validation";
+// import { emailRegex } from "../../utils/validation";
 
 function LoginPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { onLogin, isLogged } = useAuth();
 
-  const usernameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
   const [remember, setRemember] = useState(false);
@@ -29,33 +28,25 @@ function LoginPage() {
   }
 
   const handleInput = () => {
-    const username = usernameRef.current?.value.trim() ?? "";
+    const email = emailRef.current?.value.trim() ?? "";
     const password = passwordRef.current?.value.trim() ?? "";
-    setCanSubmit(username !== "" && password !== "");
+    setCanSubmit(email !== "" && password !== "");
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const username = usernameRef.current?.value.trim() ?? "";
+    const email = emailRef.current?.value.trim() ?? "";
     const password = passwordRef.current?.value.trim() ?? "";
 
-    if (!username || !password) return;
+    if (!email || !password) return;
 
     try {
       setIsFetching(true);
 
-      await login({ username, password });
+      await login({ email, password }, remember);
 
-      if (remember) {
-        localStorage.setItem("auth", "true");
-        localStorage.setItem("remember", "true");
-      } else {
-        localStorage.removeItem("auth");
-        localStorage.removeItem("remember");
-      }
-
-      onLogin(remember);
+      onLogin();
 
       const to = location.state?.from ?? "/";
       navigate(to, { replace: true });
@@ -74,7 +65,18 @@ function LoginPage() {
     <div className="login-page">
       <h1 className="login-page-title">Sign in</h1>
       <form onSubmit={handleSubmit}>
-        <FormField id="gmail" name="gmail" label="Gmail address" type="email" placeholder="e.g. user@example.com" maxLength={35} ref={usernameRef} onInput={handleInput} required /* pattern={emailRegex.source} */ />
+        <FormField
+          id="email"
+          name="email"
+          label="Email address"
+          type="email"
+          placeholder="e.g. user@example.com"
+          maxLength={35}
+          ref={emailRef}
+          onInput={handleInput}
+          required
+          // pattern={emailRegex.source}
+        />
         <FormField id="password" name="password" label="Password" type="password" maxLength={25} ref={passwordRef} onInput={handleInput} />
         <Button type="submit" variant="primary" className="login-form-submit" disabled={!canSubmit || isFetching}>
           Log in

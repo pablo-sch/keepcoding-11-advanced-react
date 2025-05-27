@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { createAdvert } from "./service";
+
+import { createAdvert, getTags } from "./service";
+
 import Button from "../../components/ui/button";
 import Page from "../../components/layout/page";
-
 import TagsDropdown from "../../components/ui/tags-dropdown";
 
 function NewAdvertPageForm() {
@@ -12,15 +13,25 @@ function NewAdvertPageForm() {
   const nameRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);
   const saleRef = useRef<HTMLSelectElement>(null);
+  const photoRef = useRef<HTMLInputElement>(null);
   const selectedTagsRef = useRef<string[]>([]);
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [canSubmit, setCanSubmit] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [tags, setTags] = useState<string[]>([]);
 
   useEffect(() => {
     nameRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    const loadTags = async () => {
+      const data = await getTags();
+      setTags(data);
+    };
+    loadTags();
   }, []);
 
   const validateForm = () => {
@@ -37,21 +48,23 @@ function NewAdvertPageForm() {
     const price = Number(priceRef.current?.value) ?? 0;
     const sale = saleRef.current?.value === "true";
     const tags = selectedTagsRef.current;
+    const photoFile = photoRef.current?.files?.[0];
 
     if (!name || price <= 0 || tags.length === 0) return;
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("price", price.toString());
+    formData.append("sale", sale.toString());
+    formData.append("tags", tags.join(","));
+
+    if (photoFile) formData.append("photo", photoFile);
 
     setIsSubmitting(true);
     setError(null);
 
     try {
-      const advert = await createAdvert({
-        name,
-        price,
-        sale,
-        tags,
-        photo: "",
-      });
-
+      const advert = await createAdvert(formData);
       navigate(`/adverts/${advert.id}`);
     } catch {
       setError("Failed to create advert.");
@@ -64,14 +77,14 @@ function NewAdvertPageForm() {
     <form onSubmit={handleSubmit}>
       <label>
         Name:
-        <input type="text" name="name" ref={nameRef} onInput={validateForm} />
+        <input type="text" name="name" maxLength={120} ref={nameRef} onInput={validateForm} />
       </label>
       <br />
 
       <label>
         Type:
-        <select name="sale" ref={saleRef}>
-          <option value="true">Sale </option>
+        <select name="sale" ref={saleRef} onChange={validateForm}>
+          <option value="true">Sale</option>
           <option value="false">Purchase</option>
         </select>
       </label>
@@ -92,15 +105,19 @@ function NewAdvertPageForm() {
           validateForm();
         }}
       />
+      <br />
 
-      <input type="file" name="photo" />
+      <label>
+        Photo:
+        <input type="file" name="photo" ref={photoRef} />
+      </label>
       <br />
 
       <Button type="submit" disabled={!canSubmit || isSubmitting}>
         Create advert
       </Button>
 
-      {error && <p>{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </form>
   );
 }

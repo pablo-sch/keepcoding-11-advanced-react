@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+import { AxiosError } from "axios";
+
 import { getAdvert } from "./service";
 import type { Advert } from "./types";
 
-import { AxiosError } from "axios";
+import defaultImage from "../../../public/image-placeholder.jpg";
 
 function AdvertPage() {
   const { advertId } = useParams();
@@ -26,31 +28,25 @@ function AdvertPage() {
   if (!advert) return <p>Loading ad...</p>;
 
   return (
-    <div>
-      <h1>Advert Detail</h1>
-      <h2>{advert.name}</h2>
-
-      <p>
-        <span>
-          <strong>Name</strong>
-        </span>
-        <span>Surname</span>
-      </p>
-
-      <p>
-        <strong>Price:</strong> {advert.price}€
-      </p>
-
-      <p>
-        <strong>Type:</strong> {advert.sale ? "Sale" : "Purchase"}
-      </p>
-
-      <p>
-        <strong>Tags:</strong> {advert.tags.join(", ")}
-      </p>
-
-      {advert.photo && <img src={advert.photo} alt={advert.name} style={{ maxWidth: "300px" }} />}
-    </div>
+    <article className="advert-item">
+      <div className="advert-item-photo-container">
+        <div className="advert-item-photo-wrapper">{advert.photo ? <img src={advert.photo} alt={advert.name} className="advert-item-photo" style={{ width: "300px" }} /> : <img src={defaultImage} alt={advert.name} className="advert-item-photo" style={{ width: "300px" }} />}</div>
+      </div>
+      <div className="advert-item-content">
+        <div className="advert-item-header">
+          <div>
+            <strong>{advert.name}</strong> — {advert.price}€
+          </div>
+          <div>{/*<strong>Posted by:</strong> {advert.user.name} ({advert.user.username})*/}</div>
+        </div>
+        <div className="advert-item-details">
+          <div>
+            {advert.sale ? "Sale" : "Purchase"} — Tags: {advert.tags.join(", ")}
+          </div>
+          <div>{advert.createdAt}</div>
+        </div>
+      </div>
+    </article>
   );
 }
 
