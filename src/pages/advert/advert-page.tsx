@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
 import { AxiosError } from "axios";
 
-import { getAdvert } from "./service";
+import { getAdvert, deleteAdvert } from "./service";
 import type { Advert } from "./types";
 
 import defaultImage from "../../../public/image-placeholder.jpg";
@@ -12,6 +11,7 @@ function AdvertPage() {
   const { advertId } = useParams();
   const navigate = useNavigate();
   const [advert, setAdvert] = useState<Advert | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(() => {
     if (!advertId) return;
@@ -25,6 +25,17 @@ function AdvertPage() {
       });
   }, [advertId, navigate]);
 
+  const handleDelete = async () => {
+    if (!advertId) return;
+
+    try {
+      await deleteAdvert(advertId);
+      navigate("/adverts");
+    } catch (error) {
+      alert("Error al eliminar el anuncio.");
+    }
+  };
+
   if (!advert) return <p>Loading ad...</p>;
 
   return (
@@ -37,13 +48,23 @@ function AdvertPage() {
           <div>
             <strong>{advert.name}</strong> — {advert.price}€
           </div>
-          <div>{/*<strong>Posted by:</strong> {advert.user.name} ({advert.user.username})*/}</div>
         </div>
         <div className="advert-item-details">
           <div>
             {advert.sale ? "Sale" : "Purchase"} — Tags: {advert.tags.join(", ")}
           </div>
           <div>{advert.createdAt}</div>
+        </div>
+        <div style={{ marginTop: "1rem" }}>
+          {!confirmDelete ? (
+            <button onClick={() => setConfirmDelete(true)}>Delete Advert</button>
+          ) : (
+            <div>
+              <p>Are you sure you want to delete the Advert?</p>
+              <button onClick={handleDelete}>Yes, delete</button>
+              <button onClick={() => setConfirmDelete(false)}>Cancel</button>
+            </div>
+          )}
         </div>
       </div>
     </article>

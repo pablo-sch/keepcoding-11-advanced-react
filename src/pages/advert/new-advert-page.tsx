@@ -1,3 +1,4 @@
+// NewAdvertPage.tsx
 import { useState, useRef, useEffect, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -22,47 +23,49 @@ function NewAdvertPageForm() {
   const [error, setError] = useState<string | null>(null);
   const [tags, setTags] = useState<string[]>([]);
 
+  const PRICE_MAX = 25000;
+  const [priceTooHigh, setPriceTooHigh] = useState(false);
+
   useEffect(() => {
     nameRef.current?.focus();
   }, []);
 
   useEffect(() => {
-    const loadTags = async () => {
-      const data = await getTags();
-      setTags(data);
-    };
-    loadTags();
+    getTags().then(setTags);
   }, []);
 
   const validateForm = () => {
     const name = nameRef.current?.value.trim() ?? "";
-    const price = Number(priceRef.current?.value) ?? 0;
+    const price = Number(priceRef.current?.value) || 0;
     const tags = selectedTagsRef.current;
-    setCanSubmit(name !== "" && price > 0 && tags.length > 0);
+
+    setPriceTooHigh(price > PRICE_MAX);
+    setCanSubmit(name !== "" && price > 0 && price <= PRICE_MAX && tags.length > 0);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(null);
 
     const name = nameRef.current?.value.trim() ?? "";
-    const price = Number(priceRef.current?.value) ?? 0;
-    const sale = saleRef.current?.value === "true";
+    const price = Number(priceRef.current?.value) || 0;
     const tags = selectedTagsRef.current;
-    const photoFile = photoRef.current?.files?.[0];
 
-    if (!name || price <= 0 || tags.length === 0) return;
+    if (!name || price <= 0 || price > PRICE_MAX || tags.length === 0) {
+      return;
+    }
+
+    const sale = saleRef.current?.value === "true";
+    const photoFile = photoRef.current?.files?.[0];
 
     const formData = new FormData();
     formData.append("name", name);
     formData.append("price", price.toString());
     formData.append("sale", sale.toString());
     formData.append("tags", tags.join(","));
-
     if (photoFile) formData.append("photo", photoFile);
 
     setIsSubmitting(true);
-    setError(null);
-
     try {
       const advert = await createAdvert(formData);
       navigate(`/adverts/${advert.id}`);
@@ -83,7 +86,7 @@ function NewAdvertPageForm() {
 
       <label>
         Type:
-        <select name="sale" ref={saleRef} onChange={validateForm}>
+        <select name="sale" ref={saleRef} onChange={validateForm} defaultValue="true">
           <option value="true">Sale</option>
           <option value="false">Purchase</option>
         </select>
@@ -117,17 +120,17 @@ function NewAdvertPageForm() {
         Create advert
       </Button>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {priceTooHigh && <div style={{ color: "red", marginTop: "1rem" }}>Price cannot exceed {PRICE_MAX}.</div>}
+
+      {error && <div style={{ color: "red", marginTop: "1rem" }}>{error}</div>}
     </form>
   );
 }
 
-function NewAdvertPage() {
+export default function NewAdvertPage() {
   return (
     <Page title="Create new advert">
       <NewAdvertPageForm />
     </Page>
   );
 }
-
-export default NewAdvertPage;

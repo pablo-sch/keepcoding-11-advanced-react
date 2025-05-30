@@ -1,14 +1,25 @@
-import { useState } from "react";
-
-const tagOptions = ["motor", "lifestyle", "mobile", "work"];
+// TagsDropdown.tsx
+import { useState, useEffect } from "react";
+import { getTags } from "../../pages/advert/service"; // ajusta la ruta
 
 type TagsDropdownProps = {
   selectedTags: string[];
   onChange: (selected: string[]) => void;
 };
 
-function TagsDropdown({ selectedTags, onChange }: TagsDropdownProps) {
+export default function TagsDropdown({ selectedTags, onChange }: TagsDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [options, setOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+    getTags().then((tags) => {
+      if (mounted) setOptions(tags);
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
@@ -18,17 +29,19 @@ function TagsDropdown({ selectedTags, onChange }: TagsDropdownProps) {
   };
 
   return (
-    <div>
+    <div className="tags-dropdown">
       <button type="button" onClick={toggleDropdown}>
-        Select tags
+        {selectedTags.length > 0 ? `Tags: ${selectedTags.join(", ")}` : "Select tags"}
       </button>
 
       {isOpen && (
-        <ul>
-          {tagOptions.map((tag) => (
+        <ul className="tags-list">
+          {options.map((tag) => (
             <li key={tag}>
-              <input type="checkbox" id={`tag-${tag}`} onChange={() => handleCheckboxChange(tag)} checked={selectedTags.includes(tag)} />
-              <label htmlFor={`tag-${tag}`}>{tag}</label>
+              <label>
+                <input type="checkbox" value={tag} checked={selectedTags.includes(tag)} onChange={() => handleCheckboxChange(tag)} />
+                {tag}
+              </label>
             </li>
           ))}
         </ul>
@@ -36,5 +49,3 @@ function TagsDropdown({ selectedTags, onChange }: TagsDropdownProps) {
     </div>
   );
 }
-
-export default TagsDropdown;

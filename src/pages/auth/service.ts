@@ -7,7 +7,9 @@ import type { Login, Credentials } from "./types";
 export const login = async (credentials: Credentials, remember: boolean) => {
   const response = await client.post<Login>(AUTH_LOGIN, credentials);
   const { accessToken } = response.data;
+
   storage.set("auth", accessToken);
+
   setAuthorizationHeader(accessToken);
 
   if (remember) {
