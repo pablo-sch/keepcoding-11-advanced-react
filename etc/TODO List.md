@@ -3,10 +3,10 @@
 - Create a “Create User”.
 - D - Implement a loading system.
 - D - Redirect the “Login” page to “Adverts” if the user is already logged in.
-- Filter and delete an “Adverts”.
+- D - Filter and delete an “Adverts”.
 - Implement likes to an “Advert”.
-- Refactor server requests.
+- D - Refactor server requests.
 - Refactor errors that may occur.
 - Create and style the “404” screen.
 - Make examples of “useMemo” and “useCallback”.
-- Control the input data of the forms.
+- D - Control the input data of the forms.
