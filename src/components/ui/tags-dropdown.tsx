@@ -31,7 +31,7 @@ export default function TagsDropdown({ selectedTags, onChange }: TagsDropdownPro
   return (
     <div className="tags-dropdown">
       <button type="button" onClick={toggleDropdown}>
-        {selectedTags.length > 0 ? `Tags: ${selectedTags.join(", ")}` : "Select tags"}
+        {selectedTags.length > 0 ? `${selectedTags.join(", ")}` : "Select tags"}
       </button>
 
       {isOpen && (

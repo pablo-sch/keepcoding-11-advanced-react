@@ -2,11 +2,13 @@
 import { useState, useRef, useEffect, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { createAdvert, getTags } from "./service";
+import { createAdvert } from "./service"; // ya no importas getTags aquí
 
 import Button from "../../components/ui/button";
 import Page from "../../components/layout/page";
 import TagsDropdown from "../../components/ui/tags-dropdown";
+
+import "./new-advert-page.css";
 
 function NewAdvertPageForm() {
   const navigate = useNavigate();
@@ -21,18 +23,23 @@ function NewAdvertPageForm() {
   const [canSubmit, setCanSubmit] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [tags, setTags] = useState<string[]>([]);
 
   const PRICE_MAX = 25000;
   const [priceTooHigh, setPriceTooHigh] = useState(false);
+
+  // Estado para la vista previa de la imagen
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
   useEffect(() => {
     nameRef.current?.focus();
   }, []);
 
+  // Limpiar URL de preview si cambia o al desmontar
   useEffect(() => {
-    getTags().then(setTags);
-  }, []);
+    return () => {
+      if (photoPreview) URL.revokeObjectURL(photoPreview);
+    };
+  }, [photoPreview]);
 
   const validateForm = () => {
     const name = nameRef.current?.value.trim() ?? "";
@@ -41,6 +48,17 @@ function NewAdvertPageForm() {
 
     setPriceTooHigh(price > PRICE_MAX);
     setCanSubmit(name !== "" && price > 0 && price <= PRICE_MAX && tags.length > 0);
+  };
+
+  const handlePhotoChange = () => {
+    const file = photoRef.current?.files?.[0];
+    if (file) {
+      if (photoPreview) URL.revokeObjectURL(photoPreview);
+      setPhotoPreview(URL.createObjectURL(file));
+    } else {
+      setPhotoPreview(null);
+    }
+    validateForm();
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -77,29 +95,20 @@ function NewAdvertPageForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input type="text" name="name" maxLength={120} ref={nameRef} onInput={validateForm} />
-      </label>
-      <br />
+    <form className="form-grid" onSubmit={handleSubmit}>
+      <label htmlFor="name">Name:</label>
+      <input id="name" type="text" name="name" maxLength={120} ref={nameRef} onInput={validateForm} />
 
-      <label>
-        Type:
-        <select name="sale" ref={saleRef} onChange={validateForm} defaultValue="true">
-          <option value="true">Sale</option>
-          <option value="false">Purchase</option>
-        </select>
-      </label>
-      <br />
+      <label htmlFor="price">Price:</label>
+      <input id="price" type="number" name="price" ref={priceRef} onInput={validateForm} />
 
-      <label>
-        Price:
-        <input type="number" name="price" ref={priceRef} onInput={validateForm} />
-      </label>
-      <br />
+      <label htmlFor="sale">Type:</label>
+      <select id="sale" name="sale" ref={saleRef} onChange={validateForm} defaultValue="true">
+        <option value="true">Sale</option>
+        <option value="false">Purchase</option>
+      </select>
 
-      <label>Tags: {selectedTags.length > 0 ? selectedTags.join(", ") : "none"}</label>
+      <label>Tags:</label>
       <TagsDropdown
         selectedTags={selectedTags}
         onChange={(updated) => {
@@ -108,13 +117,15 @@ function NewAdvertPageForm() {
           validateForm();
         }}
       />
-      <br />
 
-      <label>
-        Photo:
-        <input type="file" name="photo" ref={photoRef} />
-      </label>
-      <br />
+      <label htmlFor="photo">Photo:</label>
+      <input id="photo" type="file" name="photo" accept="image/*" ref={photoRef} onChange={handlePhotoChange} />
+
+      {photoPreview && (
+        <div className="photo-preview-wrapper">
+          <img src={photoPreview} alt="Preview" className="photo-preview" />
+        </div>
+      )}
 
       <Button type="submit" disabled={!canSubmit || isSubmitting}>
         Create advert
