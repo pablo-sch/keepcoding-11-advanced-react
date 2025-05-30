@@ -1,5 +1,8 @@
 import { useState, useRef, useCallback, useEffect } from "react";
+
 import Button from "../../components/ui/button";
+
+import "./filter-dropdown.css";
 
 export type FiltersState = {
   name: string;
@@ -90,20 +93,16 @@ export default function FilterDropdown({ initialFilters, availableTags, onApply 
 
       {isOpen && (
         <div className="filter-panel" ref={panelRef}>
-          <label>
-            Name
+          <div className="filter-panel-label">
+            <label>Name</label>
             <input name="name" type="text" defaultValue={initialFilters.name} placeholder="Advert Name" />
-          </label>
-
-          <label>
-            Min Price
+            <label>Min Price</label>
             <input name="minPrice" type="number" defaultValue={initialFilters.minPrice} placeholder="0" min={0} max={25000} />
-          </label>
-
-          <label>
-            Max Price
-            <input name="maxPrice" type="number" defaultValue={initialFilters.maxPrice} placeholder="25000" min={0} max={25000} />
-          </label>
+            <label>Max Price</label> <input name="maxPrice" type="number" defaultValue={initialFilters.maxPrice} placeholder="25000" min={0} max={25000} />
+          </div>
+          {/*
+          <div className="filter-panel-fieldset"></div>
+          <div className="filter-panel-label"></div> */}
 
           <fieldset>
             <legend>Type</legend>

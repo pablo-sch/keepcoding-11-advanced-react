@@ -1,4 +1,3 @@
-// AdvertsPage.tsx
 import { useMemo } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 
@@ -9,6 +8,8 @@ import AdvertItem from "./advert-item";
 
 import Page from "../../components/layout/page";
 import FilterDropdown, { type FiltersState } from "../../components/ui/filter-dropdown";
+
+import "./adverts-page.css";
 
 const EmptyList = () => (
   <div className="adverts-page-empty">
@@ -39,24 +40,27 @@ function AdvertsPage() {
 
   return (
     <Page title="Available Adverts">
-      <FilterDropdown initialFilters={filters} availableTags={availableTags} onApply={handleApply} />
-
-      <div className="adverts-page">
-        {adverts.length > 0 ? (
-          <ul>
-            {adverts.map((ad) => (
-              <li key={ad.id}>
-                <Link to={`/adverts/${ad.id}`}>
-                  <AdvertItem advert={ad} />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        ) : hasActive ? (
-          <NoResults />
-        ) : (
-          <EmptyList />
-        )}
+      <div className="adverts-list-container">
+        <div className="filter-dropdown-wrapper">
+          <FilterDropdown initialFilters={filters} availableTags={availableTags} onApply={handleApply} />
+        </div>
+        <div className="adverts-list">
+          {adverts.length > 0 ? (
+            <ul>
+              {adverts.map((ad) => (
+                <li key={ad.id}>
+                  <Link to={`/adverts/${ad.id}`}>
+                    <AdvertItem advert={ad} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : hasActive ? (
+            <NoResults />
+          ) : (
+            <EmptyList />
+          )}
+        </div>
       </div>
     </Page>
   );

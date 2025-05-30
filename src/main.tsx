@@ -10,6 +10,8 @@ import AuthProvider from "./pages/auth/auth-provider";
 
 import ErrorBoundary from "./components/error/error-boundary";
 
+import "./styles/index.css";
+
 const accessToken = storage.get("auth");
 const shouldRemember = storage.get("remember") === "true";
 const defaultIsLogged = shouldRemember && !!accessToken;

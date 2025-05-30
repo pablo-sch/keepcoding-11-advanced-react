@@ -1,14 +1,58 @@
-@import "./login-page.css";
-@import "./advert-page.css";
-@import "./adverts-page.css";
-@import "./advert-item.css";
-@import "./new-advert-page.css";
-@import "./header.css";
-@import "./footer.css";
-@import "./layout.css";
-@import "./button.css";
-@import "./page.css";
-@import "./form-field.css";
-@import "./photo.css";
-@import "./text-area.css";
-@import "./error-boundary.css";
+@import "normalize.css";
+
+:root {
+  --bg-color: #575757e8;
+  --bg-color-1: #3a3a3a;
+  --bg-color-2: #535353;
+  --bg-color-3: #646464;
+  --bg-color-4: #7c7c7c;
+  --bg-color-5: #919191;
+  --bg-color-6: #a5a5a5;
+  --bg-color-7: #c0c0c0;
+
+  --bg-post: white;
+  --bg-search: rgb(157, 234, 248);
+  --bg-search-2: rgb(245, 254, 255);
+
+  --btn-home: rgb(226, 228, 119);
+  --btn-search: rgb(38, 192, 219);
+
+  --btn-p-navbar: rgb(160, 231, 94);
+  --btn-s-navbar: rgb(247, 117, 66);
+
+  --btn-p: rgb(191, 243, 142);
+  --btn-s: rgb(248, 71, 48);
+
+  --btn-X-notification: rgb(255, 255, 255);
+  --font-X-notification: rgb(255, 0, 0);
+
+  --font-btn-p: rgb(0, 0, 0);
+  --font-btn-s: rgb(0, 0, 0);
+
+  font-family: Arial, sans-serif;
+  font-size: clamp(2px, 5vw, 16px);
+}
+
+main {
+  background-color: var(--bg-color-6);
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul,
+li {
+  all: unset;
+}
+
+h1,
+h2 {
+  margin: 0;
+  margin-bottom: 1rem;
+}

@@ -7,8 +7,10 @@ interface PageProps {
 
 function Page({ title, children }: PageProps) {
   return (
-    <div className="layout-page">
-      <h2 className="layout-title">{title}</h2>
+    <div className="main-content">
+      <div className="main-title">
+        <h2>{title}</h2>
+      </div>
       {children}
     </div>
   );

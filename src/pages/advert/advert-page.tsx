@@ -7,6 +7,8 @@ import type { Advert } from "./types";
 
 import defaultImage from "../../../public/image-placeholder.jpg";
 
+import "./advert-page.css";
+
 function AdvertPage() {
   const { advertId } = useParams();
   const navigate = useNavigate();

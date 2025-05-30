@@ -1,0 +1,30 @@
+.adverts-list-container {
+  position: relative;
+
+  padding-top: 3rem;
+}
+
+.adverts-list ul {
+  display: grid;
+
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+}
+
+.adverts-list a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 640px) {
+  .adverts-list ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .adverts-list ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

@@ -7,6 +7,7 @@
 - Implement likes to an “Advert”.
 - D - Refactor server requests.
 - Refactor errors that may occur.
-- Create and style the “404” screen.
+- Create “404” Page.
+- Apply basic CSS to the proyect.
 - Make examples of “useMemo” and “useCallback”.
 - D - Control the input data of the forms.

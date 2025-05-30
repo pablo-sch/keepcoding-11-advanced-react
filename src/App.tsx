@@ -8,6 +8,8 @@ const AdvertsPage = lazy(() => import("./pages/advert/adverts-page"));
 const AdvertPage = lazy(() => import("./pages/advert/advert-page"));
 const NewAdvertPage = lazy(() => import("./pages/advert/new-advert-page"));
 
+const NotFoundPage = lazy(() => import("./pages/not-found"));
+
 const Layout = lazy(() => import("./components/layout/layout"));
 
 function App() {
@@ -28,7 +30,7 @@ function App() {
           <Route path="new" element={<NewAdvertPage />} />
         </Route>
         <Route path="/" element={<Navigate to="/adverts" />} />
-        <Route path="/not-found" element={<div>404 | Not Found</div>} />
+        <Route path="/not-found" element={<NotFoundPage />} />
         <Route path="*" element={<Navigate to="/not-found" />} />
       </Routes>
     </Suspense>
