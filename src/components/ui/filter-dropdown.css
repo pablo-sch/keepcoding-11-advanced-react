@@ -1,19 +1,17 @@
 .filter-dropdown-wrapper {
-  position: absolute;
   display: flex;
   align-items: center;
+}
 
+.filter-dropdown {
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   width: auto;
   z-index: 1000;
-
-  background-color: var(--bg-color-3);
-}
-
-.filter-dropdown {
   width: 100%;
+  background-color: var(--bg-color-3);
 }
 
 .filter-dropdown button {

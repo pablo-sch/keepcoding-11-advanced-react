@@ -2,6 +2,11 @@ footer {
   display: flex;
   justify-content: center;
   background-color: var(--bg-color-1);
+  padding: 1rem;
+}
+
+footer p {
+  margin: 0;
 }
 
 footer p {

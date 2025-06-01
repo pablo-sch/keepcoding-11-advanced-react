@@ -2,16 +2,20 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AxiosError } from "axios";
 
+import Page from "../../components/layout/page";
 import { getAdvert, deleteAdvert } from "./service";
 import type { Advert } from "./types";
 
 import defaultImage from "../../../public/image-placeholder.jpg";
 
 import "./advert-page.css";
+import { formatDate } from "../../utils/format-date";
+import Button from "../../components/ui/button";
 
 function AdvertPage() {
   const { advertId } = useParams();
   const navigate = useNavigate();
+
   const [advert, setAdvert] = useState<Advert | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
@@ -34,42 +38,58 @@ function AdvertPage() {
       await deleteAdvert(advertId);
       navigate("/adverts");
     } catch (error) {
-      alert("Error al eliminar el anuncio.");
+      alert("Error deleting the advert.");
     }
   };
 
   if (!advert) return <p>Loading ad...</p>;
 
   return (
-    <article className="advert-item">
-      <div className="advert-item-photo-container">
-        <div className="advert-item-photo-wrapper">{advert.photo ? <img src={advert.photo} alt={advert.name} className="advert-item-photo" style={{ width: "300px" }} /> : <img src={defaultImage} alt={advert.name} className="advert-item-photo" style={{ width: "300px" }} />}</div>
-      </div>
-      <div className="advert-item-content">
-        <div className="advert-item-header">
-          <div>
-            <strong>{advert.name}</strong> — {advert.price}€
+    <Page title="Advert Detail">
+      <article className="advert-page">
+        <div className="advert-page-photo-container">
+          <div className="advert-page-photo-wrapper">{advert.photo ? <img src={advert.photo} alt={advert.name} className="advert-page-photo" /> : <img src={defaultImage} alt={advert.name} className="advert-page-photo" />}</div>
+        </div>
+        <div className="advert-page-data">
+          <p>
+            <strong>{advert.name}</strong> - €{advert.price}
+          </p>
+          <p>
+            <strong>{advert.sale ? "Sale" : "Purchase"}</strong> - <strong>Tags: </strong>
+            {advert.tags.join(", ")}
+          </p>
+          <p>
+            <strong>Created at: </strong>
+            {formatDate(advert.createdAt)}
+          </p>
+        </div>
+        {
+          <div className="advert-page-handle-delete">
+            {!confirmDelete ? (
+              <div>
+                <Button className="advert-delete-submit" onClick={() => setConfirmDelete(true)}>
+                  Delete Advert
+                </Button>
+              </div>
+            ) : (
+              <div>
+                <div>
+                  <p>Are you sure you want to delete the advert?</p>
+                </div>
+                <div>
+                  <Button className="advert-confirm-delete-submit" onClick={handleDelete}>
+                    Yes, delete
+                  </Button>
+                  <Button className="advert-cancel-delete-submit" onClick={() => setConfirmDelete(false)}>
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-        <div className="advert-item-details">
-          <div>
-            {advert.sale ? "Sale" : "Purchase"} — Tags: {advert.tags.join(", ")}
-          </div>
-          <div>{advert.createdAt}</div>
-        </div>
-        <div style={{ marginTop: "1rem" }}>
-          {!confirmDelete ? (
-            <button onClick={() => setConfirmDelete(true)}>Delete Advert</button>
-          ) : (
-            <div>
-              <p>Are you sure you want to delete the Advert?</p>
-              <button onClick={handleDelete}>Yes, delete</button>
-              <button onClick={() => setConfirmDelete(false)}>Cancel</button>
-            </div>
-          )}
-        </div>
-      </div>
-    </article>
+        }
+      </article>
+    </Page>
   );
 }
 

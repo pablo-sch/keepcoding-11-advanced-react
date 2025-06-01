@@ -3,9 +3,9 @@ import { useSearchParams, Link } from "react-router-dom";
 
 import { useAdverts } from "./hooks/use-adverts";
 
-import Button from "../../components/ui/button";
 import AdvertItem from "./advert-item";
 
+import Button from "../../components/ui/button";
 import Page from "../../components/layout/page";
 import FilterDropdown, { type FiltersState } from "../../components/ui/filter-dropdown";
 

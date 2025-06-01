@@ -10,7 +10,9 @@
   --bg-color-6: #a5a5a5;
   --bg-color-7: #c0c0c0;
 
-  --bg-post: white;
+  --bg-color-10: #ffffff;
+
+  /*   --bg-post: white;
   --bg-search: rgb(157, 234, 248);
   --bg-search-2: rgb(245, 254, 255);
 
@@ -21,20 +23,16 @@
   --btn-s-navbar: rgb(247, 117, 66);
 
   --btn-p: rgb(191, 243, 142);
-  --btn-s: rgb(248, 71, 48);
+  --btn-s: rgb(248, 71, 48); */
 
-  --btn-X-notification: rgb(255, 255, 255);
-  --font-X-notification: rgb(255, 0, 0);
+  --bg-btn-header: rgb(70, 63, 54);
+  --bg-btn-header-nav: rgb(95, 86, 74);
 
-  --font-btn-p: rgb(0, 0, 0);
-  --font-btn-s: rgb(0, 0, 0);
+  --font-btn-header-nav: antiquewhite;
+  --font-btn-header: rgb(150, 140, 127);
 
   font-family: Arial, sans-serif;
   font-size: clamp(2px, 5vw, 16px);
-}
-
-main {
-  background-color: var(--bg-color-6);
 }
 
 a {
@@ -47,8 +45,12 @@ a {
 }
 
 ul,
-li {
+li,
+p {
   all: unset;
+}
+p {
+  margin-bottom: 0.5rem;
 }
 
 h1,

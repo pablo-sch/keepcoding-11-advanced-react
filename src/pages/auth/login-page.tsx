@@ -7,6 +7,10 @@ import { useAuth } from "./context";
 
 import Button from "../../components/ui/button";
 import FormField from "../../components/ui/form-field";
+import Page from "../../components/layout/page";
+
+import "../../components/ui/form-field.css";
+import "../../components/layout/layout.css"; //<-- (X)
 
 // import { emailRegex } from "../../utils/validation";
 
@@ -33,8 +37,8 @@ function LoginPage() {
     setCanSubmit(email !== "" && password !== "");
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     const email = emailRef.current?.value.trim() ?? "";
     const password = passwordRef.current?.value.trim() ?? "";
@@ -48,7 +52,7 @@ function LoginPage() {
 
       onLogin();
 
-      const to = location.state?.from ?? "/";
+      const to = (location.state as { from?: string })?.from ?? "/";
       navigate(to, { replace: true });
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -62,36 +66,41 @@ function LoginPage() {
   };
 
   return (
-    <div className="login-page">
-      <h1 className="login-page-title">Sign in</h1>
-      <form onSubmit={handleSubmit}>
-        <FormField
-          id="email"
-          name="email"
-          label="Email address"
-          type="email"
-          placeholder="e.g. user@example.com"
-          maxLength={35}
-          ref={emailRef}
-          onInput={handleInput}
-          required
-          // pattern={emailRegex.source}
-        />
-        <FormField id="password" name="password" label="Password" type="password" maxLength={25} ref={passwordRef} onInput={handleInput} />
-        <Button type="submit" variant="primary" className="login-form-submit" disabled={!canSubmit || isFetching}>
-          Log in
-        </Button>
-        <label>
-          <input type="checkbox" checked={remember} onChange={() => setRemember(!remember)} />
-          Remember me
-        </label>
-      </form>
-      {error && (
-        <div className="login-page-error" role="alert" onClick={() => setError(null)}>
-          {error.message}
-        </div>
-      )}
-    </div>
+    <main className="main" /* <-- (X) */>
+      <Page title="Login Page">
+        <form className="form-grid" onSubmit={handleSubmit}>
+          <FormField
+            id="email"
+            name="email"
+            label="Email address"
+            type="email"
+            placeholder="e.g. user@example.com"
+            maxLength={35}
+            ref={emailRef}
+            onInput={handleInput}
+            required
+            // pattern={emailRegex.source}
+          />
+          <FormField id="password" name="password" label="Password" type="password" maxLength={25} ref={passwordRef} onInput={handleInput} required />
+
+          <label className="form-field">
+            <label className="form-field-label">
+              <input className="form-field-checkbox" type="checkbox" checked={remember} onChange={() => setRemember(!remember)} />
+              <span className="form-field-span">Remember me</span>
+            </label>
+          </label>
+
+          <Button className="login-form-submit" type="submit" disabled={!canSubmit || isFetching}>
+            Log in
+          </Button>
+        </form>
+        {error && (
+          <div className="login-page-error" role="alert" onClick={() => setError(null)}>
+            {error.message}
+          </div>
+        )}
+      </Page>
+    </main>
   );
 }
 

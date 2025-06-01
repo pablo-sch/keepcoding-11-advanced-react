@@ -1,14 +1,17 @@
-// NewAdvertPage.tsx
+// pages/advert/NewAdvertPage.tsx
+
 import { useState, useRef, useEffect, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { createAdvert } from "./service"; // ya no importas getTags aquí
+import { createAdvert } from "./service";
 
 import Button from "../../components/ui/button";
 import Page from "../../components/layout/page";
+import FormField from "../../components/ui/form-field";
 import TagsDropdown from "../../components/ui/tags-dropdown";
 
-import "./new-advert-page.css";
+/* import "./new-advert-page.css"; */
+import "../../components/ui/form-field.css";
 
 function NewAdvertPageForm() {
   const navigate = useNavigate();
@@ -27,14 +30,12 @@ function NewAdvertPageForm() {
   const PRICE_MAX = 25000;
   const [priceTooHigh, setPriceTooHigh] = useState(false);
 
-  // Estado para la vista previa de la imagen
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
   useEffect(() => {
     nameRef.current?.focus();
   }, []);
 
-  // Limpiar URL de preview si cambia o al desmontar
   useEffect(() => {
     return () => {
       if (photoPreview) URL.revokeObjectURL(photoPreview);
@@ -96,30 +97,41 @@ function NewAdvertPageForm() {
 
   return (
     <form className="form-grid" onSubmit={handleSubmit}>
-      <label htmlFor="name">Name:</label>
-      <input id="name" type="text" name="name" maxLength={120} ref={nameRef} onInput={validateForm} />
+      <FormField id="name" name="name" label="Name" type="text" maxLength={120} ref={nameRef} onInput={validateForm} required />
 
-      <label htmlFor="price">Price:</label>
-      <input id="price" type="number" name="price" ref={priceRef} onInput={validateForm} />
+      <FormField id="price" name="price" label="Price" type="number" ref={priceRef} onInput={validateForm} required />
 
-      <label htmlFor="sale">Type:</label>
-      <select id="sale" name="sale" ref={saleRef} onChange={validateForm} defaultValue="true">
-        <option value="true">Sale</option>
-        <option value="false">Purchase</option>
-      </select>
+      <label className="form-field">
+        <label className="form-field-label">
+          <span className="form-field-span">Type</span>
+          <select id="sale" name="sale" ref={saleRef} onChange={validateForm} defaultValue="true" className="form-field-input">
+            <option value="true">Sale</option>
+            <option value="false">Purchase</option>
+          </select>
+        </label>
+      </label>
 
-      <label>Tags:</label>
-      <TagsDropdown
-        selectedTags={selectedTags}
-        onChange={(updated) => {
-          setSelectedTags(updated);
-          selectedTagsRef.current = updated;
-          validateForm();
-        }}
-      />
+      <label className="form-field">
+        <label className="form-field-label">
+          <span className="form-field-span">Tags</span>
+          <TagsDropdown
+            selectedTags={selectedTags}
+            onChange={(updated) => {
+              setSelectedTags(updated);
+              selectedTagsRef.current = updated;
+              validateForm();
+            }}
+          />
+        </label>
+      </label>
 
-      <label htmlFor="photo">Photo:</label>
-      <input id="photo" type="file" name="photo" accept="image/*" ref={photoRef} onChange={handlePhotoChange} />
+      <label className="form-field">
+        <label className="form-field-label">
+          {" "}
+          <span className="form-field-span">Photo</span>
+          <input id="photo" type="file" name="photo" accept="image/*" ref={photoRef} onChange={handlePhotoChange} className="form-field-input" />
+        </label>
+      </label>
 
       {photoPreview && (
         <div className="photo-preview-wrapper">
@@ -127,13 +139,13 @@ function NewAdvertPageForm() {
         </div>
       )}
 
-      <Button type="submit" disabled={!canSubmit || isSubmitting}>
+      <Button className="new-advert-form-submit" type="submit" disabled={!canSubmit || isSubmitting}>
         Create advert
       </Button>
 
-      {priceTooHigh && <div style={{ color: "red", marginTop: "1rem" }}>Price cannot exceed {PRICE_MAX}.</div>}
+      {priceTooHigh && <div>Price cannot exceed {PRICE_MAX}.</div>}
 
-      {error && <div style={{ color: "red", marginTop: "1rem" }}>{error}</div>}
+      {error && <div>{error}</div>}
     </form>
   );
 }

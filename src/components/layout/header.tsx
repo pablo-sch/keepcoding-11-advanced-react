@@ -9,20 +9,27 @@ function Header() {
   return (
     <header className="header">
       <div className="header-wrapper">
-        <div className="header-container">
-          <Link to="/">
+        <nav className="header-nav">
+          <div className="header-left">
             <div className="header-logo">
-              <NodepopIcon />
+              <Link to="/">
+                <NodepopIcon />
+              </Link>
             </div>
-          </Link>
-          <nav className="header-nav">
-            <NavLink to="/adverts/new">New Advert</NavLink>
-            <NavLink to="/adverts" end>
-              Latest Adverts
-            </NavLink>
+
+            <div className="header-nav-links">
+              <NavLink className="nav-link" to="/adverts/new">
+                New Advert
+              </NavLink>
+              <NavLink className="nav-link" to="/adverts" end>
+                Adverts List
+              </NavLink>
+            </div>
+          </div>
+          <div className="header-right">
             <AuthButton />
-          </nav>
-        </div>
+          </div>
+        </nav>
       </div>
     </header>
   );

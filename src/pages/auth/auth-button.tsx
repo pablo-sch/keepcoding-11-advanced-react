@@ -11,13 +11,5 @@ export default function AuthButton() {
     onLogout();
   };
 
-  return isLogged ? (
-    <Button onClick={handleLogoutClick} variant="secondary">
-      Logout
-    </Button>
-  ) : (
-    <Button variant="primary" /* as={Link} */ to="/login">
-      Login
-    </Button>
-  );
+  return isLogged ? <Button onClick={handleLogoutClick}>Logout</Button> : <Button to="/login">Login</Button>;
 }

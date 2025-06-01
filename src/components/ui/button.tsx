@@ -2,11 +2,10 @@ import { useNavigate } from "react-router-dom";
 import type { ButtonHTMLAttributes } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary";
   to?: string;
 }
 
-function Button({ variant = "primary", to, onClick, ...props }: ButtonProps) {
+function Button({ to, onClick, ...props }: ButtonProps) {
   const navigate = useNavigate();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -20,11 +19,7 @@ function Button({ variant = "primary", to, onClick, ...props }: ButtonProps) {
   };
 
   return (
-    <button
-      className={`button button--${variant}`}
-      onClick={handleClick}
-      {...props}
-    >
+    <button onClick={handleClick} {...props}>
       {props.children}
     </button>
   );
