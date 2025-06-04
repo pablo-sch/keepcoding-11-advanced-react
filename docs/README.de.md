@@ -216,17 +216,19 @@ Ziel dieses Projekts ist es, eine Single Page Application (SPA) zu erstellen, um
 
 ### Repositories klonen
 
-Nodepop API
+- **Nodepop API**
 
 ```bash
 git clone https://github.com/davidjj76/nodepop-api.git
 ```
 
-Projekt
+- **Projekt**
 
 ```bash
 git clone https://github.com/pablo-sch/keepcoding-08-react-fundamentals.git
 ```
+
+- **Demo**
 
 ![Demo](https://github.com/pablo-sch/pablo-sch/blob/main/etc/clone-tutorial.gif)
 
