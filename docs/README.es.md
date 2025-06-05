@@ -1,7 +1,7 @@
 # Entrega Proyecto de Fundamentos de REACT
 
 **Proyectos KeepCoding - Web 18**  
-Consulta la lista completa de repositorios y descripciones en [repos-kc-web-18.md](https://github.com/pablo-sch/pablo-sch/blob/main/docs/repos-kc-web-18.md)
+Consulta la lista completa de repositorios y descripciones en 📁 [repos-kc-web-18.md](https://github.com/pablo-sch/pablo-sch/blob/main/docs/repos-kc-web-18.md)
 
 ## Selecciona tu Idioma
 
@@ -210,19 +210,19 @@ Con el fin de ejercitar y demostrar los conocimientos adquiridos en clases virtu
 
 ### Clonación del Repositorio
 
-- **API REST Nodepop-API**
+API REST Nodepop-API
 
 ```bash
 git clone https://github.com/davidjj76/nodepop-api.git
 ```
 
-- **Poyecto**
+Poyecto
 
 ```bash
 git clone https://github.com/pablo-sch/keepcoding-08-react-fundamentals.git
 ```
 
-- **Demo**
+Demo
 
 ![Demo](https://github.com/pablo-sch/pablo-sch/blob/main/etc/clone-tutorial.gif)
 

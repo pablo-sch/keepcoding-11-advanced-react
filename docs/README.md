@@ -1,7 +1,7 @@
 # React Fundamentals Project Submission
 
 **KeepCoding Projects - Web 18**  
-Check the full list of repositories and descriptions in [repos-kc-web-18.md](https://github.com/pablo-sch/pablo-sch/blob/main/docs/repos-kc-web-18.md)
+Check the full list of repositories and descriptions in 📁 [repos-kc-web-18.md](https://github.com/pablo-sch/pablo-sch/blob/main/docs/repos-kc-web-18.md)
 
 ## Select Your Language
 
@@ -216,19 +216,19 @@ To practice and demonstrate the knowledge acquired in virtual classes, this proj
 
 ### Clone the Repositories
 
-- **Nodepop API**
+Nodepop API
 
 ```bash
 git clone https://github.com/davidjj76/nodepop-api.git
 ```
 
-- **Project**
+Project
 
 ```bash
 git clone https://github.com/pablo-sch/keepcoding-08-react-fundamentals.git
 ```
 
-- **Demo**
+Demo
 
 ![Demo](https://github.com/pablo-sch/pablo-sch/blob/main/etc/clone-tutorial.gif)
 
