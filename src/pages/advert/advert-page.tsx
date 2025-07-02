@@ -6,8 +6,6 @@ import Page from "../../components/layout/page";
 import { getAdvert, deleteAdvert } from "./service";
 import type { Advert } from "./types";
 
-import defaultImage from "../../../public/image-placeholder.jpg";
-
 import "./advert-page.css";
 import { formatDate } from "../../utils/format-date";
 import Button from "../../components/ui/button";
@@ -18,6 +16,8 @@ function AdvertPage() {
 
   const [advert, setAdvert] = useState<Advert | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const defaultImage = "/image-placeholder.jpg";
 
   useEffect(() => {
     if (!advertId) return;
@@ -39,6 +39,7 @@ function AdvertPage() {
       navigate("/adverts");
     } catch (error) {
       alert("Error deleting the advert.");
+      console.log(error);
     }
   };
 

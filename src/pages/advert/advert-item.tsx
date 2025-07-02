@@ -3,7 +3,6 @@ import type { Advert } from "./types";
 //import Page from "../../components/layout/page";
 
 import "./advert-item.css";
-import defaultImage from "../../../public/image-placeholder.jpg";
 
 interface AdvertItemProps {
   advert: Advert;
@@ -11,6 +10,7 @@ interface AdvertItemProps {
 
 const AdvertItem = ({ advert }: AdvertItemProps) => {
   const { name, price, sale, tags, photo } = advert;
+  const defaultImage = "/image-placeholder.jpg";
 
   return (
     /*<Page title="">*/ <article className="advert-item">

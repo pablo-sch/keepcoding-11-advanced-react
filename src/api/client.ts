@@ -5,7 +5,12 @@ export const client = axios.create({
 });
 
 client.interceptors.request.use((config) => {
-  const auth = localStorage.getItem("auth");
+  let auth = localStorage.getItem("auth");
+
+  if (!auth) {
+    auth = sessionStorage.getItem("auth");
+  }
+
   if (auth) {
     config.headers = config.headers ?? {};
     config.headers["Authorization"] = `Bearer ${auth}`;

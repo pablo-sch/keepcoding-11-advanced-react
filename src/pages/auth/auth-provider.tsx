@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from "react";
 import { AuthContext } from "./context";
-/* import storage from "../../utils/storage";
-import { setAuthorizationHeader, removeAuthorizationHeader } from "../../api/client"; */
+import storage from "../../utils/storage";
+import { removeAuthorizationHeader } from "../../api/client";
 
 interface AuthProviderProps {
   defaultIsLogged: boolean;
@@ -16,6 +16,8 @@ function AuthProvider({ defaultIsLogged, children }: AuthProviderProps) {
   }
 
   function handleLogout() {
+    storage.remove("auth");
+    removeAuthorizationHeader();
     setIsLogged(false);
   }
 

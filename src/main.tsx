@@ -12,9 +12,13 @@ import ErrorBoundary from "./components/error/error-boundary";
 
 import "./styles/index.css";
 
-const accessToken = storage.get("auth");
-const shouldRemember = storage.get("remember") === "true";
-const defaultIsLogged = shouldRemember && !!accessToken;
+let accessToken = storage.get("auth", "local");
+
+if (!accessToken) {
+  accessToken = storage.get("auth", "session");
+}
+
+const defaultIsLogged = !!accessToken;
 
 if (accessToken) {
   setAuthorizationHeader(accessToken);

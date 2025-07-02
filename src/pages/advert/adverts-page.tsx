@@ -15,7 +15,7 @@ const EmptyList = () => (
   <div className="adverts-page-empty">
     <p>Be the first to publish!</p>
     <Link to="/adverts/new">
-      <Button variant="primary">Create Advert</Button>
+      <Button>Create Advert</Button>
     </Link>
   </div>
 );
