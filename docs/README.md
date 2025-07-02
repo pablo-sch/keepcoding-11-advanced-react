@@ -1,250 +1,198 @@
 # React Fundamentals Project Submission
 
-**KeepCoding Projects - Web 18**  
-Check the full list of repositories and descriptions in 📁 [repos-kc-web-18.md](https://github.com/pablo-sch/pablo-sch/blob/main/docs/repos-kc-web-18.md)
+`>` **KeepCoding Projects - Web 18:** 📁 [repos-kc-web-18.md](https://github.com/pablo-sch/pablo-sch/blob/main/docs/repos-kc-web-18.md)
 
-## Select Your Language
-
-- 🇪🇸 [Spanish](README.es.md)
-- 🇩🇪 [German](README.de.md)
+`>` **Choose Your Language:** [Spanish](README.es.md) 🔄 [German](README.de.md)
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
 ## Project Objective
 
-To practice and demonstrate the knowledge acquired in virtual classes, this project requires creating a Single Page Application (SPA) that serves as a graphical interface to manage the ads API using the backend called Nodepop.
+To practice and demonstrate the knowledge acquired in virtual classes, this project requires creating a SPA (Single Page Application) using React that will serve as the graphical interface to manage the adverts API with the backend called Nodepop.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
-## Skills Learned and Applied
+## Learned and Practiced Concepts
 
-- **React Fundamentals:**
+### React Fundamentals
 
-  - React: Declarative library for building user interfaces.
-  - Components: Reusable, independent, hierarchical.
+- **React:** Declarative library for building user interfaces.
+- **Components:** Reusable, independent, hierarchical.
 
-- **Elements:**
+### Elements
 
-  - `React.createElement(type, props, children)`
-  - `ReactDOM.render(element, container)`
-  - _JSX:_
-    - Syntax similar to `HTML`.
-    - _Attributes:_ `className`, `htmlFor`, etc.
-    - _Spread attributes:_ <Component {...props} />
-    - _children:_ Inner content between tags.
+- `React.createElement(type, props, children)`
+- `ReactDOM.render(element, container)`
+- **JSX:**
 
-- **Components:**
+  - Syntax similar to `HTML`.
+  - **Attributes:** `className`, `htmlFor`, etc.
+  - **Spread attributes:** `<Component {...props} />`
+  - **children:** Content inside tags.
 
-  - _Props:_ Parameters received by a component (`props.name`)
-  - Nested components
-  - _React.Fragment:_ Groups elements without adding extra nodes.
-  - _Conditional rendering:_ `if`, `? :`, `&&`
-  - _Lists:_ Using `.map()` and unique keys (`key`)
-  - _Events:_ `onClick`, `onChange`, etc.
+### Components
 
-- **State:**
+- **Props:** Parameters received by a component (`props.name`)
+- Nested components
+- **React.Fragment:** Groups without adding extra nodes.
+- **Conditional rendering:** `if`, `? :`, `&&`
+- **Lists:** Use of `.map()` and unique keys (`key`)
+- **Events:** `onClick`, `onChange`, etc.
 
-  - `useState(initialValue)` for managing local state.
-  - _Lifting state up:_ sharing state between components.
+### State
 
-- **Forms:**
+- `useState(initialValue)` to manage local state.
+- **Lifting state up:** sharing state among components.
 
-  - _Controlled inputs:_ managed by useState
-  - _Uncontrolled inputs:_ accessed via useRef
-  - Checkbox / Radio Buttons
-  - _Form submission:_ `onSubmit`, `event.preventDefault()`
+### Forms
 
-- **Effects:**
+- **Controlled inputs:** managed by useState
+- **Uncontrolled inputs:** accessed via useRef
+- **Checkbox** / **Radio Buttons**
+- **Form submission:** `onSubmit`, `event.preventDefault()`
 
-  - Using `useEffect` and its anatomy (dependencies, cleanup), and behavior in `StrictMode`.
+### Effects
 
-- **Hooks:**
+Use of `useEffect` with dependencies, cleanup, and behavior under `StrictMode`.
 
-  - Custom hooks for reusable logic.
+### Hooks
 
-- **Context:**
+Custom hooks for reusable logic.
 
-  - Creating contexts with `React.createContext`, providing with `Context.Provider`, and consuming with `useContext`.
+### Context
 
-- **Refs:**
+Creating contexts with `React.createContext`, providing with `Context.Provider`, consuming with `useContext`.
 
-  - _useRef:_ access the DOM or persist values between renders.
-  - _forwardRef:_ forward references to child components.
+### Refs
 
-- **Performance Optimization:**
+- **useRef:** access to DOM or persistent values between renders.
+- **forwardRef:** forwarding refs to child components.
 
-  - _React.memo:_ avoids unnecessary renders if props don't change.
-  - _useCallback(fn, deps):_ memoizes functions.
-  - _useMemo(fn, deps):_ memoizes expensive computed values.
+### Performance Optimization
 
-- **Load Optimization:**
-  - Use `React.lazy` and `Suspense` for lazy loading components.
-  - `Code splitting` to reduce initial bundle size.
+- **React.memo:** prevents unnecessary renders if props don't change.
+- **useCallback(fn, deps):** memoizes functions.
+- **useMemo(fn, deps):** memoizes expensive computed values.
+
+### Load Optimization
+
+- Use of `React.lazy` and `Suspense` for lazy loading components and `Code splitting` to reduce initial bundle size.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
 ## Project Details
 
-### Backend (Nodepop API)
-
-**Available endpoints:**
-
-- `/api/auth/signup`
-
-  - **POST**: Creates users.
-
-- `/api/auth/me`
-
-  - **GET**: Returns authenticated user's info.
-
-- `/api/auth/login`
-
-  - **POST**: Returns a JWT token with correct email and password.
-
-- `/api/v1/adverts`
-
-  - **GET**: Lists ads, supports query filters: `name=car`, `sale=true/false`, `price=0-25000`, `tags=motor,work`
-  - **POST**: Creates a new ad.
-
-- `/api/v1/adverts/tags`
-
-  - **GET**: Returns available tags.
-
-- `/api/v1/adverts/:id`
-  - **GET**: Returns ad by ID.
-  - **DELETE**: Deletes ad by ID.
-
-**Important notes:**
-
-- Endpoints under `/adverts` require a token. Send via header: `Header['Authorization'] = Bearer ${token}`.
-- Data is stored in an SQLite database under `/data`.
-- Uploaded images are saved in `/uploads` and served statically from `/public`.
-
-### Frontend (SPA with React)
-
-**Public routes:**
+### Public Routes
 
 - `/login` —> LoginPage
 
-**Protected routes (authenticated users only):**
+  - Form with email, password, and "Remember me" checkbox. Stores token after successful login.
+
+### Protected Routes (authenticated users only)
 
 - `/` —> Redirects to `/adverts`
-- `/adverts` —> AdvertsPage
-- `/adverts/:id` —> AdvertPage
+
+  - List of adverts showing name, price, buy/sell, and tags.
+  - Includes filters (name, type, price, tags).
+  - Links to advert details and creating new adverts.
+  - Shows message if no adverts.
+
+- `/adverts`, `/adverts/:id` —> AdvertPage
+
+  - Shows detail with image or placeholder.
+  - Redirects to 404 if not found.
+  - Delete button with confirmation. Redirects to list after delete.
+
 - `/adverts/new` —> NewAdvertPage
+
+  - Form with name, type, tags, price, and optional photo.
+  - React validations. Redirects to detail after creation.
+
 - Any other route —> `NotFoundPage (404)`
-
-**Main components:**
-
-- **LoginPage**  
-  Form with email, password, and "Remember me" checkbox. Saves token after successful login.
-
-- **AdvertsPage**  
-  Lists ads showing name, price, buy/sell status, and tags.  
-  Includes filters (name, type, price, tags).  
-  Link to ad details and to create new ad.  
-  Shows a message if no ads are available.
-
-- **AdvertPage**  
-  Shows ad details with image or placeholder.  
-  Redirects to 404 if not found.  
-  Delete button with confirmation. Redirects to list after deletion.
-
-- **NewAdvertPage**  
-  Form with name, type, tags, price, and optional photo.  
-  React validations. Redirects to details after creation.
-
-- **NotFoundPage**  
-  Informative 404 page.
-
-- **LogoutButton**  
-  Visible if user is logged in.  
-  Confirmation before logging out.
 
 **Filters on AdvertsPage:**
 
 - At least two filters: name, buy/sell, price, or tags.
-- _Two ways to apply filters:_
-  1. Frontend filtering after loading all ads.
+- **Two ways to apply filters:**
+  1. Frontend filtering with all adverts loaded.
   2. Backend filtering by sending query parameters (recommended).
 
 **Key technical features:**
 
 - Authentication with JWT token.
-- Protected routes and automatic redirection to login.
+- Protected routes and automatic login redirect.
 - Session persistence with localStorage.
-- Axios with token-injecting interceptor.
-- Styling with Tailwind CSS.
-- Navigation using React Router.
-- Form validation using React.
+- Axios interceptor to add token.
+- Styles with Tailwind CSS.
+- React Router for navigation.
+- Form validation with React.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
 ## Technologies Used
 
-### Languages
-
-- **HTML:** For content structuring and creating the layout of the webpage.
-- **CSS:** For visual design and styling, ensuring a cohesive and appealing user experience.
-- **JavaScript:** For adding interactivity and dynamic features, improving the user experience with things like form validation, animations, and event handling.
-- **TypeScript:** A statically typed language that compiles to JavaScript, improving code quality and maintainability.
-
-- **JSX Pseudolanguage:** Used in React, it's a JavaScript syntax extension that allows writing HTML-like structures within JavaScript code.
-
-### Dependencies
-
-- **React:** Library for building user interfaces using reusable components.
-- **Vite:** Build tool and fast development server for modern frontend projects.
-- **TypeScript:** A superset of JavaScript that adds static typing, making development more scalable and less error-prone.
-- **Tailwind CSS:** Utility-first CSS framework for rapid, customizable design.
-- **ESLint:** Tool to analyze and identify problems in JavaScript/TypeScript code, ensuring quality and consistency.
-- **Axios:** HTTP client for making API requests easily and efficiently.
-- **clsx:** Utility to conditionally combine CSS classes in a clean and simple way.
-- **Globals:** Global variable definitions to support and maintain compatibility in the codebase.
-- **Prettier:** Automatic code formatter that helps maintain a consistent style throughout the project.
+- **Languages:** HTML, CSS, JavaScript, TypeScript.
+- **Notable Node.js dependencies:** React, Vite, Tailwind CSS, TypeScript, ESLint, Axios, clsx, Globals, Prettier.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
 ## Installation and Usage Instructions
 
-### Software Requirements
+### Note
 
-- **[Git](https://git-scm.com/downloads)** (tested with version **2.47.1.windows.1**)
-- **[Visual Studio Code](https://code.visualstudio.com/)** (tested with version **1.99.0**)
+This project **depends** on the REST API `nodepop-api`. To interact with the simulated database, you must first start the server that runs this API.
+
+### 1. Software Requirements
+
+- **[Git](https://git-scm.com/downloads)** (tested on version **2.47.1.windows.1**)
+- **[Visual Studio Code](https://code.visualstudio.com/)** (tested on version **1.99.0**)
+- **[Node.js](https://nodejs.org/en/download/)** (use latest available version)
 - **[nodepop-api (REST API)](https://github.com/davidjj76/nodepop-api)** (created by instructor **David Jiménez** - **KeepCoding**)
-- **Live Server** (VS Code addon, _optional_)
 
-### Clone the Repositories
-
-Nodepop API
-
-```bash
-git clone https://github.com/davidjj76/nodepop-api.git
-```
-
-Project
+### 2. Clone the Repository
 
 ```bash
 git clone https://github.com/pablo-sch/keepcoding-08-react-fundamentals.git
 ```
 
-Demo
+`>` **VSCode Clone Demo:** 🎥 [Gif Demo](https://github.com/pablo-sch/pablo-sch/blob/main/etc/clone-tutorial.gif)
 
-![Demo](https://github.com/pablo-sch/pablo-sch/blob/main/etc/clone-tutorial.gif)
+### 4. Create Users
 
-### Notes
+Once the API is running, create a new user using Swagger at `http://localhost:3001/swagger/` to be able to log in.
 
-- Once the repository is cloned, you can open the `.html` files with **Live Server** to preview them in the browser.
-- You must run the backend server to make the REST API operational and interact with the simulated database.
+### 3. Commands
+
+```sh
+# Installs project dependencies.
+npm install
+
+# Starts development server.
+npm run dev
+
+# Builds production-ready app.
+npm run build
+
+# Checks code for errors.
+npm run lint
+
+# Previews production build locally.
+npm run preview
+
+# Formats code automatically
+npm run format
+```
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
-## Project Preview
+## Resources
 
-...
+`>` **Nodepop-API Endpoints:** 📄 [Endpoints](api-doc.md)
+
+`>` **Project Preview:** 👀 [Preview](preview.md)
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
 ## Contributions and Licenses
 
-This project has no external contributions or licenses.
+Project under MIT license. Free use and distribution with attribution. External contributions not accepted, but suggestions welcome.

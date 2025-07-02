@@ -164,22 +164,22 @@ Una vez que la API esté levantada, deberás crear un nuevo usuario usando Swagg
 ### 3. Comandos
 
 ```sh
-# Installs project dependencies.
+# Instala las dependencias del proyecto.
 npm install
 
-# Starts development server.
+# Inicia el servidor de desarrollo.
 npm run dev
 
-# Builds production-ready app.
+# Construye la aplicación lista para producción.
 npm run build
 
-# Checks code for errors.
+# Revisa el código en busca de errores.
 npm run lint
 
-# Previews production build locally.
+# Previsualiza la compilación de producción localmente.
 npm run preview
 
-# Formats code automatically
+# Formatea el código automáticamente.
 npm run format
 ```
 

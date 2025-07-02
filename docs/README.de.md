@@ -1,179 +1,128 @@
-# Abgabeprojekt Grundlagen von REACT
+# React-Grundlagen Projektabgabe
 
-**KeepCoding Projekte - Web 18**  
-Die vollständige Liste der Repositories und Beschreibungen findest du in 📁 [repos-kc-web-18.md](https://github.com/pablo-sch/pablo-sch/blob/main/docs/repos-kc-web-18.md)
+`>` **KeepCoding Projekte - Web 18:** 📁 [repos-kc-web-18.md](https://github.com/pablo-sch/pablo-sch/blob/main/docs/repos-kc-web-18.md)
 
-## Wähle deine Sprache
-
-- 🇺🇸 [Englisch](README.md)
-- 🇪🇸 [Spanisch](README.es.md)
+`>` **Wähle deine Sprache:** [Englisch](README.md) 🔄 [Spanisch](README.es.md)
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
 ## Projektziel
 
-Ziel dieses Projekts ist es, eine Single Page Application (SPA) zu erstellen, um die im Online-Unterricht erworbenen Kenntnisse zu üben und zu demonstrieren. Diese SPA dient als grafische Oberfläche zur Verwaltung der Anzeigen-API mit dem Backend namens Nodepop.
+Um die in den Online-Kursen erworbenen Kenntnisse zu üben und zu demonstrieren, soll in diesem Projekt eine SPA (Single Page Application) mit React erstellt werden, die als grafische Benutzeroberfläche zur Verwaltung der Anzeigen-API mit dem Backend namens Nodepop dient.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
-## Erlernte und angewandte Kenntnisse
+## Erlernte und geübte Konzepte
 
-- **Grundlagen von React:**
+### React-Grundlagen
 
-  - React: Deklarative Bibliothek zum Erstellen von Benutzeroberflächen.
-  - Komponenten: Wiederverwendbar, unabhängig, hierarchisch.
+- **React:** Deklarative Bibliothek zum Erstellen von Benutzeroberflächen.
+- **Komponenten:** Wiederverwendbar, unabhängig, hierarchisch.
 
-- **Elemente:**
+### Elemente
 
-  - `React.createElement(type, props, children)`
-  - `ReactDOM.render(element, container)`
-  - _JSX:_
-    - HTML-ähnliche Syntax.
-    - _Attribute:_ `className`, `htmlFor`, usw.
-    - _Spread-Attribute:_ <Component {...props} />
-    - _children:_ Inhalt zwischen Tags.
+- `React.createElement(type, props, children)`
+- `ReactDOM.render(element, container)`
+- **JSX:**
 
-- **Komponenten:**
+  - Syntax ähnlich zu `HTML`.
+  - **Attribute:** `className`, `htmlFor`, etc.
+  - **Spread-Attribute:** `<Component {...props} />`
+  - **children:** Inhalt zwischen Tags.
 
-  - _Props:_ Parameter, die eine Komponente empfängt (`props.name`)
-  - Verschachtelte Komponenten
-  - _React.Fragment:_ Gruppiert Elemente ohne zusätzliche Knoten.
-  - _Bedingtes Rendern:_ `if`, `? :`, `&&`
-  - _Listen:_ Verwendung von `.map()` mit eindeutigen Schlüsseln (`key`)
-  - _Events:_ `onClick`, `onChange`, usw.
+### Komponenten
 
-- **State (Zustand):**
+- **Props:** Parameter, die eine Komponente erhält (`props.name`)
+- Verschachtelte Komponenten
+- **React.Fragment:** Gruppiert ohne zusätzliche Knoten.
+- **Bedingte Darstellung:** `if`, `? :`, `&&`
+- **Listen:** Verwendung von `.map()` und eindeutigen Schlüsseln (`key`)
+- **Events:** `onClick`, `onChange`, etc.
 
-  - `useState(initialValue)` zur Verwaltung von lokalem Zustand.
-  - _Lifting state up:_ Zustandsweitergabe zwischen Komponenten.
+### State
 
-- **Formulare:**
+- `useState(initialValue)` zur lokalen Zustandsverwaltung.
+- **Lifting state up:** Zustandsweitergabe zwischen Komponenten.
 
-  - _Kontrollierte Eingaben:_ über useState gesteuert.
-  - _Unkontrollierte Eingaben:_ Zugriff über useRef.
-  - Checkboxen / Radiobuttons
-  - _Formularübermittlung:_ `onSubmit`, `event.preventDefault()`
+### Formulare
 
-- **Effekte:**
+- **Kontrollierte Inputs:** gesteuert durch useState
+- **Unkontrollierte Inputs:** Zugriff über useRef
+- **Checkbox** / **Radio Buttons**
+- **Formularübermittlung:** `onSubmit`, `event.preventDefault()`
 
-  - Verwendung von `useEffect` mit Abhängigkeiten und Cleanup. Verhalten in `StrictMode`.
+### Effekte
 
-- **Hooks:**
+Verwendung von `useEffect` mit Abhängigkeiten, Aufräumfunktionen und Verhalten unter `StrictMode`.
 
-  - Benutzerdefinierte Hooks für wiederverwendbare Logik.
+### Hooks
 
-- **Context:**
+Benutzerdefinierte Hooks für wiederverwendbare Logik.
 
-  - Erstellen von Context mit `React.createContext`, Bereitstellen mit `Context.Provider` und Verwenden mit `useContext`.
+### Context
 
-- **Refs:**
+Erstellung von Contexts mit `React.createContext`, Bereitstellung mit `Context.Provider`, Nutzung mit `useContext`.
 
-  - _useRef:_ Zugriff auf das DOM oder persistente Werte zwischen Rendern.
-  - _forwardRef:_ Referenzweitergabe an Kindkomponenten.
+### Refs
 
-- **Leistungsoptimierung:**
+- **useRef:** Zugriff auf DOM oder persistente Werte zwischen Rendern.
+- **forwardRef:** Weiterleitung von Refs an Kindkomponenten.
 
-  - _React.memo:_ Vermeidet unnötige Renders, wenn Props sich nicht ändern.
-  - _useCallback(fn, deps):_ Merkt sich Funktionen.
-  - _useMemo(fn, deps):_ Merkt sich teure berechnete Werte.
+### Performance-Optimierung
 
-- **Ladeoptimierung:**
-  - Verwendung von `React.lazy` und `Suspense` für Lazy Loading.
-  - `Code Splitting`, um die Bundle-Größe zu reduzieren.
+- **React.memo:** Verhindert unnötiges Rendern, wenn sich Props nicht ändern.
+- **useCallback(fn, deps):** Memoisiert Funktionen.
+- **useMemo(fn, deps):** Memoisiert aufwändig berechnete Werte.
+
+### Ladeoptimierung
+
+- Verwendung von `React.lazy` und `Suspense` für Lazy Loading von Komponenten und `Code splitting` zur Verringerung der Bundle-Größe.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
 ## Projektdetails
 
-### Backend (Nodepop API)
-
-**Verfügbare Endpunkte:**
-
-- `/api/auth/signup`
-
-  - **POST**: Erstellt Benutzer.
-
-- `/api/auth/me`
-
-  - **GET**: Gibt Informationen des authentifizierten Benutzers zurück.
-
-- `/api/auth/login`
-
-  - **POST**: Gibt ein JWT-Token bei korrekter E-Mail und Passwort zurück.
-
-- `/api/v1/adverts`
-
-  - **GET**: Listet Anzeigen mit optionalen Filtern: `name=auto`, `sale=true/false`, `price=0-25000`, `tags=motor,work`
-  - **POST**: Erstellt eine neue Anzeige.
-
-- `/api/v1/adverts/tags`
-
-  - **GET**: Gibt verfügbare Tags zurück.
-
-- `/api/v1/adverts/:id`
-  - **GET**: Gibt Anzeige per ID zurück.
-  - **DELETE**: Löscht Anzeige per ID.
-
-**Wichtige Hinweise:**
-
-- Endpunkte unter `/adverts` erfordern ein Token. Im Header senden: `Header['Authorization'] = Bearer ${token}`.
-- Daten werden in einer SQLite-Datenbank unter `/data` gespeichert.
-- Hochgeladene Bilder werden unter `/uploads` gespeichert und über `/public` statisch bereitgestellt.
-
-### Frontend (SPA mit React)
-
-**Öffentliche Routen:**
+### Öffentliche Routen
 
 - `/login` —> LoginPage
 
-**Geschützte Routen (nur authentifizierte Benutzer):**
+  - Formular mit E-Mail, Passwort und „Session merken“ Checkbox. Speichert Token nach erfolgreichem Login.
 
-- `/` —> Weiterleitung zu `/adverts`
-- `/adverts` —> AdvertsPage
-- `/adverts/:id` —> AdvertPage
+### Geschützte Routen (nur für authentifizierte Nutzer)
+
+- `/` —> Leitet zu `/adverts` weiter
+
+  - Liste von Anzeigen mit Name, Preis, Kauf/Verkauf und Tags.
+  - Filter für Name, Typ, Preis, Tags.
+  - Links zu Anzeige-Details und Neuerstellung.
+  - Anzeige einer Nachricht, falls keine Anzeigen vorhanden sind.
+
+- `/adverts`, `/adverts/:id` —> AdvertPage
+
+  - Zeigt Detail mit Bild oder Platzhalter.
+  - Leitet zu 404, wenn nicht gefunden.
+  - Löschen-Button mit Bestätigung. Leitet nach Löschen zurück zur Liste.
+
 - `/adverts/new` —> NewAdvertPage
+
+  - Formular mit Name, Typ, Tags, Preis und optionalem Foto.
+  - React Validierungen. Leitet nach Erstellung zur Detailseite.
+
 - Alle anderen Routen —> `NotFoundPage (404)`
-
-**Hauptkomponenten:**
-
-- **LoginPage**  
-  Formular mit E-Mail, Passwort und Checkbox „Session merken“. Speichert Token nach erfolgreichem Login.
-
-- **AdvertsPage**  
-  Zeigt Anzeigen mit Name, Preis, Kauf/Verkauf und Tags.  
-  Filter (Name, Typ, Preis, Tags) verfügbar.  
-  Links zur Detailseite oder zur Erstellung neuer Anzeige.  
-  Nachricht bei fehlenden Anzeigen.
-
-- **AdvertPage**  
-  Zeigt Anzeigedetails mit Bild oder Platzhalter.  
-  Leitet zu 404 weiter, wenn nicht gefunden.  
-  Löschen mit Bestätigung. Weiterleitung zur Liste nach dem Löschen.
-
-- **NewAdvertPage**  
-  Formular mit Name, Typ, Tags, Preis und optionalem Foto.  
-  Validierung mit React. Weiterleitung zur Detailseite nach Erstellung.
-
-- **NotFoundPage**  
-  Informationsseite für 404-Fehler.
-
-- **LogoutButton**  
-  Sichtbar bei eingeloggtem Benutzer.  
-  Bestätigung vor dem Logout.
 
 **Filter auf der AdvertsPage:**
 
 - Mindestens zwei Filter: Name, Kauf/Verkauf, Preis oder Tags.
-- _Zwei Arten der Filteranwendung:_
-  1. Frontend-Filterung nach dem Laden aller Anzeigen.
-  2. Backend-Filterung durch Übergabe von Query-Parametern (empfohlen).
+- **Zwei Filter-Methoden:**
+  1. Frontend-Filterung mit allen geladenen Anzeigen.
+  2. Backend-Filterung durch Senden von Query-Parametern (empfohlen).
 
 **Wichtige technische Features:**
 
-- Authentifizierung mit JWT-Token.
-- Geschützte Routen mit automatischer Weiterleitung zum Login.
-- Sitzungspersistenz mit localStorage.
-- Axios mit Token-Interceptor.
+- Authentifizierung mit JWT Token.
+- Geschützte Routen und automatische Weiterleitung zum Login.
+- Session-Persistenz mit localStorage.
+- Axios-Interceptor zum Hinzufügen des Tokens.
 - Styling mit Tailwind CSS.
 - Navigation mit React Router.
 - Formularvalidierung mit React.
@@ -182,69 +131,68 @@ Ziel dieses Projekts ist es, eine Single Page Application (SPA) zu erstellen, um
 
 ## Verwendete Technologien
 
-### Sprachen
-
-- **HTML:** Strukturierung von Inhalten und Aufbau der Webseite.
-- **CSS:** Visuelles Design und Styling für ein ansprechendes Nutzererlebnis.
-- **JavaScript:** Interaktivität und dynamische Funktionen, z. B. Formularvalidierung, Animationen und Event-Handling.
-- **TypeScript:** Statisch typisierte Programmiersprache, die nach JavaScript kompiliert wird und Codequalität sowie Wartbarkeit verbessert.
-
-- **JSX-Pseudosprachsyntax:** In React verwendet, erlaubt HTML-ähnliche Syntax innerhalb von JavaScript-Code.
-
-### Abhängigkeiten
-
-- **React:** Bibliothek für die Entwicklung von Benutzeroberflächen mit wiederverwendbaren Komponenten.
-- **Vite:** Build-Tool und schneller Entwicklungsserver für moderne Frontend-Projekte.
-- **TypeScript:** Eine Obermenge von JavaScript, die statische Typisierung hinzufügt und so eine skalierbarere und fehlerärmere Entwicklung ermöglicht.
-- **Tailwind CSS:** Utility-First CSS-Framework für schnelles, individuelles Design.
-- **ESLint:** Analysewerkzeug zur Qualitätssicherung von JavaScript-/TypeScript-Code.
-- **Axios:** HTTP-Client zur einfachen Kommunikation mit APIs.
-- **clsx:** Hilfsbibliothek zum bedingten Kombinieren von CSS-Klassen.
-- **Globals:** Definition globaler Variablen zur Unterstützung und Kompatibilität im Code.
-- **Prettier:** Automatischer Code-Formatter für einheitlichen Stil im Projekt.
+- **Sprachen:** HTML, CSS, JavaScript, TypeScript.
+- **Wichtige Node.js-Abhängigkeiten:** React, Vite, Tailwind CSS, TypeScript, ESLint, Axios, clsx, Globals, Prettier.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
 ## Installations- und Nutzungshinweise
 
-### Softwareanforderungen
+### Hinweis
+
+Dieses Projekt **ist abhängig** von der REST API `nodepop-api`. Um mit der simulierten Datenbank zu interagieren, muss der Server, der diese API bereitstellt, zuerst gestartet werden.
+
+### 1. Softwareanforderungen
 
 - **[Git](https://git-scm.com/downloads)** (getestet mit Version **2.47.1.windows.1**)
 - **[Visual Studio Code](https://code.visualstudio.com/)** (getestet mit Version **1.99.0**)
-- **[nodepop-api (REST-API)](https://github.com/davidjj76/nodepop-api)** (entwickelt von **David Jiménez** – **KeepCoding**)
-- **Live Server** (VS Code Addon, _optional_)
+- **[Node.js](https://nodejs.org/en/download/)** (verwenden Sie die neueste verfügbare Version)
+- **[nodepop-api (REST API)](https://github.com/davidjj76/nodepop-api)** (erstellt vom Dozenten **David Jiménez** - **KeepCoding**)
 
-### Repositories klonen
-
-Nodepop API
-
-```bash
-git clone https://github.com/davidjj76/nodepop-api.git
-```
-
-Projekt
+### 2. Repository klonen
 
 ```bash
 git clone https://github.com/pablo-sch/keepcoding-08-react-fundamentals.git
 ```
 
-Demo
+`>` **VSCode Klon-Demo:** 🎥 [Gif Demo](https://github.com/pablo-sch/pablo-sch/blob/main/etc/clone-tutorial.gif)
 
-![Demo](https://github.com/pablo-sch/pablo-sch/blob/main/etc/clone-tutorial.gif)
+### 4. Benutzer anlegen
 
-### Hinweise
+Sobald die API läuft, erstellen Sie einen neuen Benutzer über Swagger unter `http://localhost:3001/swagger/`, um sich anmelden zu können.
 
-- Sobald das Repository geklont wurde, kannst du die `.html`-Dateien mit **Live Server** öffnen, um sie im Browser vorzuschauen.
-- Der Backend-Server muss gestartet werden, damit die REST-API funktionsfähig ist und auf die simulierte Datenbank zugegriffen werden kann.
+### 3. Befehle
+
+```sh
+# Installiert die Projektabhängigkeiten.
+npm install
+
+# Startet den Entwicklungsserver.
+npm run dev
+
+# Baut die produktionsbereite Anwendung.
+npm run build
+
+# Prüft den Code auf Fehler.
+npm run lint
+
+# Zeigt den Produktions-Build lokal an.
+npm run preview
+
+# Formatiert den Code automatisch.
+npm run format
+```
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
-## Projektvorschau
+## Ressourcen
 
-...
+`>` **Nodepop-API Endpunkte:** 📄 [Endpoints](api-doc.md)
+
+`>` **Projektvorschau:** 👀 [Preview](preview.md)
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
 ## Beiträge und Lizenzen
 
-Dieses Projekt enthält keine externen Beiträge oder Lizenzen.
+Projekt unter MIT Lizenz. Freie Nutzung und Verbreitung mit Namensnennung. Externe Beiträge werden nicht angenommen, Vorschläge sind jedoch willkommen.
