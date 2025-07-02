@@ -161,7 +161,7 @@ git clone https://github.com/pablo-sch/keepcoding-08-react-fundamentals.git
 
 Una vez que la API esté levantada, deberás crear un nuevo usuario usando Swagger en `http://localhost:3001/swagger/` para poder iniciar sesión.
 
-### 3. Commandos
+### 3. Comandos
 
 ```sh
 # Installs project dependencies.
@@ -195,4 +195,4 @@ npm run format
 
 ## Contribuciones y Licencias
 
-Este proyecto no cuenta con contribuciones externas ni licencias.
+Proyecto bajo licencia MIT. Uso y distribución libres con atribución. No se aceptan contribuciones externas, pero las sugerencias son bienvenidas.

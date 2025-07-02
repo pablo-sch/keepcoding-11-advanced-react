@@ -7,6 +7,9 @@ export default function AuthButton() {
   const { isLogged, onLogout } = useAuth();
 
   const handleLogoutClick = async () => {
+    const confirmed = window.confirm("Are you sure you want to log out?");
+    if (!confirmed) return;
+
     await logout();
     onLogout();
   };
