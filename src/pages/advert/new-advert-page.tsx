@@ -1,17 +1,11 @@
-// pages/advert/NewAdvertPage.tsx
-
 import { useState, useRef, useEffect, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { createAdvert } from "./service";
-
 import Button from "../../components/ui/button";
 import Page from "../../components/layout/page";
 import FormField from "../../components/ui/form-field";
 import TagsDropdown from "../../components/ui/tags-dropdown";
-
-/* import "./new-advert-page.css"; */
-import "../../components/ui/form-field.css";
 
 function NewAdvertPageForm() {
   const navigate = useNavigate();
@@ -26,11 +20,10 @@ function NewAdvertPageForm() {
   const [canSubmit, setCanSubmit] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
   const PRICE_MAX = 25000;
   const [priceTooHigh, setPriceTooHigh] = useState(false);
-
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
   useEffect(() => {
     nameRef.current?.focus();
@@ -70,9 +63,7 @@ function NewAdvertPageForm() {
     const price = Number(priceRef.current?.value) || 0;
     const tags = selectedTagsRef.current;
 
-    if (!name || price <= 0 || price > PRICE_MAX || tags.length === 0) {
-      return;
-    }
+    if (!name || price <= 0 || price > PRICE_MAX || tags.length === 0) return;
 
     const sale = saleRef.current?.value === "true";
     const photoFile = photoRef.current?.files?.[0];
@@ -96,56 +87,55 @@ function NewAdvertPageForm() {
   };
 
   return (
-    <form className="form-grid" onSubmit={handleSubmit}>
-      <FormField id="name" name="name" label="Name" type="text" maxLength={120} ref={nameRef} onInput={validateForm} required />
+    <form className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow space-y-6" onSubmit={handleSubmit}>
+      <FormField id="name" name="name" label="Name" type="text" maxLength={120} ref={nameRef} onInput={validateForm} required className="bg-gray-100" />
 
-      <FormField id="price" name="price" label="Price" type="number" ref={priceRef} onInput={validateForm} required />
+      <FormField id="price" name="price" label="Price" type="number" ref={priceRef} onInput={validateForm} required className="bg-gray-100" />
 
-      <label className="form-field">
-        <label className="form-field-label">
-          <span className="form-field-span">Type</span>
-          <select id="sale" name="sale" ref={saleRef} onChange={validateForm} defaultValue="true" className="form-field-input">
-            <option value="true">Sale</option>
-            <option value="false">Purchase</option>
-          </select>
+      <div>
+        <label htmlFor="sale" className="block text-sm font-medium text-gray-700 mb-1">
+          Type
         </label>
-      </label>
+        <select id="sale" name="sale" ref={saleRef} onChange={validateForm} defaultValue="true" className="w-full border rounded-md px-3 py-2 text-sm bg-gray-100">
+          <option value="true">Sale</option>
+          <option value="false">Purchase</option>
+        </select>
+      </div>
 
-      <label className="form-field">
-        <label className="form-field-label">
-          <span className="form-field-span">Tags</span>
-          <TagsDropdown
-            selectedTags={selectedTags}
-            onChange={(updated) => {
-              setSelectedTags(updated);
-              selectedTagsRef.current = updated;
-              validateForm();
-            }}
-          />
-        </label>
-      </label>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+        <TagsDropdown
+          selectedTags={selectedTags}
+          onChange={(updated) => {
+            setSelectedTags(updated);
+            selectedTagsRef.current = updated;
+            validateForm();
+          }}
+        />
+      </div>
 
-      <label className="form-field">
-        <label className="form-field-label">
-          {" "}
-          <span className="form-field-span">Photo</span>
-          <input id="photo" type="file" name="photo" accept="image/*" ref={photoRef} onChange={handlePhotoChange} className="form-field-input" />
+      <div>
+        <label htmlFor="photo" className="block text-sm font-medium text-gray-700 mb-1">
+          Photo
         </label>
-      </label>
+        <input id="photo" type="file" name="photo" accept="image/*" ref={photoRef} onChange={handlePhotoChange} className="w-full text-sm text-gray-700 border rounded-md px-3 py-2 bg-gray-100" />
+      </div>
 
       {photoPreview && (
-        <div className="photo-preview-wrapper">
-          <img src={photoPreview} alt="Preview" className="photo-preview" />
+        <div className="w-full flex justify-center mt-4">
+          <img src={photoPreview} alt="Preview" className="max-w-xs max-h-64 rounded-md object-cover border" />
         </div>
       )}
 
-      <Button className="new-advert-form-submit" type="submit" disabled={!canSubmit || isSubmitting}>
-        Create advert
-      </Button>
+      {priceTooHigh && <div className="text-red-600 text-sm">Price cannot exceed €{PRICE_MAX}.</div>}
 
-      {priceTooHigh && <div>Price cannot exceed {PRICE_MAX}.</div>}
+      {error && <div className="text-red-500 text-sm font-medium">{error}</div>}
 
-      {error && <div>{error}</div>}
+      <div className="pt-4">
+        <Button className="w-full" type="submit" disabled={!canSubmit || isSubmitting}>
+          {isSubmitting ? "Creating..." : "Create Advert"}
+        </Button>
+      </div>
     </form>
   );
 }

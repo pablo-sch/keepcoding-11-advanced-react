@@ -5,7 +5,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   to?: string;
 }
 
-function Button({ to, onClick, ...props }: ButtonProps) {
+function Button({ to, onClick, className = "", ...props }: ButtonProps) {
   const navigate = useNavigate();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -19,7 +19,7 @@ function Button({ to, onClick, ...props }: ButtonProps) {
   };
 
   return (
-    <button onClick={handleClick} {...props}>
+    <button onClick={handleClick} className={`${className} cursor-pointer bg-gray-200`} {...props}>
       {props.children}
     </button>
   );

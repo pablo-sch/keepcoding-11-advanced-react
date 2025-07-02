@@ -5,13 +5,6 @@ import { AxiosError } from "axios";
 import { login } from "./service";
 import { useAuth } from "./context";
 
-import Button from "../../components/ui/button";
-import FormField from "../../components/ui/form-field";
-import Page from "../../components/layout/page";
-
-import "../../components/ui/form-field.css";
-import "../../components/layout/layout.css"; //<-- (X)
-
 // import { emailRegex } from "../../utils/validation";
 
 function LoginPage() {
@@ -66,40 +59,42 @@ function LoginPage() {
   };
 
   return (
-    <main className="main" /* <-- (X) */>
-      <Page title="Login Page">
-        <form className="form-grid" onSubmit={handleSubmit}>
-          <FormField
-            id="email"
-            name="email"
-            label="Email address"
-            type="email"
-            placeholder="e.g. user@example.com"
-            maxLength={35}
-            ref={emailRef}
-            onInput={handleInput}
-            required
-            // pattern={emailRegex.source}
-          />
-          <FormField id="password" name="password" label="Password" type="password" maxLength={25} ref={passwordRef} onInput={handleInput} required />
-
-          <label className="form-field">
-            <label className="form-field-label">
-              <input className="form-field-checkbox" type="checkbox" checked={remember} onChange={() => setRemember(!remember)} />
-              <span className="form-field-span">Remember me</span>
+    <main className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
+        <h1 className="text-2xl font-semibold mb-6 text-center">Login Page</h1>
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              Email address
             </label>
-          </label>
+            <input id="email" name="email" type="email" placeholder="e.g. user@example.com" maxLength={35} ref={emailRef} onInput={handleInput} required className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
 
-          <Button className="login-form-submit" type="submit" disabled={!canSubmit || isFetching}>
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              Password
+            </label>
+            <input id="password" name="password" type="password" maxLength={25} ref={passwordRef} onInput={handleInput} required className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+
+          <div className="flex items-center">
+            <input id="remember" type="checkbox" checked={remember} onChange={() => setRemember(!remember)} className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
+            <label htmlFor="remember" className="ml-2 block text-sm text-gray-900">
+              Remember me
+            </label>
+          </div>
+
+          <button type="submit" disabled={!canSubmit || isFetching} className={`w-full py-2 px-4 rounded-md text-white font-semibold ${!canSubmit || isFetching ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-600 hover:bg-indigo-700"}`}>
             Log in
-          </Button>
+          </button>
         </form>
+
         {error && (
-          <div className="login-page-error" role="alert" onClick={() => setError(null)}>
+          <div role="alert" onClick={() => setError(null)} className="mt-4 p-3 bg-red-100 text-red-700 rounded cursor-pointer text-center">
             {error.message}
           </div>
         )}
-      </Page>
+      </div>
     </main>
   );
 }

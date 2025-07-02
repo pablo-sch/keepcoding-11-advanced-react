@@ -1,6 +1,7 @@
 // TagsDropdown.tsx
 import { useState, useEffect } from "react";
 import { getTags } from "../../pages/advert/service"; // ajusta la ruta
+import Button from "./button";
 
 type TagsDropdownProps = {
   selectedTags: string[];
@@ -30,9 +31,9 @@ export default function TagsDropdown({ selectedTags, onChange }: TagsDropdownPro
 
   return (
     <div className="tags-dropdown">
-      <button type="button" onClick={toggleDropdown}>
+      <Button type="button" onClick={toggleDropdown}>
         {selectedTags.length > 0 ? `${selectedTags.join(", ")}` : "Select tags"}
-      </button>
+      </Button>
 
       {isOpen && (
         <ul className="tags-list">

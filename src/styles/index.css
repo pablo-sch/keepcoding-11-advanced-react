@@ -1,4 +1,4 @@
-@import "normalize.css";
+@import "tailwindcss";
 
 :root {
   --bg-color: #575757e8;
@@ -25,17 +25,19 @@
   --btn-p: rgb(191, 243, 142);
   --btn-s: rgb(248, 71, 48); */
 
-  --bg-btn-header: rgb(70, 63, 54);
-  --bg-btn-header-nav: rgb(95, 86, 74);
+  --bg-btn-header: #463f36;
+  --bg-btn-header-nav: #5f564a;
 
-  --font-btn-header-nav: antiquewhite;
-  --font-btn-header: rgb(150, 140, 127);
+  --font-btn-header-nav: #faebd7;
+  --font-btn-header: #968c7f;
 
-  font-family: Arial, sans-serif;
+  --color-1: #463f36;
+  --color-2: #bbaf9f;
+  --color-4: --color-5: font-family: Arial, sans-serif;
   font-size: clamp(2px, 5vw, 16px);
 }
 
-a {
+/* a {
   all: unset;
   cursor: pointer;
 }
@@ -57,4 +59,4 @@ h1,
 h2 {
   margin: 0;
   margin-bottom: 1rem;
-}
+} */

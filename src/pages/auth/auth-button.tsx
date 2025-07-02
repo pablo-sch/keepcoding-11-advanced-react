@@ -1,9 +1,12 @@
-//import { Link } from "react-router-dom";
 import Button from "../../components/ui/button";
 import { useAuth } from "../../pages/auth/context";
 import { logout } from "../../pages/auth/service";
 
-export default function AuthButton() {
+type AuthButtonProps = {
+  className?: string;
+};
+
+export default function AuthButton({ className }: AuthButtonProps) {
   const { isLogged, onLogout } = useAuth();
 
   const handleLogoutClick = async () => {
@@ -14,5 +17,13 @@ export default function AuthButton() {
     onLogout();
   };
 
-  return isLogged ? <Button onClick={handleLogoutClick}>Logout</Button> : <Button to="/login">Login</Button>;
+  return isLogged ? (
+    <Button className={className} onClick={handleLogoutClick}>
+      Logout
+    </Button>
+  ) : (
+    <Button to="/login" className={className}>
+      Login
+    </Button>
+  );
 }

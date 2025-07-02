@@ -6,7 +6,6 @@ import Page from "../../components/layout/page";
 import { getAdvert, deleteAdvert } from "./service";
 import type { Advert } from "./types";
 
-import "./advert-page.css";
 import { formatDate } from "../../utils/format-date";
 import Button from "../../components/ui/button";
 
@@ -47,48 +46,47 @@ function AdvertPage() {
 
   return (
     <Page title="Advert Detail">
-      <article className="advert-page">
-        <div className="advert-page-photo-container">
-          <div className="advert-page-photo-wrapper">{advert.photo ? <img src={advert.photo} alt={advert.name} className="advert-page-photo" /> : <img src={defaultImage} alt={advert.name} className="advert-page-photo" />}</div>
+      <article className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6 space-y-6">
+        {/* Image */}
+        <div className="w-full flex justify-center">
+          <img src={advert.photo || defaultImage} alt={advert.name} className="w-full max-w-md rounded-md object-cover border" />
         </div>
-        <div className="advert-page-data">
-          <p>
-            <strong>{advert.name}</strong> - €{advert.price}
+
+        {/* Data */}
+        <div className="text-gray-800 text-sm space-y-2">
+          <p className="text-lg font-semibold">
+            {advert.name} - €{advert.price}
           </p>
           <p>
-            <strong>{advert.sale ? "Sale" : "Purchase"}</strong> - <strong>Tags: </strong>
-            {advert.tags.join(", ")}
+            <span className="font-medium">{advert.sale ? "Sale" : "Purchase"}</span> — Tags: {advert.tags.join(", ")}
           </p>
           <p>
-            <strong>Created at: </strong>
-            {formatDate(advert.createdAt)}
+            <span className="font-medium">Created at:</span> {formatDate(advert.createdAt)}
           </p>
         </div>
-        {
-          <div className="advert-page-handle-delete">
-            {!confirmDelete ? (
-              <div>
-                <Button className="advert-delete-submit" onClick={() => setConfirmDelete(true)}>
-                  Delete Advert
+
+        {/* Delete Section */}
+        <div className="pt-4 border-t mt-4">
+          {!confirmDelete ? (
+            <div>
+              <Button className="bg-red-500 hover:bg-red-600 text-white" onClick={() => setConfirmDelete(true)}>
+                Delete Advert
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <p className="text-red-600 font-medium">Are you sure you want to delete this advert?</p>
+              <div className="flex gap-4">
+                <Button className="bg-red-600 hover:bg-red-700 text-white" onClick={handleDelete}>
+                  Yes, delete
+                </Button>
+                <Button className="bg-gray-300 hover:bg-gray-400" onClick={() => setConfirmDelete(false)}>
+                  Cancel
                 </Button>
               </div>
-            ) : (
-              <div>
-                <div>
-                  <p>Are you sure you want to delete the advert?</p>
-                </div>
-                <div>
-                  <Button className="advert-confirm-delete-submit" onClick={handleDelete}>
-                    Yes, delete
-                  </Button>
-                  <Button className="advert-cancel-delete-submit" onClick={() => setConfirmDelete(false)}>
-                    Cancel
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
-        }
+            </div>
+          )}
+        </div>
       </article>
     </Page>
   );

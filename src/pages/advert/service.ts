@@ -54,8 +54,9 @@ export const deleteAdvert = async (id: string): Promise<void> => {
   return response.data;
 };
 
-export const getFilteredAdverts = async (params: URLSearchParams): Promise<Advert[]> => {
-  const response = await client.get<Advert[]>(`${GET_ADVERTS}?${params.toString()}`, {
+export const getFilteredAdverts = async (params: Record<string, string | number | undefined>): Promise<Advert[]> => {
+  const response = await client.get<Advert[]>(GET_ADVERTS, {
+    params,
     /*     headers: {
       Authorization: `Bearer ${getAuth()}`,
     }, */
