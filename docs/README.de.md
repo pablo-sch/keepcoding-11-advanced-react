@@ -144,9 +144,9 @@ Dieses Projekt **ist abhängig** von der REST API `nodepop-api`. Um mit der simu
 
 ### 1. Softwareanforderungen
 
+- **[Node.js](https://nodejs.org/en/download/)** (getestet mit Version **v22.15.1**)
 - **[Git](https://git-scm.com/downloads)** (getestet mit Version **2.47.1.windows.1**)
 - **[Visual Studio Code](https://code.visualstudio.com/)** (getestet mit Version **1.99.0**)
-- **[Node.js](https://nodejs.org/en/download/)** (verwenden Sie die neueste verfügbare Version)
 - **[nodepop-api (REST API)](https://github.com/davidjj76/nodepop-api)** (erstellt vom Dozenten **David Jiménez** - **KeepCoding**)
 
 ### 2. Repository klonen

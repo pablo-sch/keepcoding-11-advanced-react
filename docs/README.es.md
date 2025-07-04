@@ -144,9 +144,9 @@ Este proyecto **depende** de la API REST `nodepop-api`. Para poder interactuar c
 
 ### 1. Requisitos de Software
 
+- **[Node.js](https://nodejs.org/en/download/)** (testeado en la versión **v22.15.1**)
 - **[Git](https://git-scm.com/downloads)** (testeado en la versión **2.47.1.windows.1**)
 - **[Visual Studio Code](https://code.visualstudio.com/)** (testeado en la versión **1.99.0**)
-- **[Node.js](https://nodejs.org/en/download/)** (utilizar última versión disponible)
 - **[nodepop-api (API REST)](https://github.com/davidjj76/nodepop-api)** (creada por el docente **David Jiménez** - **KeepCoding**)
 
 ### 2. Clonación del Repositorio

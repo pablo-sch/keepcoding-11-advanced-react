@@ -144,9 +144,9 @@ This project **depends** on the REST API `nodepop-api`. To interact with the sim
 
 ### 1. Software Requirements
 
+- **[Node.js](https://nodejs.org/en/download/)** (tested on version **v22.15.1**)
 - **[Git](https://git-scm.com/downloads)** (tested on version **2.47.1.windows.1**)
 - **[Visual Studio Code](https://code.visualstudio.com/)** (tested on version **1.99.0**)
-- **[Node.js](https://nodejs.org/en/download/)** (use latest available version)
 - **[nodepop-api (REST API)](https://github.com/davidjj76/nodepop-api)** (created by instructor **David Jiménez** - **KeepCoding**)
 
 ### 2. Clone the Repository
