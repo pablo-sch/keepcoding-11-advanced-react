@@ -8,9 +8,7 @@
 
 ## Project Objective
 
-To practice and demonstrate the knowledge acquired in virtual classes, this project requires creating a SPA (Single Page Application) using React that will serve as the graphical interface to manage the adverts API with the backend called Nodepop.
-
-<!-- ------------------------------------------------------------------------------------------- -->
+To practice and demonstrate the knowledge acquired during virtual classes, this project consists of creating a Single Page Application (SPA) using React, which will serve as the graphical interface to manage the ads API through a backend called Nodepop.
 
 ## Learned and Practiced Concepts
 
@@ -24,11 +22,10 @@ To practice and demonstrate the knowledge acquired in virtual classes, this proj
 - `React.createElement(type, props, children)`
 - `ReactDOM.render(element, container)`
 - **JSX:**
-
-  - Syntax similar to `HTML`.
+  - HTML-like syntax.
   - **Attributes:** `className`, `htmlFor`, etc.
   - **Spread attributes:** `<Component {...props} />`
-  - **children:** Content inside tags.
+  - **children:** Inner content between tags.
 
 ### Components
 
@@ -36,24 +33,24 @@ To practice and demonstrate the knowledge acquired in virtual classes, this proj
 - Nested components
 - **React.Fragment:** Groups without adding extra nodes.
 - **Conditional rendering:** `if`, `? :`, `&&`
-- **Lists:** Use of `.map()` and unique keys (`key`)
+- **Lists:** Using `.map()` and unique `key`s
 - **Events:** `onClick`, `onChange`, etc.
 
 ### State
 
 - `useState(initialValue)` to manage local state.
-- **Lifting state up:** sharing state among components.
+- **Lifting state up:** Sharing state between components.
 
 ### Forms
 
-- **Controlled inputs:** managed by useState
-- **Uncontrolled inputs:** accessed via useRef
-- **Checkbox** / **Radio Buttons**
+- **Controlled inputs:** Managed with `useState`
+- **Uncontrolled inputs:** Accessed using `useRef`
+- **Checkboxes** / **Radio Buttons**
 - **Form submission:** `onSubmit`, `event.preventDefault()`
 
 ### Effects
 
-Use of `useEffect` with dependencies, cleanup, and behavior under `StrictMode`.
+Using `useEffect`, its anatomy (dependencies, cleanup), and its behavior in `StrictMode`.
 
 ### Hooks
 
@@ -61,47 +58,44 @@ Custom hooks for reusable logic.
 
 ### Context
 
-Creating contexts with `React.createContext`, providing with `Context.Provider`, consuming with `useContext`.
+Creating contexts with `React.createContext`, providing them with `Context.Provider`, and consuming them using `useContext`.
 
 ### Refs
 
-- **useRef:** access to DOM or persistent values between renders.
-- **forwardRef:** forwarding refs to child components.
+- **useRef:** Access DOM or persistent values between renders.
+- **forwardRef:** Forward refs to child components.
 
 ### Performance Optimization
 
-- **React.memo:** prevents unnecessary renders if props don't change.
-- **useCallback(fn, deps):** memoizes functions.
-- **useMemo(fn, deps):** memoizes expensive computed values.
+- **React.memo:** Avoids unnecessary re-renders if props haven't changed.
+- **useCallback(fn, deps):** Memoizes functions.
+- **useMemo(fn, deps):** Memoizes expensive computed values.
 
 ### Load Optimization
 
-- Use of `React.lazy` and `Suspense` for lazy loading components and `Code splitting` to reduce initial bundle size.
-
-<!-- ------------------------------------------------------------------------------------------- -->
+Using `React.lazy` and `Suspense` for lazy loading of components and `Code splitting` to reduce initial bundle size.
 
 ## Project Details
 
 ### Public Routes
 
 - `/login` —> LoginPage
-
-  - Form with email, password, and "Remember me" checkbox. Stores token after successful login.
+  - Form with email, password, and “Remember session” checkbox. Saves token after successful login.
 
 ### Protected Routes (authenticated users only)
 
 - `/` —> Redirects to `/adverts`
 
-  - List of adverts showing name, price, buy/sell, and tags.
+  - List of ads showing name, price, buy/sell status, and tags.
   - Includes filters (name, type, price, tags).
-  - Links to advert details and creating new adverts.
-  - Shows message if no adverts.
+  - Link to ad detail and create new ad.
+  - Displays message if there are no ads.
 
 - `/adverts`, `/adverts/:id` —> AdvertPage
 
-  - Shows detail with image or placeholder.
+  - Shows details with image or placeholder.
   - Redirects to 404 if not found.
-  - Delete button with confirmation. Redirects to list after delete.
+  - Delete button with confirmation. Redirects to list after deletion.
 
 - `/adverts/new` —> NewAdvertPage
 
@@ -110,37 +104,33 @@ Creating contexts with `React.createContext`, providing with `Context.Provider`,
 
 - Any other route —> `NotFoundPage (404)`
 
-**Filters on AdvertsPage:**
+**Filters in AdvertsPage:**
 
 - At least two filters: name, buy/sell, price, or tags.
 - **Two ways to apply filters:**
-  1. Frontend filtering with all adverts loaded.
+  1. Frontend filtering with all ads loaded.
   2. Backend filtering by sending query parameters (recommended).
 
-**Key technical features:**
+**Key Technical Features:**
 
 - Authentication with JWT token.
-- Protected routes and automatic login redirect.
-- Session persistence with localStorage.
-- Axios interceptor to add token.
-- Styles with Tailwind CSS.
+- Protected routes and automatic redirection to login.
+- Session persistence using localStorage.
+- Axios with token interceptor.
+- Tailwind CSS for styling.
 - React Router for navigation.
-- Form validation with React.
-
-<!-- ------------------------------------------------------------------------------------------- -->
+- Form validation using React.
 
 ## Technologies Used
 
 - **Languages:** HTML, CSS, JavaScript, TypeScript.
-- **Notable Node.js dependencies:** React, Vite, Tailwind CSS, TypeScript, ESLint, Axios, clsx, Globals, Prettier.
-
-<!-- ------------------------------------------------------------------------------------------- -->
+- **Key dependencies (Node.js):** React, Vite, Tailwind CSS, TypeScript, ESLint, Axios, clsx, Globals, Prettier.
 
 ## Installation and Usage Instructions
 
 ### Note
 
-This project **depends** on the REST API `nodepop-api`. To interact with the simulated database, you must first start the server that runs this API.
+This project **depends** on the `nodepop-api` REST API. To interact with the mock database, you must first start the server that runs the API.
 
 ### 1. Software Requirements
 

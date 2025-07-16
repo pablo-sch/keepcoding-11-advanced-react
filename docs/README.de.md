@@ -8,15 +8,15 @@
 
 ## Projektziel
 
-Um die in den Online-Kursen erworbenen Kenntnisse zu üben und zu demonstrieren, soll in diesem Projekt eine SPA (Single Page Application) mit React erstellt werden, die als grafische Benutzeroberfläche zur Verwaltung der Anzeigen-API mit dem Backend namens Nodepop dient.
+Zum Zweck der Übung und Demonstration der in den Online-Kursen erworbenen Kenntnisse soll in diesem Projekt eine SPA (Single Page Application) mit React entwickelt werden. Diese Anwendung stellt die grafische Oberfläche dar, über die die Anzeigen-API des Backends namens Nodepop verwaltet wird.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
-## Erlernte und geübte Konzepte
+## Erlernte und angewandte Kenntnisse
 
-### React-Grundlagen
+### Grundlagen von React
 
-- **React:** Deklarative Bibliothek zum Erstellen von Benutzeroberflächen.
+- **React:** Deklarative Bibliothek zur Erstellung von Benutzeroberflächen.
 - **Komponenten:** Wiederverwendbar, unabhängig, hierarchisch.
 
 ### Elemente
@@ -25,58 +25,59 @@ Um die in den Online-Kursen erworbenen Kenntnisse zu üben und zu demonstrieren,
 - `ReactDOM.render(element, container)`
 - **JSX:**
 
-  - Syntax ähnlich zu `HTML`.
+  - HTML-ähnliche Syntax.
   - **Attribute:** `className`, `htmlFor`, etc.
-  - **Spread-Attribute:** `<Component {...props} />`
-  - **children:** Inhalt zwischen Tags.
+  - **Spread-Attribute:** <Component {...props} />
+  - **children:** Inhalt zwischen den Tags.
 
 ### Komponenten
 
 - **Props:** Parameter, die eine Komponente erhält (`props.name`)
 - Verschachtelte Komponenten
-- **React.Fragment:** Gruppiert ohne zusätzliche Knoten.
-- **Bedingte Darstellung:** `if`, `? :`, `&&`
-- **Listen:** Verwendung von `.map()` und eindeutigen Schlüsseln (`key`)
+- **React.Fragment:** Gruppiert ohne zusätzliche DOM-Knoten.
+- **Bedingtes Rendern:** `if`, `? :`, `&&`
+- **Listen:** Verwendung von `.map()` und eindeutige Schlüssel (`key`)
 - **Events:** `onClick`, `onChange`, etc.
 
-### State
+### Zustand
 
-- `useState(initialValue)` zur lokalen Zustandsverwaltung.
-- **Lifting state up:** Zustandsweitergabe zwischen Komponenten.
+- `useState(anfangsWert)` zur Verwaltung des lokalen Zustands.
+- **Lifting state up:** Zustand zwischen Komponenten teilen.
 
 ### Formulare
 
-- **Kontrollierte Inputs:** gesteuert durch useState
-- **Unkontrollierte Inputs:** Zugriff über useRef
-- **Checkbox** / **Radio Buttons**
+- **Kontrollierte Inputs:** mit useState verwaltet.
+- **Unkontrollierte Inputs:** Zugriff über useRef.
+- **Checkboxen** / **Radio Buttons**
 - **Formularübermittlung:** `onSubmit`, `event.preventDefault()`
 
 ### Effekte
 
-Verwendung von `useEffect` mit Abhängigkeiten, Aufräumfunktionen und Verhalten unter `StrictMode`.
+Verwendung von `useEffect`, inklusive Abhängigkeiten, Aufräumfunktionen und Verhalten im `StrictMode`.
 
 ### Hooks
 
-Benutzerdefinierte Hooks für wiederverwendbare Logik.
+Eigene Hooks für wiederverwendbare Logik.
 
 ### Context
 
-Erstellung von Contexts mit `React.createContext`, Bereitstellung mit `Context.Provider`, Nutzung mit `useContext`.
+Erstellen von Contexten mit `React.createContext`, bereitstellen mit `Context.Provider` und verwenden mit `useContext`.
 
 ### Refs
 
-- **useRef:** Zugriff auf DOM oder persistente Werte zwischen Rendern.
-- **forwardRef:** Weiterleitung von Refs an Kindkomponenten.
+- **useRef:** Zugriff auf DOM oder persistente Werte zwischen Renders.
+- **forwardRef:** Referenzen an Kindkomponenten weiterleiten.
 
-### Performance-Optimierung
+### Leistungsoptimierung
 
-- **React.memo:** Verhindert unnötiges Rendern, wenn sich Props nicht ändern.
-- **useCallback(fn, deps):** Memoisiert Funktionen.
-- **useMemo(fn, deps):** Memoisiert aufwändig berechnete Werte.
+- **React.memo:** Verhindert unnötige Renders, wenn Props sich nicht ändern.
+- **useCallback(fn, deps):** Merkt sich Funktionen.
+- **useMemo(fn, deps):** Merkt sich teure berechnete Werte.
 
 ### Ladeoptimierung
 
-- Verwendung von `React.lazy` und `Suspense` für Lazy Loading von Komponenten und `Code splitting` zur Verringerung der Bundle-Größe.
+- Verwendung von `React.lazy` und `Suspense` für Lazy Loading.
+- Code Splitting zur Reduzierung der anfänglichen Bundle-Größe.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
@@ -86,43 +87,43 @@ Erstellung von Contexts mit `React.createContext`, Bereitstellung mit `Context.P
 
 - `/login` —> LoginPage
 
-  - Formular mit E-Mail, Passwort und „Session merken“ Checkbox. Speichert Token nach erfolgreichem Login.
+  - Formular mit E-Mail, Passwort und Checkbox „Session merken“. Speichert Token nach erfolgreichem Login.
 
 ### Geschützte Routen (nur für authentifizierte Nutzer)
 
-- `/` —> Leitet zu `/adverts` weiter
+- `/` —> Weiterleitung zu `/adverts`
 
-  - Liste von Anzeigen mit Name, Preis, Kauf/Verkauf und Tags.
-  - Filter für Name, Typ, Preis, Tags.
-  - Links zu Anzeige-Details und Neuerstellung.
-  - Anzeige einer Nachricht, falls keine Anzeigen vorhanden sind.
+  - Anzeigenliste mit Name, Preis, Kauf/Verkauf und Tags.
+  - Filtermöglichkeiten (Name, Typ, Preis, Tags).
+  - Links zur Detailansicht und zur Erstellung neuer Anzeigen.
+  - Anzeige einer Nachricht, wenn keine Anzeigen vorhanden sind.
 
 - `/adverts`, `/adverts/:id` —> AdvertPage
 
-  - Zeigt Detail mit Bild oder Platzhalter.
-  - Leitet zu 404, wenn nicht gefunden.
-  - Löschen-Button mit Bestätigung. Leitet nach Löschen zurück zur Liste.
+  - Detailansicht mit Bild oder Platzhalter.
+  - Weiterleitung zu 404, wenn nicht vorhanden.
+  - Löschen-Button mit Bestätigung. Nach dem Löschen Weiterleitung zur Liste.
 
 - `/adverts/new` —> NewAdvertPage
 
-  - Formular mit Name, Typ, Tags, Preis und optionalem Foto.
-  - React Validierungen. Leitet nach Erstellung zur Detailseite.
+  - Formular mit Name, Typ, Tags, Preis und Foto (optional).
+  - Validierungen mit React. Nach Erstellung Weiterleitung zur Detailansicht.
 
 - Alle anderen Routen —> `NotFoundPage (404)`
 
-**Filter auf der AdvertsPage:**
+**Filter in AdvertsPage:**
 
 - Mindestens zwei Filter: Name, Kauf/Verkauf, Preis oder Tags.
-- **Zwei Filter-Methoden:**
+- **Zwei Methoden zur Filteranwendung:**
   1. Frontend-Filterung mit allen geladenen Anzeigen.
-  2. Backend-Filterung durch Senden von Query-Parametern (empfohlen).
+  2. Backend-Filterung über Query-Parameter (empfohlen).
 
-**Wichtige technische Features:**
+**Wichtige technische Funktionen:**
 
-- Authentifizierung mit JWT Token.
-- Geschützte Routen und automatische Weiterleitung zum Login.
-- Session-Persistenz mit localStorage.
-- Axios-Interceptor zum Hinzufügen des Tokens.
+- Authentifizierung mit JWT-Token.
+- Geschützte Routen mit automatischer Weiterleitung zum Login.
+- Sitzungsspeicherung mit localStorage.
+- Axios-Interceptor zur Token-Übertragung.
 - Styling mit Tailwind CSS.
 - Navigation mit React Router.
 - Formularvalidierung mit React.
@@ -132,7 +133,7 @@ Erstellung von Contexts mit `React.createContext`, Bereitstellung mit `Context.P
 ## Verwendete Technologien
 
 - **Sprachen:** HTML, CSS, JavaScript, TypeScript.
-- **Wichtige Node.js-Abhängigkeiten:** React, Vite, Tailwind CSS, TypeScript, ESLint, Axios, clsx, Globals, Prettier.
+- **Wichtige Abhängigkeiten (Node.js):** React, Vite, Tailwind CSS, TypeScript, ESLint, Axios, clsx, Globals, Prettier.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
@@ -140,14 +141,14 @@ Erstellung von Contexts mit `React.createContext`, Bereitstellung mit `Context.P
 
 ### Hinweis
 
-Dieses Projekt **ist abhängig** von der REST API `nodepop-api`. Um mit der simulierten Datenbank zu interagieren, muss der Server, der diese API bereitstellt, zuerst gestartet werden.
+Dieses Projekt **benötigt** die REST-API `nodepop-api`. Um mit der simulierten Datenbank zu interagieren, muss der Server dieser API zuerst gestartet werden.
 
-### 1. Softwareanforderungen
+### 1. Software-Voraussetzungen
 
 - **[Node.js](https://nodejs.org/en/download/)** (getestet mit Version **v22.15.1**)
 - **[Git](https://git-scm.com/downloads)** (getestet mit Version **2.47.1.windows.1**)
 - **[Visual Studio Code](https://code.visualstudio.com/)** (getestet mit Version **1.99.0**)
-- **[nodepop-api (REST API)](https://github.com/davidjj76/nodepop-api)** (erstellt vom Dozenten **David Jiménez** - **KeepCoding**)
+- **[nodepop-api (REST-API)](https://github.com/davidjj76/nodepop-api)** (erstellt von Dozent **David Jiménez** - **KeepCoding**)
 
 ### 2. Repository klonen
 

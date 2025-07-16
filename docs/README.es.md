@@ -170,26 +170,26 @@ npm install
 # Inicia el servidor de desarrollo.
 npm run dev
 
-# Construye la aplicación lista para producción.
+# Genera la carpeta dist para producción.
 npm run build
 
-# Revisa el código en busca de errores.
+# Corre Eslint en busca de errores.
 npm run lint
 
 # Previsualiza la compilación de producción localmente.
 npm run preview
 
-# Formatea el código automáticamente.
+# Corre Prettier para que el código sea formateado.
 npm run format
 ```
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
-## Recursos
+## Recursos del Proyecto
 
 `>` **Endpoints Nodepop-API:** 📄 [Endpoints](api-doc.md)
 
-`>` **Vista Previa del Proyecto:** 👀 [Vista Previa](preview.md)
+`>` **Vista Previa del Proyecto:** 👀 [Vista Previa](preview.md) TODO
 
 <!-- ------------------------------------------------------------------------------------------- -->
 

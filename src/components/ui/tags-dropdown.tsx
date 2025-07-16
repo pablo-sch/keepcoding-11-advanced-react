@@ -1,6 +1,5 @@
-// TagsDropdown.tsx
 import { useState, useEffect } from "react";
-import { getTags } from "../../pages/advert/service"; // ajusta la ruta
+import { getTags } from "../../pages/advert/service";
 import Button from "./button";
 
 type TagsDropdownProps = {
