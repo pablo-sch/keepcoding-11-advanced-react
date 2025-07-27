@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { useAuth } from "./context";
+import { useAuth } from "../../store/hooks";
 import { Navigate, useLocation } from "react-router-dom";
 
 interface RequireAuthProps {
@@ -7,7 +7,7 @@ interface RequireAuthProps {
 }
 
 function RequireAuth({ children }: RequireAuthProps) {
-  const { isLogged } = useAuth();
+  const isLogged = useAuth();
   const location = useLocation();
 
   if (!isLogged) {

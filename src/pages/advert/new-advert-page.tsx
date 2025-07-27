@@ -1,40 +1,52 @@
+//DEPENDENCIES
 import { useState, useRef, useEffect, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
 
-import { createAdvert } from "./service";
+//REACT
 import Button from "../../components/ui/button";
 import Page from "../../components/layout/page";
 import FormField from "../../components/ui/form-field";
 import TagsDropdown from "../../components/ui/tags-dropdown";
 
+//REDUX
+import { useAppDispatch } from "../../store";
+import { advertsCreate } from "../../store/actions";
+
+//=======================================================================================================
 function NewAdvertPageForm() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const nameRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);
   const saleRef = useRef<HTMLSelectElement>(null);
   const photoRef = useRef<HTMLInputElement>(null);
   const selectedTagsRef = useRef<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [canSubmit, setCanSubmit] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  /* const [isSubmitting, setIsSubmitting] = useState(false); */
   const [error, setError] = useState<string | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
   const PRICE_MAX = 25000;
   const [priceTooHigh, setPriceTooHigh] = useState(false);
 
+  //-------------------------------------------------------------------------
   useEffect(() => {
     nameRef.current?.focus();
   }, []);
 
+  //-------------------------------------------------------------------------
   useEffect(() => {
     return () => {
       if (photoPreview) URL.revokeObjectURL(photoPreview);
     };
   }, [photoPreview]);
 
+  //-------------------------------------------------------------------------
   const validateForm = () => {
     const name = nameRef.current?.value.trim() ?? "";
     const price = Number(priceRef.current?.value) || 0;
@@ -44,6 +56,7 @@ function NewAdvertPageForm() {
     setCanSubmit(name !== "" && price > 0 && price <= PRICE_MAX && tags.length > 0);
   };
 
+  //-------------------------------------------------------------------------
   const handlePhotoChange = () => {
     const file = photoRef.current?.files?.[0];
     if (file) {
@@ -55,8 +68,9 @@ function NewAdvertPageForm() {
     validateForm();
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  //-------------------------------------------------------------------------
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setError(null);
 
     const name = nameRef.current?.value.trim() ?? "";
@@ -75,12 +89,16 @@ function NewAdvertPageForm() {
     formData.append("tags", tags.join(","));
     if (photoFile) formData.append("photo", photoFile);
 
-    setIsSubmitting(true);
     try {
-      const advert = await createAdvert(formData);
-      navigate(`/adverts/${advert.id}`);
-    } catch {
-      setError("Failed to create advert.");
+      setIsSubmitting(true);
+      const createdAdvert = await dispatch(advertsCreate(formData));
+      navigate(`/adverts/${createdAdvert.id}`);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.status === 401) {
+          navigate("/login", { replace: true });
+        }
+      }
     } finally {
       setIsSubmitting(false);
     }

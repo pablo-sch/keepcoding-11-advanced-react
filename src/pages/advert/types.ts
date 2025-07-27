@@ -1,5 +1,5 @@
 export interface Advert {
-  id: number;
+  id: string;
   name: string;
   price: number;
   sale: boolean;

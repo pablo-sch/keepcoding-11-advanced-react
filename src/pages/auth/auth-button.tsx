@@ -1,20 +1,21 @@
 import Button from "../../components/ui/button";
-import { useAuth } from "../../pages/auth/context";
 import { logout } from "../../pages/auth/service";
+import { useAuth, useLogoutAction } from "../../store/hooks";
 
 type AuthButtonProps = {
   className?: string;
 };
 
 export default function AuthButton({ className }: AuthButtonProps) {
-  const { isLogged, onLogout } = useAuth();
+  const isLogged = useAuth();
+  const logoutAction = useLogoutAction();
 
   const handleLogoutClick = async () => {
     const confirmed = window.confirm("Are you sure you want to log out?");
     if (!confirmed) return;
 
     await logout();
-    onLogout();
+    logoutAction();
   };
 
   return isLogged ? (

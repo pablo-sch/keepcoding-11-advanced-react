@@ -1,40 +1,31 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { AxiosError } from "axios";
+//DEPENDENCIES
+import { useNavigate, useParams } from "react-router";
+import { useState } from "react";
 
+//REACT
 import Page from "../../components/layout/page";
-import { getAdvert, deleteAdvert } from "./service";
-import type { Advert } from "./types";
-
 import { formatDate } from "../../utils/format-date";
 import Button from "../../components/ui/button";
 
+//REDUX
+import { useAppDispatch, useAppSelector } from "../../store";
+import { getAdvert } from "../../store/selectors";
+import { advertsDelete } from "../../store/actions";
+
 function AdvertPage() {
-  const { advertId } = useParams();
+  const params = useParams();
+  const dispatch = useAppDispatch();
+  const advert = useAppSelector(getAdvert(params.advertId));
+  const defaultImage = "/image-placeholder.jpg";
   const navigate = useNavigate();
 
-  const [advert, setAdvert] = useState<Advert | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const defaultImage = "/image-placeholder.jpg";
-
-  useEffect(() => {
-    if (!advertId) return;
-
-    getAdvert(advertId)
-      .then(setAdvert)
-      .catch((error) => {
-        if (error instanceof AxiosError && error.response?.status === 404) {
-          navigate("/not-found", { replace: true });
-        }
-      });
-  }, [advertId, navigate]);
-
   const handleDelete = async () => {
-    if (!advertId) return;
+    if (!advert?.id) return;
 
     try {
-      await deleteAdvert(advertId);
+      await dispatch(advertsDelete(advert.id));
       navigate("/adverts");
     } catch (error) {
       alert("Error deleting the advert.");
@@ -42,30 +33,27 @@ function AdvertPage() {
     }
   };
 
-  if (!advert) return <p>Loading ad...</p>;
+  /*  if (!advert) return <p>Loading ad...</p>; */
 
   return (
     <Page title="Advert Detail">
       <article className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6 space-y-6">
-        {/* Image */}
         <div className="w-full flex justify-center">
-          <img src={advert.photo || defaultImage} alt={advert.name} className="w-full max-w-md rounded-md object-cover border" />
+          <img src={advert?.photo || defaultImage} alt={advert?.name} className="w-full max-w-md rounded-md object-cover border" />
         </div>
 
-        {/* Data */}
         <div className="text-gray-800 text-sm space-y-2">
           <p className="text-lg font-semibold">
-            {advert.name} - €{advert.price}
+            {advert?.name} - €{advert?.price}
           </p>
           <p>
-            <span className="font-medium">{advert.sale ? "Sale" : "Purchase"}</span> — Tags: {advert.tags.join(", ")}
+            <span className="font-medium">{advert?.sale ? "Sale" : "Purchase"}</span> — Tags: {advert?.tags.join(", ")}
           </p>
           <p>
-            <span className="font-medium">Created at:</span> {formatDate(advert.createdAt)}
+            <span className="font-medium">Created at:</span> {formatDate(advert?.createdAt || "")}
           </p>
         </div>
 
-        {/* Delete Section */}
         <div className="pt-4 border-t mt-4">
           {!confirmDelete ? (
             <div>
