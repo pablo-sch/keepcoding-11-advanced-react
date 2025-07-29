@@ -1,5 +1,5 @@
-import { useState, type ReactNode } from "react";
-import { AuthContext } from "./context";
+/* import { useState, type ReactNode } from "react";
+
 import storage from "../../utils/storage";
 import { removeAuthorizationHeader } from "../../api/client";
 
@@ -31,3 +31,4 @@ function AuthProvider({ defaultIsLogged, children }: AuthProviderProps) {
 }
 
 export default AuthProvider;
+ */

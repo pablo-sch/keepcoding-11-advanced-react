@@ -1,38 +1,43 @@
 //DEPENDENCIES
-import { useState, useRef, useEffect, type FormEvent } from "react";
+import { useState, useRef, useEffect, type FormEvent, type SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 
-//REACT
+//REACTs
 import Button from "../../components/ui/button";
 import Page from "../../components/layout/page";
+
 import FormField from "../../components/ui/form-field";
-import TagsDropdown from "../../components/ui/tags-dropdown";
+import Form from "../../components/ui/form";
+import Dropdown from "../../components/ui/drop-down";
+import ErrorMessage from "../../components/ui/error-message-props";
 
 //REDUX
-import { useAppDispatch } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { advertsCreate } from "../../store/actions";
 
 //=======================================================================================================
-function NewAdvertPageForm() {
+function NewAdvertPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const nameRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);
-  const saleRef = useRef<HTMLSelectElement>(null);
   const photoRef = useRef<HTMLInputElement>(null);
   const selectedTagsRef = useRef<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [canSubmit, setCanSubmit] = useState(false);
-  /* const [isSubmitting, setIsSubmitting] = useState(false); */
   const [error, setError] = useState<string | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
   const PRICE_MAX = 25000;
   const [priceTooHigh, setPriceTooHigh] = useState(false);
+
+  const [sale, setSale] = useState("true");
+  const tags = useAppSelector((state) => state.tags || []);
+  const tagOptions = tags.map((tag: string) => ({ value: tag, label: tag }));
 
   //-------------------------------------------------------------------------
   useEffect(() => {
@@ -79,13 +84,13 @@ function NewAdvertPageForm() {
 
     if (!name || price <= 0 || price > PRICE_MAX || tags.length === 0) return;
 
-    const sale = saleRef.current?.value === "true";
+    const isSale = sale === "true";
     const photoFile = photoRef.current?.files?.[0];
 
     const formData = new FormData();
     formData.append("name", name);
     formData.append("price", price.toString());
-    formData.append("sale", sale.toString());
+    formData.append("sale", isSale.toString());
     formData.append("tags", tags.join(","));
     if (photoFile) formData.append("photo", photoFile);
 
@@ -105,63 +110,69 @@ function NewAdvertPageForm() {
   };
 
   return (
-    <form className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow space-y-6" onSubmit={handleSubmit}>
-      <FormField id="name" name="name" label="Name" type="text" maxLength={120} ref={nameRef} onInput={validateForm} required className="bg-gray-100" />
-
-      <FormField id="price" name="price" label="Price" type="number" ref={priceRef} onInput={validateForm} required className="bg-gray-100" />
-
-      <div>
-        <label htmlFor="sale" className="block text-sm font-medium text-gray-700 mb-1">
-          Type
-        </label>
-        <select id="sale" name="sale" ref={saleRef} onChange={validateForm} defaultValue="true" className="w-full border rounded-md px-3 py-2 text-sm bg-gray-100">
-          <option value="true">Sale</option>
-          <option value="false">Purchase</option>
-        </select>
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Tags</label>
-        <TagsDropdown
-          selectedTags={selectedTags}
-          onChange={(updated) => {
-            setSelectedTags(updated);
-            selectedTagsRef.current = updated;
-            validateForm();
-          }}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="photo" className="block text-sm font-medium text-gray-700 mb-1">
-          Photo
-        </label>
-        <input id="photo" type="file" name="photo" accept="image/*" ref={photoRef} onChange={handlePhotoChange} className="w-full text-sm text-gray-700 border rounded-md px-3 py-2 bg-gray-100" />
-      </div>
-
-      {photoPreview && (
-        <div className="w-full flex justify-center mt-4">
-          <img src={photoPreview} alt="Preview" className="max-w-xs max-h-64 rounded-md object-cover border" />
-        </div>
-      )}
-
-      {priceTooHigh && <div className="text-red-600 text-sm">Price cannot exceed €{PRICE_MAX}.</div>}
-
-      {error && <div className="text-red-500 text-sm font-medium">{error}</div>}
-
-      <div className="pt-4">
-        <Button className="w-full" type="submit" disabled={!canSubmit || isSubmitting}>
-          {isSubmitting ? "Creating..." : "Create Advert"}
-        </Button>
-      </div>
-    </form>
-  );
-}
-
-export default function NewAdvertPage() {
-  return (
     <Page title="Create new advert">
-      <NewAdvertPageForm />
+      <div className="new-advert">
+        <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-6">
+          <Form onSubmit={handleSubmit} layout="withPreview" previewSrc={photoPreview}>
+            <FormField id="name" name="name" placeholder="Name" type="text" maxLength={120} ref={nameRef} onInput={validateForm} required />
+
+            <FormField id="price" name="price" placeholder="Price" type="number" ref={priceRef} onInput={validateForm} required />
+
+            <Dropdown
+              name="sale"
+              label="Type"
+              value={sale}
+              onChange={(val: SetStateAction<string>) => {
+                setSale(val);
+                validateForm();
+              }}
+              options={[
+                { value: "true", label: "Sale" },
+                { value: "false", label: "Purchase" },
+              ]}
+            />
+
+            <Dropdown
+              name="tags"
+              label="Tags"
+              value={selectedTags[0] || ""}
+              options={tagOptions}
+              onChange={(value) => {
+                setSelectedTags([value]);
+                selectedTagsRef.current = [value];
+                validateForm();
+              }}
+            />
+
+            <div>
+              <label htmlFor="photo" className="block text-sm font-medium text-gray-700 mb-1">
+                Photo
+              </label>
+              <input
+                id="photo"
+                type="file"
+                name="photo"
+                accept="image/*"
+                ref={photoRef}
+                onChange={handlePhotoChange}
+                className="w-full px-3 py-2 rounded-md bg-gray-100 text-sm border border-gray-300 
+               focus:outline-none focus:ring-2 focus:ring-blue-500 
+               hover:cursor-pointer hover:border-gray-400 transition-colors"
+              />
+            </div>
+
+            <ErrorMessage message={priceTooHigh ? `Price cannot exceed €${PRICE_MAX}.` : null} />
+            <ErrorMessage message={error} />
+
+            <div className="pt-4">
+              <Button className="w-full" type="submit" disabled={!canSubmit || isSubmitting}>
+                {isSubmitting ? "Creating..." : "Create Advert"}
+              </Button>
+            </div>
+          </Form>
+        </div>
+      </div>
     </Page>
   );
 }
+export default NewAdvertPage;

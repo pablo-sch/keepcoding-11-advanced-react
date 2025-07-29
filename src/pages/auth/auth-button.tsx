@@ -1,5 +1,8 @@
+import { Link } from "react-router-dom";
+
 import Button from "../../components/ui/button";
 import { logout } from "../../pages/auth/service";
+
 import { useAuth, useLogoutAction } from "../../store/hooks";
 
 type AuthButtonProps = {
@@ -19,11 +22,11 @@ export default function AuthButton({ className }: AuthButtonProps) {
   };
 
   return isLogged ? (
-    <Button className={className} onClick={handleLogoutClick}>
+    <Button className={className} onClick={handleLogoutClick} $variant="secondary">
       Logout
     </Button>
   ) : (
-    <Button to="/login" className={className}>
+    <Button className={className} as={Link} to="/login" $variant="primary">
       Login
     </Button>
   );

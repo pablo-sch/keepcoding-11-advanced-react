@@ -8,18 +8,25 @@ import Page from "../../components/layout/page";
 import { advertsLoaded, tagsLoaded } from "../../store/actions";
 import { useAppDispatch, useAppSelector } from "../../store";
 
+/* import "./adverts-page.css"; */
+import Form from "../../components/ui/form";
+import Dropdown from "../../components/ui/drop-down";
+import FormField from "../../components/ui/form-field";
+
 // ................................................
 const EmptyList = () => (
-  <div className="adverts-page-empty">
-    <p>Be the first to publish!</p>
+  <div className="flex flex-col items-center justify-center text-center bg-gray-100 rounded-lg p-8 mt-8 shadow-md">
+    <img src="/empty-box.webp" alt="No adverts" className="w-24 h-24 mb-4 opacity-70" />
+    <h2 className="text-xl font-semibold text-gray-700 mb-2">No adverts found</h2>
+    <p className="text-gray-500 mb-6">It looks like there are no adverts matching your filters. Be the first to create one!</p>
     <Link to="/adverts/new">
-      <Button>Create Advert</Button>
+      <Button $variant="secondary">Create New Advert</Button>
     </Link>
   </div>
 );
 
 // =======================================================================================================================================================
-export default function AdvertsPage() {
+function AdvertsPage() {
   const dispatch = useAppDispatch();
   const tags = useAppSelector((state) => state.tags);
 
@@ -51,36 +58,47 @@ export default function AdvertsPage() {
 
   return (
     <Page title="Available Adverts">
-      <div className="adverts-page mt-6 space-y-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <input type="text" placeholder="Name" className="border rounded px-2 py-1" value={filters.name} onChange={(e) => setFilters({ ...filters, name: e.target.value })} />
+      <div className="adverts-page">
+        <div className="max-w-screen-xl mx-auto space-y-8">
+          <Form variant="search">
+            <div className="flex flex-wrap gap-4">
+              <FormField id="name" name="name" type="text" placeholder="Name" value={filters.name} onChange={(e) => setFilters({ ...filters, name: e.target.value })} />
 
-          <input type="number" placeholder="Max price" className="border rounded px-2 py-1" value={filters.price} onChange={(e) => setFilters({ ...filters, price: e.target.value })} />
+              <FormField id="price" name="price" type="number" placeholder="Max price" value={filters.price} onChange={(e) => setFilters({ ...filters, price: e.target.value })} />
 
-          <select className="border rounded px-2 py-1" value={filters.tag} onChange={(e) => setFilters({ ...filters, tag: e.target.value })}>
-            <option value="all">All Tags</option>
-            {tags.map((tag) => (
-              <option key={tag} value={tag}>
-                {tag}
-              </option>
-            ))}
-          </select>
+              <Dropdown
+                name="sale"
+                value={filters.sale}
+                onChange={(value) => setFilters({ ...filters, sale: value })}
+                options={[
+                  { value: "all", label: "All" },
+                  { value: "true", label: "Sale" },
+                  { value: "false", label: "Purchase" },
+                ]}
+                className="flex-1"
+              />
+
+              <Dropdown name="tag" value={filters.tag} onChange={(value) => setFilters({ ...filters, tag: value })} options={[{ value: "all", label: "All Tags" }, ...tags.map((tag) => ({ value: tag, label: tag }))]} />
+            </div>
+          </Form>
+
+          {filteredAdverts.length ? (
+            <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredAdverts.map((ad) => (
+                <li key={ad.id}>
+                  <Link to={`/adverts/${ad.id}`}>
+                    <AdvertItem advert={ad} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <EmptyList />
+          )}
         </div>
-
-        {filteredAdverts.length ? (
-          <ul className="space-y-4">
-            {filteredAdverts.map((ad) => (
-              <li key={ad.id}>
-                <Link to={`/adverts/${ad.id}`} className="block hover:no-underline">
-                  <AdvertItem advert={ad} />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <EmptyList />
-        )}
       </div>
     </Page>
   );
 }
+
+export default AdvertsPage;
