@@ -4,8 +4,9 @@ import { login } from "../pages/auth/service";
 import type { Credentials } from "../pages/auth/types";
 
 //SERVICES
-import { createAdvert, getAdverts, getAdvert, deleteAdvert, getTags } from "../pages/advert/service";
+import { createAdvert, getAdverts, getAdvert as getAdvertService, deleteAdvert, getTags } from "../pages/advert/service";
 import type { Advert } from "../pages/advert/types";
+import { getAdvert } from "./selectors";
 
 //Tipos de acciones===========================================================================================================
 /**
@@ -38,6 +39,11 @@ type AdvertsLoadedFulFilled = {
 
 type AdvertsCreatedFulFilled = {
   type: "adverts/created/fulfilled";
+  payload: Advert;
+};
+
+type AdvertsDetailFulFilled = {
+  type: "adverts/detail/fulfilled";
   payload: Advert;
 };
 
@@ -108,6 +114,11 @@ export const advertsLoadedFulFilled = (adverts: Advert[]): AdvertsLoadedFulFille
   payload: adverts,
 });
 
+export const advertsDetailFulFilled = (advert: Advert): AdvertsDetailFulFilled => ({
+  type: "adverts/detail/fulfilled",
+  payload: advert,
+});
+
 export const advertsCreatedFulfilled = (advert: Advert): AdvertsCreatedFulFilled => ({
   type: "adverts/created/fulfilled",
   payload: advert,
@@ -121,16 +132,14 @@ export const advertsDeletedFulfilled = (advertId: string): AdvertsDeletedFulfill
 export function advertsLoaded(): AppThunk<Promise<void>> {
   return async function (dispatch, getState) {
     const state = getState();
-    if (state.adverts) {
+    if (state.adverts.loaded) {
       return;
     }
     try {
-      // Manage advertsLoadedPending
       const adverts = await getAdverts();
       dispatch(advertsLoadedFulFilled(adverts));
     } catch (error) {
       console.log(error);
-      // Manage advertsLoadedRejected
     }
   };
 }
@@ -140,9 +149,7 @@ export function advertsLoaded(): AppThunk<Promise<void>> {
 export function advertsDelete(advertId: string): AppThunk<Promise<void>> {
   return async function (dispatch) {
     try {
-      // Llamada al backend para borrar el advert
       await deleteAdvert(advertId);
-      // Dispatch para actualizar estado local
       dispatch(advertsDeletedFulfilled(advertId));
     } catch (error) {
       console.error("Error deleting advert:", error);
@@ -153,16 +160,30 @@ export function advertsDelete(advertId: string): AppThunk<Promise<void>> {
 
 // ................................................
 
+export function advertDetail(advertId: string): AppThunk<Promise<void>> {
+  return async function (dispatch, getState) {
+    const state = getState();
+    if (getAdvert(advertId)(state)) {
+      return;
+    }
+    try {
+      const advert = await getAdvertService(advertId);
+      dispatch(advertsDetailFulFilled(advert));
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+}
+
 export function advertsCreate(advertContent: FormData): AppThunk<Promise<Advert>> {
   return async function (dispatch) {
     try {
-      // Manage advertsCreatePending
       const createdAdvert = await createAdvert(advertContent);
-      const advert = await getAdvert(createdAdvert.id.toString());
+      const advert = await getAdvertService(createdAdvert.id.toString());
       dispatch(advertsCreatedFulfilled(advert));
       return advert;
     } catch (error) {
-      // Manage advertsCreateRejected
       console.log(error);
       throw error;
     }
@@ -196,4 +217,4 @@ export const uiResetError = (): UiResetError => ({
  * Agrupa todos los tipos de acciones posibles en un solo tipo (Actions),
  * usado para tipar correctamente el dispatch y los reducers.
  */
-export type Actions = AuthLoginPending | AuthLoginFulfilled | AuthLoginRejected | AuthLogout | AdvertsLoadedFulFilled | AdvertsCreatedFulFilled | AdvertsDeletedFulfilled | TagsLoadedFulfilled | UiResetError;
+export type Actions = AuthLoginPending | AuthLoginFulfilled | AuthLoginRejected | AuthLogout | AdvertsLoadedFulFilled | AdvertsDetailFulFilled | AdvertsCreatedFulFilled | AdvertsDeletedFulfilled | TagsLoadedFulfilled | UiResetError;

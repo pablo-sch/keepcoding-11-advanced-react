@@ -44,7 +44,7 @@ function AdvertsPage() {
     tag: "all",
   });
 
-  const adverts = useAppSelector((state) => state.adverts || []);
+  const adverts = useAppSelector((state) => state.adverts.data || []);
 
   const filteredAdverts = adverts.filter((ad) => {
     const matchesName = ad.name.toLowerCase().includes(filters.name.toLowerCase());

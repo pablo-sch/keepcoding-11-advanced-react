@@ -1,6 +1,7 @@
 //DEPENDENCIES
 import { useNavigate, useParams } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { AxiosError } from "axios";
 
 //REACT
 import Page from "../../components/layout/page";
@@ -10,19 +11,33 @@ import Button from "../../components/ui/button";
 //REDUX
 import { useAppDispatch, useAppSelector } from "../../store";
 import { getAdvert } from "../../store/selectors";
-import { advertsDelete } from "../../store/actions";
-
-/* import "./advert-page.css"; */
+import { advertsDelete, advertDetail } from "../../store/actions";
 
 function AdvertPage() {
   const params = useParams();
-  const dispatch = useAppDispatch();
-  const advert = useAppSelector(getAdvert(params.advertId));
-  const defaultImage = "/image-placeholder.jpg";
   const navigate = useNavigate();
+  const advert = useAppSelector(getAdvert(params.advertId));
+  const dispatch = useAppDispatch();
+
+  const defaultImage = "/image-placeholder.jpg";
 
   const [confirmDelete, setConfirmDelete] = useState(false);
 
+  // ................................................
+  useEffect(() => {
+    if (!params.advertId) {
+      return;
+    }
+    dispatch(advertDetail(params.advertId)).catch((error) => {
+      if (error instanceof AxiosError) {
+        if (error.status === 404) {
+          navigate("/not-found", { replace: true });
+        }
+      }
+    });
+  }, [params.advertId, navigate, dispatch]);
+
+  // ................................................
   const handleDelete = async () => {
     if (!advert?.id) return;
 
