@@ -22,11 +22,11 @@ export default function AuthButton({ className }: AuthButtonProps) {
   };
 
   return isLogged ? (
-    <Button className={className} onClick={handleLogoutClick} $variant="secondary">
+    <Button $variant="secondary" className={className} onClick={handleLogoutClick}>
       Logout
     </Button>
   ) : (
-    <Button className={className} as={Link} to="/login" $variant="primary">
+    <Button $variant="secondary" className={className} as={Link} to="/login">
       Login
     </Button>
   );

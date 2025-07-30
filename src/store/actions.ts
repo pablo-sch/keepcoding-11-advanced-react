@@ -1,10 +1,10 @@
 //DEPENDENCIES
 import type { AppThunk } from ".";
-import { login } from "../pages/auth/service";
+/* import { login } from "../pages/auth/service"; */
 import type { Credentials } from "../pages/auth/types";
 
 //SERVICES
-import { createAdvert, getAdverts, getAdvert as getAdvertService, deleteAdvert, getTags } from "../pages/advert/service";
+/* import { createAdvert, getAdverts, getAdvert as getAdvertService, deleteAdvert, getTags } from "../pages/advert/service"; */
 import type { Advert } from "../pages/advert/types";
 import { getAdvert } from "./selectors";
 
@@ -89,10 +89,10 @@ export const authLoginRejected = (error: Error): AuthLoginRejected => ({
  * Usan el middleware redux-thunk.
  */
 export function authLogin(credentials: Credentials): AppThunk<Promise<void>> {
-  return async function (dispatch) {
+  return async function (dispatch, _getState, { api }) {
     dispatch(authLoginPending());
     try {
-      await login(credentials);
+      await api.auth.login(credentials);
       dispatch(authLoginFulfilled());
     } catch (error) {
       if (error instanceof Error) {
@@ -130,13 +130,13 @@ export const advertsDeletedFulfilled = (advertId: string): AdvertsDeletedFulfill
 });
 
 export function advertsLoaded(): AppThunk<Promise<void>> {
-  return async function (dispatch, getState) {
+  return async function (dispatch, getState, { api }) {
     const state = getState();
     if (state.adverts.loaded) {
       return;
     }
     try {
-      const adverts = await getAdverts();
+      const adverts = await api.adverts.getAdverts();
       dispatch(advertsLoadedFulFilled(adverts));
     } catch (error) {
       console.log(error);
@@ -147,9 +147,9 @@ export function advertsLoaded(): AppThunk<Promise<void>> {
 // ................................................
 
 export function advertsDelete(advertId: string): AppThunk<Promise<void>> {
-  return async function (dispatch) {
+  return async function (dispatch, _getState, { api }) {
     try {
-      await deleteAdvert(advertId);
+      await api.adverts.deleteAdvert(advertId);
       dispatch(advertsDeletedFulfilled(advertId));
     } catch (error) {
       console.error("Error deleting advert:", error);
@@ -161,13 +161,13 @@ export function advertsDelete(advertId: string): AppThunk<Promise<void>> {
 // ................................................
 
 export function advertDetail(advertId: string): AppThunk<Promise<void>> {
-  return async function (dispatch, getState) {
+  return async function (dispatch, getState, { api }) {
     const state = getState();
     if (getAdvert(advertId)(state)) {
       return;
     }
     try {
-      const advert = await getAdvertService(advertId);
+      const advert = await api.adverts.getAdvert(advertId);
       dispatch(advertsDetailFulFilled(advert));
     } catch (error) {
       console.log(error);
@@ -177,10 +177,10 @@ export function advertDetail(advertId: string): AppThunk<Promise<void>> {
 }
 
 export function advertsCreate(advertContent: FormData): AppThunk<Promise<Advert>> {
-  return async function (dispatch) {
+  return async function (dispatch, _getState, { api }) {
     try {
-      const createdAdvert = await createAdvert(advertContent);
-      const advert = await getAdvertService(createdAdvert.id.toString());
+      const createdAdvert = await api.adverts.createAdvert(advertContent);
+      const advert = await api.adverts.getAdvert(createdAdvert.id.toString());
       dispatch(advertsCreatedFulfilled(advert));
       return advert;
     } catch (error) {
@@ -193,9 +193,9 @@ export function advertsCreate(advertContent: FormData): AppThunk<Promise<Advert>
 // ................................................
 
 export function tagsLoaded(): AppThunk<Promise<void>> {
-  return async function (dispatch) {
+  return async function (dispatch, _getState, { api }) {
     try {
-      const tags = await getTags();
+      const tags = await api.adverts.getTags();
       dispatch({ type: "tags/loaded/fulfilled", payload: tags });
     } catch (error) {
       console.error("Error loading tags:", error);
