@@ -1,16 +1,19 @@
+//DEPENDENCIES
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+//REACT
 import AdvertItem from "./advert-item";
-import Button from "../../components/ui/button";
-import Page from "../../components/layout/page";
-
-import { advertsLoaded, tagsLoaded } from "../../store/actions";
-import { useAppDispatch, useAppSelector } from "../../store";
 
 import Form from "../../components/ui/form";
 import Dropdown from "../../components/ui/drop-down";
 import FormField from "../../components/ui/form-field";
+import Button from "../../components/ui/button";
+import Page from "../../components/layout/page";
+
+//REDUX
+import { advertsLoaded, tagsLoaded } from "../../store/actions";
+import { useAppDispatch, useAppSelector } from "../../store";
 
 // ................................................
 const EmptyList = () => (

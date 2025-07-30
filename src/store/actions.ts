@@ -1,18 +1,14 @@
 //DEPENDENCIES
 import type { AppThunk } from ".";
-/* import { login } from "../pages/auth/service"; */
-import type { Credentials } from "../pages/auth/types";
 
 //SERVICES
-/* import { createAdvert, getAdverts, getAdvert as getAdvertService, deleteAdvert, getTags } from "../pages/advert/service"; */
 import type { Advert } from "../pages/advert/types";
+import type { Credentials } from "../pages/auth/types";
+
+//REDUX
 import { getAdvert } from "./selectors";
 
 //Tipos de acciones===========================================================================================================
-/**
- * Define los tipos de acciones que pueden ser enviadas (dispatch) al store,
- * incluyendo acciones para login, logout, adverts y errores de UI.
- */
 type AuthLoginPending = {
   type: "auth/login/pending";
 };
@@ -42,14 +38,29 @@ type AdvertsCreatedFulFilled = {
   payload: Advert;
 };
 
+type AdvertsCreatedRejected = {
+  type: "adverts/created/rejected";
+  payload: Error;
+};
+
 type AdvertsDetailFulFilled = {
   type: "adverts/detail/fulfilled";
   payload: Advert;
 };
 
+type AdvertsDetailRejected = {
+  type: "adverts/detail/rejected";
+  payload: Error;
+};
+
 type AdvertsDeletedFulfilled = {
   type: "adverts/deleted/fulfilled";
   payload: string;
+};
+
+type AdvertsDeletedRejected = {
+  type: "adverts/deleted/rejected";
+  payload: Error;
 };
 
 // ................................................
@@ -66,10 +77,6 @@ type UiResetError = {
 };
 
 //Acciones sincrónicas============================================================================================================
-/**
- * Funciones que devuelven objetos de acción con un type (y opcionalmente un payload).
- * Se usan para actualizar el estado del store.
- */
 export const authLoginPending = (): AuthLoginPending => ({
   type: "auth/login/pending",
 });
@@ -84,10 +91,6 @@ export const authLoginRejected = (error: Error): AuthLoginRejected => ({
 });
 
 //Thunks (acciones asíncronas)===============================================================================================0
-/**
- * Funciones que permiten ejecutar lógica asíncrona (como llamadas a la API) y luego despachar acciones según el resultado.
- * Usan el middleware redux-thunk.
- */
 export function authLogin(credentials: Credentials): AppThunk<Promise<void>> {
   return async function (dispatch, _getState, { api, router }) {
     dispatch(authLoginPending());
@@ -122,9 +125,19 @@ export const advertsDetailFulFilled = (advert: Advert): AdvertsDetailFulFilled =
   payload: advert,
 });
 
+export const advertsDetailRejected = (error: Error): AdvertsDetailRejected => ({
+  type: "adverts/detail/rejected",
+  payload: error,
+});
+
 export const advertsCreatedFulfilled = (advert: Advert): AdvertsCreatedFulFilled => ({
   type: "adverts/created/fulfilled",
   payload: advert,
+});
+
+export const advertsCreatedRejected = (error: Error): AdvertsCreatedRejected => ({
+  type: "adverts/created/rejected",
+  payload: error,
 });
 
 export const advertsDeletedFulfilled = (advertId: string): AdvertsDeletedFulfilled => ({
@@ -142,7 +155,10 @@ export function advertsLoaded(): AppThunk<Promise<void>> {
       const adverts = await api.adverts.getAdverts();
       dispatch(advertsLoadedFulFilled(adverts));
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        dispatch(advertsDetailRejected(error));
+      }
+      throw error;
     }
   };
 }
@@ -150,12 +166,16 @@ export function advertsLoaded(): AppThunk<Promise<void>> {
 // ................................................
 
 export function advertsDelete(advertId: string): AppThunk<Promise<void>> {
-  return async function (dispatch, _getState, { api }) {
+  return async function (dispatch, _getState, { api, router }) {
     try {
       await api.adverts.deleteAdvert(advertId);
       dispatch(advertsDeletedFulfilled(advertId));
+      router.navigate(`/adverts`);
     } catch (error) {
-      console.error("Error deleting advert:", error);
+      if (error instanceof Error) {
+        console.log(error);
+        dispatch(advertsDetailRejected(error));
+      }
       throw error;
     }
   };
@@ -188,7 +208,10 @@ export function advertsCreate(advertContent: FormData): AppThunk<Promise<Advert>
       router.navigate(`/adverts/${createdAdvert.id}`);
       return advert;
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        console.log(error);
+        dispatch(advertsCreatedRejected(error));
+      }
       throw error;
     }
   };
@@ -209,16 +232,11 @@ export function tagsLoaded(): AppThunk<Promise<void>> {
 }
 
 //Acción para resetear errores de UI============================================================================================
-/**
- * Limpia errores en la interfaz, útil después de mostrar mensajes de error al usuario.
- */
 export const uiResetError = (): UiResetError => ({
   type: "ui/reset-error",
 });
 
 //Unificacion de Acciones----------------------------------------------------------------
-/**
- * Agrupa todos los tipos de acciones posibles en un solo tipo (Actions),
- * usado para tipar correctamente el dispatch y los reducers.
- */
-export type Actions = AuthLoginPending | AuthLoginFulfilled | AuthLoginRejected | AuthLogout | AdvertsLoadedFulFilled | AdvertsDetailFulFilled | AdvertsCreatedFulFilled | AdvertsDeletedFulfilled | TagsLoadedFulfilled | UiResetError;
+export type Actions = AuthLoginPending | AuthLoginFulfilled | AuthLoginRejected | AuthLogout | AdvertsLoadedFulFilled | AdvertsDetailFulFilled | AdvertsDetailRejected | AdvertsCreatedFulFilled | AdvertsCreatedRejected | AdvertsDeletedFulfilled | AdvertsDeletedRejected | TagsLoadedFulfilled | UiResetError;
+
+export type ActionsRejected = AuthLoginRejected | AdvertsCreatedRejected | AdvertsDetailRejected | AdvertsDeletedRejected;

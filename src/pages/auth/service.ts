@@ -1,3 +1,4 @@
+//REACT
 import { client, removeAuthorizationHeader, setAuthorizationHeader } from "../../api/client";
 import storage from "../../utils/storage";
 import type { Login, Credentials } from "./types";

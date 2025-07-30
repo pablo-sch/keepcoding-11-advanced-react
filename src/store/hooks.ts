@@ -1,7 +1,10 @@
-import { useAppDispatch, useAppSelector } from ".";
+//REACT
 import type { Credentials } from "../pages/auth/types";
+
+//REDUX
 import { authLogin, authLogout, uiResetError } from "./actions";
 import { getIsLogged } from "./selectors";
+import { useAppDispatch, useAppSelector } from ".";
 
 export function useAuth() {
   return useAppSelector(getIsLogged);

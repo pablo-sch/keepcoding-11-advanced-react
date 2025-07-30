@@ -1,16 +1,16 @@
+//DEPENDENCIES
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
-/* import { useLocation, useNavigate } from "react-router"; */
 
+//REACT
 import Button from "../../components/ui/button";
 import FormField from "../../components/ui/form-field";
 
+//REDUX
 import { useLoginAction, useUiResetError } from "../../store/hooks";
 import { useAppSelector } from "../../store";
 import { getUi } from "../../store/selectors";
 
 function LoginPage() {
-  /* const location = useLocation();
-  const navigate = useNavigate(); */
   const loginAction = useLoginAction();
   const uiResetErrorAction = useUiResetError();
   const { pending: isFetching, error } = useAppSelector(getUi);
@@ -46,13 +46,7 @@ function LoginPage() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    try {
-      await loginAction(credentials);
-      /* const to = location.state?.from ?? "/";
-      navigate(to, { replace: true }); */
-    } catch (error) {
-      console.log(error);
-    }
+    await loginAction(credentials);
   }
 
   return (

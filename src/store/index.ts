@@ -1,12 +1,15 @@
+//DEPENDENCIES
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import { useDispatch, useSelector } from "react-redux";
 import type { createBrowserRouter } from "react-router";
 import * as thunk from "redux-thunk";
 
+//REACT
 import * as adverts from "../pages/advert/service";
 import * as auth from "../pages/auth/service";
 
+//REDUX
 import type { Actions } from "./actions";
 import * as reducers from "./reducer";
 
@@ -32,6 +35,23 @@ const timestamp = (store) => (next) => (action) => {
   return next(nextAction);
 };
 
+// @ts-expect-error: any
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const failureRedirects = (router: Router) => (store) => (next) => (action) => {
+  const result = next(action);
+  if (!action.type.endsWith("/rejected")) {
+    return result;
+  }
+
+  if (action.payload.status === 404) {
+    router.navigate("/404");
+  }
+
+  if (action.payload.status === 401) {
+    router.navigate("/login");
+  }
+};
+
 // Configuración del store-----------------------------------------------------------------------------------------------------
 export default function configureStore(preloadedState: Partial<reducers.State>, router: Router) {
   const store = createStore(
@@ -47,7 +67,8 @@ export default function configureStore(preloadedState: Partial<reducers.State>, 
           api: { adverts, auth },
           router,
         }),
-        timestamp
+        timestamp,
+        failureRedirects(router)
       )
     )
   );

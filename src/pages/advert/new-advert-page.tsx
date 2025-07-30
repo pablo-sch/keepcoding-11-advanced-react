@@ -1,9 +1,7 @@
 //DEPENDENCIES
 import { useState, useRef, useEffect, type FormEvent, type SetStateAction } from "react";
-import { useNavigate } from "react-router-dom";
-import { AxiosError } from "axios";
 
-//REACTs
+//REACT
 import Button from "../../components/ui/button";
 import Page from "../../components/layout/page";
 
@@ -18,14 +16,12 @@ import { advertsCreate } from "../../store/actions";
 
 //=======================================================================================================
 function NewAdvertPage() {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const nameRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);
   const photoRef = useRef<HTMLInputElement>(null);
   const selectedTagsRef = useRef<string[]>([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [canSubmit, setCanSubmit] = useState(false);
@@ -94,18 +90,7 @@ function NewAdvertPage() {
     formData.append("tags", tags.join(","));
     if (photoFile) formData.append("photo", photoFile);
 
-    try {
-      setIsSubmitting(true);
-      await dispatch(advertsCreate(formData));
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.status === 401) {
-          navigate("/login", { replace: true });
-        }
-      }
-    } finally {
-      setIsSubmitting(false);
-    }
+    dispatch(advertsCreate(formData));
   };
 
   return (
@@ -164,8 +149,8 @@ function NewAdvertPage() {
             <ErrorMessage message={error} />
 
             <div className="pt-4">
-              <Button className="w-full" type="submit" disabled={!canSubmit || isSubmitting}>
-                {isSubmitting ? "Creating..." : "Create Advert"}
+              <Button className="w-full" type="submit" disabled={!canSubmit}>
+                Create Advert
               </Button>
             </div>
           </Form>

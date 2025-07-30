@@ -1,7 +1,6 @@
 //DEPENDENCIES
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useState, useEffect } from "react";
-import { AxiosError } from "axios";
 
 //REACT
 import Page from "../../components/layout/page";
@@ -15,7 +14,6 @@ import { advertsDelete, advertDetail } from "../../store/actions";
 
 function AdvertPage() {
   const params = useParams();
-  const navigate = useNavigate();
   const advert = useAppSelector(getAdvert(params.advertId));
   const dispatch = useAppDispatch();
 
@@ -28,26 +26,14 @@ function AdvertPage() {
     if (!params.advertId) {
       return;
     }
-    dispatch(advertDetail(params.advertId)).catch((error) => {
-      if (error instanceof AxiosError) {
-        if (error.status === 404) {
-          navigate("/not-found", { replace: true });
-        }
-      }
-    });
-  }, [params.advertId, navigate, dispatch]);
+    dispatch(advertDetail(params.advertId));
+  }, [params.advertId, dispatch]);
 
   // ................................................
   const handleDelete = async () => {
     if (!advert?.id) return;
 
-    try {
-      await dispatch(advertsDelete(advert.id));
-      navigate("/adverts");
-    } catch (error) {
-      alert("Error deleting the advert.");
-      console.log(error);
-    }
+    dispatch(advertsDelete(advert.id));
   };
 
   return (

@@ -1,16 +1,19 @@
+//DEPENDENCIES
 import { StrictMode } from "react";
 import { Provider } from "react-redux";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
-import configureStore from "./store";
-
+//REACT
 import App from "./App";
 import storage from "./utils/storage";
 import { setAuthorizationHeader } from "./api/client";
 
 import ErrorBoundary from "./components/error/error-boundary";
 import "./styles/index.css";
+
+//REDUX
+import configureStore from "./store";
 
 const accessToken = storage.get("auth");
 

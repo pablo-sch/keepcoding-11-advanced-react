@@ -1,5 +1,8 @@
+//REACT
 import type { Advert } from "../pages/advert/types";
-import type { Actions } from "./actions";
+
+//REDUX
+import { type Actions, type ActionsRejected } from "./actions";
 
 export type State = {
   auth: boolean;
@@ -65,6 +68,10 @@ export function tags(state = defaultState.tags, action: Actions): State["tags"] 
   }
 }
 
+function isRejectedAction(action: Actions): action is ActionsRejected {
+  return action.type.endsWith("/rejected");
+}
+
 export function ui(state = defaultState.ui, action: Actions): State["ui"] {
   if (action.type === "auth/login/pending") {
     return { pending: true, error: null };
@@ -72,7 +79,7 @@ export function ui(state = defaultState.ui, action: Actions): State["ui"] {
   if (action.type === "auth/login/fulfilled") {
     return { pending: false, error: null };
   }
-  if (action.type === "auth/login/rejected") {
+  if (isRejectedAction(action)) {
     return { pending: false, error: action.payload };
   }
   if (action.type === "ui/reset-error") {

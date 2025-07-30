@@ -1,3 +1,4 @@
+//REACT
 import type { Advert } from "./types";
 
 interface AdvertItemProps {

@@ -1,6 +1,8 @@
+//REACT
 import Button from "../../components/ui/button";
 import { logout } from "../../pages/auth/service";
 
+//REDUX
 import { useAuth, useLogoutAction } from "../../store/hooks";
 
 type AuthButtonProps = {

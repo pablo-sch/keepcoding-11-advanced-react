@@ -1,4 +1,7 @@
+//DEPENDENCIES
 import { Link } from "react-router-dom";
+
+//REACT
 import Page from "../components/layout/page";
 import Button from "../components/ui/button";
 
