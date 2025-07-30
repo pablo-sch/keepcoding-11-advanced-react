@@ -8,7 +8,6 @@ import Page from "../../components/layout/page";
 import { advertsLoaded, tagsLoaded } from "../../store/actions";
 import { useAppDispatch, useAppSelector } from "../../store";
 
-/* import "./adverts-page.css"; */
 import Form from "../../components/ui/form";
 import Dropdown from "../../components/ui/drop-down";
 import FormField from "../../components/ui/form-field";

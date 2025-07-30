@@ -26,7 +26,7 @@ const StyledButton = styled.button<{ $variant: Variant; disabled?: boolean }>`
 `;
 
 export default function Button({ children, className, $variant = "primary", to, disabled, ...props }: ButtonProps) {
-  const commonClassNames = clsx("inline-flex items-center justify-center rounded-full px-6 py-2 font-semibold min-w-[72px] min-h-[36px] transition-colors duration-200", variantStyles[$variant], disabled && "opacity-50 pointer-events-none", className);
+  const commonClassNames = clsx("inline-flex items-center justify-center rounded-full px-6 py-2 font-semibold min-w-[72px] min-h-[36px] transition-colors duration-200 cursor-pointer", variantStyles[$variant], disabled && "opacity-50 pointer-events-none", className);
 
   if (to) {
     return (
