@@ -8,7 +8,9 @@ import type { Credentials } from "../pages/auth/types";
 //REDUX
 import { getAdvert } from "./selectors";
 
-//Tipos de acciones===========================================================================================================
+//Acciones====================================================================================================================
+
+// AUTH............................................
 type AuthLoginPending = {
   type: "auth/login/pending";
 };
@@ -26,14 +28,18 @@ type AuthLogout = {
   type: "auth/logout";
 };
 
-// ................................................
-
-type AdvertsLoadedFulFilled = {
+// ADVERTS.........................................
+type AdvertsLoadedFulfilled = {
   type: "adverts/loaded/fulfilled";
   payload: Advert[];
 };
 
-type AdvertsCreatedFulFilled = {
+type AdvertsLoadedRejected = {
+  type: "adverts/loaded/rejected";
+  payload: Error;
+};
+
+type AdvertsCreatedFulfilled = {
   type: "adverts/created/fulfilled";
   payload: Advert;
 };
@@ -43,7 +49,7 @@ type AdvertsCreatedRejected = {
   payload: Error;
 };
 
-type AdvertsDetailFulFilled = {
+type AdvertsDetailFulfilled = {
   type: "adverts/detail/fulfilled";
   payload: Advert;
 };
@@ -63,20 +69,25 @@ type AdvertsDeletedRejected = {
   payload: Error;
 };
 
-// ................................................
-
+// TAGS............................................
 type TagsLoadedFulfilled = {
   type: "tags/loaded/fulfilled";
   payload: string[];
 };
 
-// ................................................
+type TagsLoadedRejected = {
+  type: "tags/loaded/rejected";
+  payload: Error;
+};
 
+// UI..............................................
 type UiResetError = {
   type: "ui/reset-error";
 };
 
-//Acciones sincrónicas============================================================================================================
+//Acciones Sincrónicas============================================================================================================
+
+// AUTH............................................
 export const authLoginPending = (): AuthLoginPending => ({
   type: "auth/login/pending",
 });
@@ -90,37 +101,22 @@ export const authLoginRejected = (error: Error): AuthLoginRejected => ({
   payload: error,
 });
 
-//Thunks (acciones asíncronas)===============================================================================================0
-export function authLogin(credentials: Credentials): AppThunk<Promise<void>> {
-  return async function (dispatch, _getState, { api, router }) {
-    dispatch(authLoginPending());
-    try {
-      await api.auth.login(credentials);
-      dispatch(authLoginFulfilled());
-      console.log(router);
-      const to = router.state.location.state?.from ?? "/";
-      router.navigate(to, { replace: true });
-    } catch (error) {
-      if (error instanceof Error) {
-        dispatch(authLoginRejected(error));
-      }
-      throw error;
-    }
-  };
-}
-
 export const authLogout = (): AuthLogout => ({
   type: "auth/logout",
 });
 
-// ................................................
-
-export const advertsLoadedFulFilled = (adverts: Advert[]): AdvertsLoadedFulFilled => ({
+// ADVERTS.........................................
+export const advertsLoadedFulfilled = (adverts: Advert[]): AdvertsLoadedFulfilled => ({
   type: "adverts/loaded/fulfilled",
   payload: adverts,
 });
 
-export const advertsDetailFulFilled = (advert: Advert): AdvertsDetailFulFilled => ({
+export const advertsLoadedRejected = (error: Error): AdvertsLoadedRejected => ({
+  type: "adverts/loaded/rejected",
+  payload: error,
+});
+
+export const advertsDetailFulFilled = (advert: Advert): AdvertsDetailFulfilled => ({
   type: "adverts/detail/fulfilled",
   payload: advert,
 });
@@ -130,7 +126,7 @@ export const advertsDetailRejected = (error: Error): AdvertsDetailRejected => ({
   payload: error,
 });
 
-export const advertsCreatedFulfilled = (advert: Advert): AdvertsCreatedFulFilled => ({
+export const advertsCreatedFulfilled = (advert: Advert): AdvertsCreatedFulfilled => ({
   type: "adverts/created/fulfilled",
   payload: advert,
 });
@@ -145,6 +141,49 @@ export const advertsDeletedFulfilled = (advertId: string): AdvertsDeletedFulfill
   payload: advertId,
 });
 
+export const advertsDeletedRejected = (error: Error): AdvertsDeletedRejected => ({
+  type: "adverts/deleted/rejected",
+  payload: error,
+});
+
+// TAGS............................................
+export const tagsLoadedFulfilled = (tags: string[]): TagsLoadedFulfilled => ({
+  type: "tags/loaded/fulfilled",
+  payload: tags,
+});
+
+export const tagsLoadedRejected = (error: Error): TagsLoadedRejected => ({
+  type: "tags/loaded/rejected",
+  payload: error,
+});
+
+// UI..............................................
+export const uiResetError = (): UiResetError => ({
+  type: "ui/reset-error",
+});
+
+//Acciones Asíncronas (Thunks)=================================================================================================
+// AUTH............................................
+export function authLogin(credentials: Credentials): AppThunk<Promise<void>> {
+  return async function (dispatch, _getState, { api, router }) {
+    dispatch(authLoginPending());
+    try {
+      await api.auth.login(credentials);
+      dispatch(authLoginFulfilled());
+      console.log(router);
+      const to = router.state.location.state?.from ?? "/";
+      router.navigate(to, { replace: true });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(authLoginRejected(error));
+      }
+      console.log(error);
+      throw error;
+    }
+  };
+}
+
+// ADVERTS.........................................
 export function advertsLoaded(): AppThunk<Promise<void>> {
   return async function (dispatch, getState, { api }) {
     const state = getState();
@@ -153,35 +192,16 @@ export function advertsLoaded(): AppThunk<Promise<void>> {
     }
     try {
       const adverts = await api.adverts.getAdverts();
-      dispatch(advertsLoadedFulFilled(adverts));
-    } catch (error) {
+      dispatch(advertsLoadedFulfilled(adverts));
+    } catch (error: unknown) {
       if (error instanceof Error) {
-        dispatch(advertsDetailRejected(error));
+        dispatch(advertsLoadedRejected(error));
       }
+      console.log(error);
       throw error;
     }
   };
 }
-
-// ................................................
-
-export function advertsDelete(advertId: string): AppThunk<Promise<void>> {
-  return async function (dispatch, _getState, { api, router }) {
-    try {
-      await api.adverts.deleteAdvert(advertId);
-      dispatch(advertsDeletedFulfilled(advertId));
-      router.navigate(`/adverts`);
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error);
-        dispatch(advertsDetailRejected(error));
-      }
-      throw error;
-    }
-  };
-}
-
-// ................................................
 
 export function advertDetail(advertId: string): AppThunk<Promise<void>> {
   return async function (dispatch, getState, { api }) {
@@ -192,7 +212,26 @@ export function advertDetail(advertId: string): AppThunk<Promise<void>> {
     try {
       const advert = await api.adverts.getAdvert(advertId);
       dispatch(advertsDetailFulFilled(advert));
-    } catch (error) {
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(advertsDetailRejected(error));
+      }
+      console.log(error);
+      throw error;
+    }
+  };
+}
+
+export function advertsDelete(advertId: string): AppThunk<Promise<void>> {
+  return async function (dispatch, _getState, { api, router }) {
+    try {
+      await api.adverts.deleteAdvert(advertId);
+      dispatch(advertsDeletedFulfilled(advertId));
+      router.navigate(`/adverts`);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(advertsDeletedRejected(error));
+      }
       console.log(error);
       throw error;
     }
@@ -207,36 +246,56 @@ export function advertsCreate(advertContent: FormData): AppThunk<Promise<Advert>
       dispatch(advertsCreatedFulfilled(advert));
       router.navigate(`/adverts/${createdAdvert.id}`);
       return advert;
-    } catch (error) {
+    } catch (error: unknown) {
       if (error instanceof Error) {
-        console.log(error);
         dispatch(advertsCreatedRejected(error));
       }
+      console.log(error);
       throw error;
     }
   };
 }
 
-// ................................................
-
+// TAGS............................................
 export function tagsLoaded(): AppThunk<Promise<void>> {
   return async function (dispatch, _getState, { api }) {
     try {
       const tags = await api.adverts.getTags();
-      dispatch({ type: "tags/loaded/fulfilled", payload: tags });
-    } catch (error) {
-      console.error("Error loading tags:", error);
+      dispatch(tagsLoadedFulfilled(tags));
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(tagsLoadedRejected(error));
+      }
+      console.log(error);
       throw error;
     }
   };
 }
 
-//Acción para resetear errores de UI============================================================================================
-export const uiResetError = (): UiResetError => ({
-  type: "ui/reset-error",
-});
-
 //Unificacion de Acciones----------------------------------------------------------------
-export type Actions = AuthLoginPending | AuthLoginFulfilled | AuthLoginRejected | AuthLogout | AdvertsLoadedFulFilled | AdvertsDetailFulFilled | AdvertsDetailRejected | AdvertsCreatedFulFilled | AdvertsCreatedRejected | AdvertsDeletedFulfilled | AdvertsDeletedRejected | TagsLoadedFulfilled | UiResetError;
+// prettier-ignore
+export type Actions = 
+| AuthLoginPending 
+| AuthLoginFulfilled 
+| AuthLoginRejected 
+| AuthLogout 
+| AdvertsLoadedFulfilled 
+| AdvertsLoadedRejected 
+| AdvertsDetailFulfilled 
+| AdvertsDetailRejected 
+| AdvertsCreatedFulfilled 
+| AdvertsCreatedRejected 
+| AdvertsDeletedFulfilled 
+| AdvertsDeletedRejected 
+| TagsLoadedFulfilled 
+| TagsLoadedRejected
+| UiResetError;
 
-export type ActionsRejected = AuthLoginRejected | AdvertsCreatedRejected | AdvertsDetailRejected | AdvertsDeletedRejected;
+// prettier-ignore
+export type ActionsRejected = 
+| AuthLoginRejected 
+| AdvertsLoadedRejected
+| AdvertsCreatedRejected 
+| AdvertsDetailRejected 
+| AdvertsDeletedRejected
+| TagsLoadedRejected;
