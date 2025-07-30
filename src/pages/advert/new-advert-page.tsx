@@ -24,7 +24,7 @@ function NewAdvertPage() {
   const selectedTagsRef = useRef<string[]>([]);
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [canSubmit, setCanSubmit] = useState(false);
+  const [canSubmit, setCanSubmit] = useState(Boolean);
   const [error, setError] = useState<string | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
@@ -33,7 +33,10 @@ function NewAdvertPage() {
 
   const [sale, setSale] = useState("true");
   const tags = useAppSelector((state) => state.tags || []);
-  const tagOptions = tags.map((tag: string) => ({ value: tag, label: tag }));
+  const tagOptions = [
+    { value: "", label: "Select a tag" }, // opción vacía
+    ...tags.map((tag: string) => ({ value: tag, label: tag })),
+  ];
 
   //-------------------------------------------------------------------------
   useEffect(() => {
@@ -55,6 +58,8 @@ function NewAdvertPage() {
 
     setPriceTooHigh(price > PRICE_MAX);
     setCanSubmit(name !== "" && price > 0 && price <= PRICE_MAX && tags.length > 0);
+
+    console.log(canSubmit);
   };
 
   //-------------------------------------------------------------------------
@@ -77,11 +82,13 @@ function NewAdvertPage() {
     const name = nameRef.current?.value.trim() ?? "";
     const price = Number(priceRef.current?.value) || 0;
     const tags = selectedTagsRef.current;
-
-    if (!name || price <= 0 || price > PRICE_MAX || tags.length === 0) return;
-
     const isSale = sale === "true";
     const photoFile = photoRef.current?.files?.[0];
+
+    if (!name || price <= 0 || price > PRICE_MAX || tags.length === 0) {
+      setCanSubmit(false);
+      return;
+    }
 
     const formData = new FormData();
     formData.append("name", name);
@@ -90,7 +97,24 @@ function NewAdvertPage() {
     formData.append("tags", tags.join(","));
     if (photoFile) formData.append("photo", photoFile);
 
-    dispatch(advertsCreate(formData));
+    try {
+      await dispatch(advertsCreate(formData));
+
+      if (nameRef.current) nameRef.current.value = "";
+      if (priceRef.current) priceRef.current.value = "";
+      if (photoRef.current) photoRef.current.value = "";
+
+      setSelectedTags([]);
+      selectedTagsRef.current = [];
+
+      setSale("true");
+      setPriceTooHigh(false);
+      setPhotoPreview(null);
+      setCanSubmit(false);
+      setError(null);
+    } catch (err) {
+      console.error("Error creating advert:", err);
+    }
   };
 
   return (
@@ -122,8 +146,13 @@ function NewAdvertPage() {
               value={selectedTags[0] || ""}
               options={tagOptions}
               onChange={(value) => {
-                setSelectedTags([value]);
-                selectedTagsRef.current = [value];
+                if (value === "") {
+                  setSelectedTags([]);
+                  selectedTagsRef.current = [];
+                } else {
+                  setSelectedTags([value]);
+                  selectedTagsRef.current = [value];
+                }
                 validateForm();
               }}
             />

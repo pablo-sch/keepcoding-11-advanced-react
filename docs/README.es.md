@@ -8,16 +8,79 @@
 
 ## Objetivo del Proyecto
 
+El propósito de este proyecto es ampliar el repositorio base de fundamentos de React [`keepcoding-08-react-fundamentals`](https://github.com/pablo-sch/keepcoding-08-react-fundamentals.git), incorporando las siguientes funcionalidades clave:
+
+- Integración de **React Redux** para la gestión global del estado de la aplicación.
+- Configuración de **Redux DevTools** para facilitar el seguimiento y depuración del estado.
+- Implementación de **tests unitarios** para acciones, reducers y lógica asociada.
+- Profundización en conceptos de **React avanzado** mediante prácticas reales y estructuradas.
+
+Este proyecto permite afianzar conocimientos previos y dar el siguiente paso en la construcción de aplicaciones React más escalables y mantenibles.
+
 <!-- ------------------------------------------------------------------------------------------- -->
 
 ## Conocimientos Aprendidos y Trabajados
+
+- **Redux**:
+
+  - Acciones, reducers, selectors, hooks
+  - Estado global y store
+  - Flujo de datos unidireccional
+
+- **Flujo de datos en Redux**:
+
+  1. Se despacha una acción: `store.dispatch(action)`
+  2. El store ejecuta el reducer con el estado actual y la acción
+  3. El reducer combina los resultados y genera un nuevo estado
+  4. Redux almacena el nuevo estado y notifica a los componentes suscritos
+
+- **React-Redux**:
+
+  - `useSelector` para acceder al estado
+  - `useDispatch` para enviar acciones
+  - Uso de selectores para obtener datos específicos
+
+- **Acciones Asíncronas**:
+
+  - Action creators asíncronos
+  - Middleware `redux-thunk` para lógica de efectos
+  - Configuración de middleware en Redux
+
+- **Flujo Asíncrono**:
+
+  - Sin middleware: flujo síncrono
+  - Con middleware (`redux-thunk`): flujo controlado y asíncrono
+
+- **Redux DevTools**:
+  - Configuración para depuración y seguimiento de acciones
+
+<!-- ------------------------------------------------------------------------------------------- -->
+
+## Detalles de la Práctica
+
+El objetivo de esta práctica es configurar un **store de Redux** que gestione de forma centralizada el estado de la aplicación. El store deberá incluir, al menos, la siguiente funcionalidad:
+
+- **Gestión de sesión**: manejar el estado de autenticación del usuario.
+- **Gestión de anuncios**:
+  - Obtener el listado de anuncios desde la API.
+  - Obtener el detalle de un anuncio específico.
+  - Crear nuevos anuncios.
+  - Eliminar anuncios existentes.
+- **Gestión de etiquetas**: obtener la lista de _tags_ disponibles desde la API.
+
+### Requisitos técnicos
+
+- Crear las **acciones** y **reducers** necesarios para cubrir los casos de uso anteriores.
+- Conectar los componentes de React con el store mediante hooks como `useSelector` y `useDispatch`.
+- Configurar **Redux DevTools** para facilitar el debugging.
+- Implementar **tests unitarios** para las acciones, reducers y thunks.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
 ## Tecnologías Utilizadas
 
-- **Lenguajes:** HTML, CSS, JavaScript, TypeScript.
-- **Dependencias a destacar (Node.js):** React, Vite, Tailwind CSS, TypeScript, ESLint, Axios, clsx, Globals, Prettier.
+- **Lenguajes:** HTML, TypeScript.
+- **Dependencias a destacar (Node.js):** React, Tailwind CSS, TypeScript, Axios, Styled-components, Redux-thunk, React-redux.
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
@@ -74,7 +137,7 @@ npm run format
 
 `>` **Endpoints Nodepop-API:** 📄 [Endpoints](api-doc.md)
 
-`>` **Vista Previa del Proyecto:** 👀 [Vista Previa](preview.md) TODO
+`>` **Vista Previa del Proyecto:** 👀 [Vista Previa](preview.md)
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
