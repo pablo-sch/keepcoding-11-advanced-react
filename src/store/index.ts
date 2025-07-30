@@ -1,6 +1,7 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import { useDispatch, useSelector } from "react-redux";
+import type { createBrowserRouter } from "react-router";
 import * as thunk from "redux-thunk";
 
 import * as adverts from "../pages/advert/service";
@@ -11,7 +12,12 @@ import * as reducers from "./reducer";
 
 // Combinación de reducers-------------------------------------------------------------------------------------------------------
 const rootReducer = combineReducers(reducers);
-type ExtraArgument = { api: { auth: typeof auth; adverts: typeof adverts } };
+type Router = ReturnType<typeof createBrowserRouter>;
+
+type ExtraArgument = {
+  api: { auth: typeof auth; adverts: typeof adverts };
+  router: Router;
+};
 
 // @ts-expect-error: any
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -27,7 +33,7 @@ const timestamp = (store) => (next) => (action) => {
 };
 
 // Configuración del store-----------------------------------------------------------------------------------------------------
-export default function configureStore(preloadedState: Partial<reducers.State>) {
+export default function configureStore(preloadedState: Partial<reducers.State>, router: Router) {
   const store = createStore(
     rootReducer,
     preloadedState as never,
@@ -39,6 +45,7 @@ export default function configureStore(preloadedState: Partial<reducers.State>) 
       applyMiddleware(
         thunk.withExtraArgument<reducers.State, Actions, ExtraArgument>({
           api: { adverts, auth },
+          router,
         }),
         timestamp
       )

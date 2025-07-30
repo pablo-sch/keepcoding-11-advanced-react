@@ -1,43 +1,30 @@
 import { StrictMode } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
 import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router";
+
+import configureStore from "./store";
 
 import App from "./App";
 import storage from "./utils/storage";
 import { setAuthorizationHeader } from "./api/client";
 
-//import AuthProvider from "./pages/auth/auth-provider";
-
 import ErrorBoundary from "./components/error/error-boundary";
-
 import "./styles/index.css";
-import { Provider } from "react-redux";
-import configureStore from "./store";
 
-/* let accessToken = storage.get("auth", "local");
-
-if (!accessToken) {
-  accessToken = storage.get("auth", "session");
-} */
-
-/* const defaultIsLogged = !!accessToken;
-
-if (accessToken) {
-  setAuthorizationHeader(accessToken);
-} */
 const accessToken = storage.get("auth");
+
 if (accessToken) {
   setAuthorizationHeader(accessToken);
 }
-const store = configureStore({ auth: !!localStorage });
+const router = createBrowserRouter([{ path: "*", element: <App /> }]);
+const store = configureStore({ auth: !!localStorage }, router);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ErrorBoundary>
       <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <RouterProvider router={router} />
       </Provider>
     </ErrorBoundary>
   </StrictMode>

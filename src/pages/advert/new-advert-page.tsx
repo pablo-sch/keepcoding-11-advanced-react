@@ -96,8 +96,7 @@ function NewAdvertPage() {
 
     try {
       setIsSubmitting(true);
-      const createdAdvert = await dispatch(advertsCreate(formData));
-      navigate(`/adverts/${createdAdvert.id}`);
+      await dispatch(advertsCreate(formData));
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.status === 401) {

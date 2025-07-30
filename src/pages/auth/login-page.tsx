@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
-import { useLocation, useNavigate } from "react-router";
+/* import { useLocation, useNavigate } from "react-router"; */
 
 import Button from "../../components/ui/button";
 import FormField from "../../components/ui/form-field";
@@ -9,8 +9,8 @@ import { useAppSelector } from "../../store";
 import { getUi } from "../../store/selectors";
 
 function LoginPage() {
-  const location = useLocation();
-  const navigate = useNavigate();
+  /* const location = useLocation();
+  const navigate = useNavigate(); */
   const loginAction = useLoginAction();
   const uiResetErrorAction = useUiResetError();
   const { pending: isFetching, error } = useAppSelector(getUi);
@@ -48,8 +48,8 @@ function LoginPage() {
 
     try {
       await loginAction(credentials);
-      const to = location.state?.from ?? "/";
-      navigate(to, { replace: true });
+      /* const to = location.state?.from ?? "/";
+      navigate(to, { replace: true }); */
     } catch (error) {
       console.log(error);
     }

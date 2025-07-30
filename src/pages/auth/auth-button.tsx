@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import Button from "../../components/ui/button";
 import { logout } from "../../pages/auth/service";
 
@@ -26,7 +24,7 @@ export default function AuthButton({ className }: AuthButtonProps) {
       Logout
     </Button>
   ) : (
-    <Button $variant="secondary" className={className} as={Link} to="/login">
+    <Button $variant="secondary" className={className} to="/login">
       Login
     </Button>
   );
