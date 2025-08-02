@@ -14,6 +14,7 @@ import Page from "../../components/layout/page";
 //REDUX
 import { advertsLoaded, tagsLoaded } from "../../store/actions";
 import { useAppDispatch, useAppSelector } from "../../store";
+import { getTags } from "../../store/selectors";
 
 // ................................................
 const EmptyList = () => (
@@ -30,15 +31,17 @@ const EmptyList = () => (
 // =======================================================================================================================================================
 function AdvertsPage() {
   const dispatch = useAppDispatch();
-  const tags = useAppSelector((state) => state.tags);
+  const tags = useAppSelector(getTags);
 
   useEffect(() => {
     dispatch(advertsLoaded());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(tagsLoaded());
-  }, [dispatch]);
+    if (tags.length === 0) {
+      dispatch(tagsLoaded());
+    }
+  }, [tags, dispatch]);
 
   const [filters, setFilters] = useState({
     name: "",

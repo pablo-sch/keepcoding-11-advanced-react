@@ -10,4 +10,8 @@ export function getAdvert(advertId?: string) {
   };
 }
 
+export function getTags(state: RootState): string[] {
+  return state.tags;
+}
+
 export const getUi = (state: RootState) => state.ui;

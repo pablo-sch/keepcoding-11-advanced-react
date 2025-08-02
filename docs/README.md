@@ -125,7 +125,7 @@ npm run format
 
 `>` **Nodepop-API Endpoints:** 📄 [Endpoints](api-doc.md)
 
-`>` **Live Preview:** 👀 [Preview](preview.md)
+`>` **Preview:** 👀 [Preview](preview.md)
 
 ## Contributions and Licensing
 

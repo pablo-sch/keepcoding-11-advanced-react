@@ -12,7 +12,8 @@ import ErrorMessage from "../../components/ui/error-message-props";
 
 //REDUX
 import { useAppDispatch, useAppSelector } from "../../store";
-import { advertsCreate } from "../../store/actions";
+import { advertsCreate, tagsLoaded } from "../../store/actions";
+import { getTags } from "../../store/selectors";
 
 //=======================================================================================================
 function NewAdvertPage() {
@@ -32,16 +33,20 @@ function NewAdvertPage() {
   const [priceTooHigh, setPriceTooHigh] = useState(false);
 
   const [sale, setSale] = useState("true");
-  const tags = useAppSelector((state) => state.tags || []);
-  const tagOptions = [
-    { value: "", label: "Select a tag" }, // opción vacía
-    ...tags.map((tag: string) => ({ value: tag, label: tag })),
-  ];
+  const tags = useAppSelector(getTags);
+  const tagOptions = [{ value: "", label: "Select a tag" }, ...tags.map((tag: string) => ({ value: tag, label: tag }))];
 
   //-------------------------------------------------------------------------
   useEffect(() => {
     nameRef.current?.focus();
   }, []);
+
+  //-------------------------------------------------------------------------
+  useEffect(() => {
+    if (tags.length === 0) {
+      dispatch(tagsLoaded());
+    }
+  }, [tags, dispatch]);
 
   //-------------------------------------------------------------------------
   useEffect(() => {
@@ -58,8 +63,6 @@ function NewAdvertPage() {
 
     setPriceTooHigh(price > PRICE_MAX);
     setCanSubmit(name !== "" && price > 0 && price <= PRICE_MAX && tags.length > 0);
-
-    console.log(canSubmit);
   };
 
   //-------------------------------------------------------------------------
