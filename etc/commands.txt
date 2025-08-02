@@ -1,4 +1,0 @@
-npm run format (prettier)
-
-npm run build (produccion)
-npm run dev (desarrollo)

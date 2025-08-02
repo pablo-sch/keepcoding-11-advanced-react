@@ -23,8 +23,5 @@ dist
 *.sln
 *.sw?
 
-
-git branch name
-
-get checkount name
+coverage
 
