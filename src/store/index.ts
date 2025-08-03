@@ -17,7 +17,7 @@ import * as reducers from "./reducer";
 const rootReducer = combineReducers(reducers);
 type Router = ReturnType<typeof createBrowserRouter>;
 
-type ExtraArgument = {
+export type ExtraArgument = {
   api: { auth: typeof auth; adverts: typeof adverts };
   router: Router;
 };

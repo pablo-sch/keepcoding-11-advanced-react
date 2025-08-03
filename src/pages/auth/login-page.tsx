@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "r
 //REACT
 import Button from "../../components/ui/button";
 import FormField from "../../components/ui/form-field";
+import Form from "../../components/ui/form"; // <-- aquí importas tu Form
 
 //REDUX
 import { useLoginAction, useUiResetError } from "../../store/hooks";
@@ -45,27 +46,48 @@ function LoginPage() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
     await loginAction(credentials);
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8 space-y-6">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 bg-gray-300">
+      <Form onSubmit={handleSubmit} layout="normal">
         <h1 className="text-2xl font-bold text-center text-gray-800">Log in to your account</h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <FormField type="email" name="email" label="Email" placeholder="e.g. user@example.com" value={email} onChange={handleChange} id="email" />
-          <FormField type="password" name="password" label="Password" placeholder="Your password" value={password} onChange={handleChange} id="password" />
-          <Button type="submit" disabled={isDisabled} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200">
-            {isFetching ? "Logging in..." : "Log In"}
-          </Button>
-        </form>
+        <FormField
+          type="email"
+          name="email"
+          label="Email"
+          placeholder="e.g. user@example.com"
+          value={email}
+          onChange={handleChange}
+          id="email"
+        />
+        <FormField
+          type="password"
+          name="password"
+          label="Password"
+          placeholder="Your password"
+          value={password}
+          onChange={handleChange}
+          id="password"
+        />
+        <Button
+          type="submit"
+          disabled={isDisabled}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200"
+        >
+          {isFetching ? "Logging in..." : "Log In"}
+        </Button>
         {error && (
-          <div className="mt-4 p-3 bg-red-100 text-red-700 border border-red-300 rounded cursor-pointer text-sm text-center" role="alert" onClick={() => uiResetErrorAction()}>
+          <div
+            className="mt-4 p-3 bg-red-100 text-red-700 border border-red-300 rounded cursor-pointer text-sm text-center"
+            role="alert"
+            onClick={() => uiResetErrorAction()}
+          >
             {error.message}
           </div>
         )}
-      </div>
+      </Form>
     </div>
   );
 }

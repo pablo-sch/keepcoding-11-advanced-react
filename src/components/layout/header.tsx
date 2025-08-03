@@ -4,7 +4,8 @@ import AuthButton from "../../pages/auth/auth-button";
 
 const activeLinkClasses = "text-blue-600 font-semibold border-b-2 border-blue-600 pb-1";
 const inactiveLinkClasses = "text-gray-700 hover:text-blue-600 transition-colors duration-300 ease-in-out";
-const authButtonClasses = "text-blue-600 font-semibold rounded-md border border-blue-600 px-4 py-1 hover:bg-blue-600 hover:text-white transition-colors duration-300 ease-in-out";
+const authButtonClasses =
+  "text-blue-600 font-semibold rounded-md border border-blue-600 px-4 py-1 hover:bg-blue-600 hover:text-white transition-colors duration-300 ease-in-out";
 
 function Header() {
   return (

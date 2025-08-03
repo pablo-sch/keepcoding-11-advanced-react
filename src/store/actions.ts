@@ -1,7 +1,7 @@
 //DEPENDENCIES
 import type { AppThunk } from ".";
 
-//SERVICES
+//REACT
 import type { Advert } from "../pages/advert/types";
 import type { Credentials } from "../pages/auth/types";
 
@@ -272,7 +272,7 @@ export function tagsLoaded(): AppThunk<Promise<void>> {
   };
 }
 
-//Unificacion de Acciones----------------------------------------------------------------
+//Unificación de Acciones----------------------------------------------------------------
 // prettier-ignore
 export type Actions = 
 | AuthLoginPending 
