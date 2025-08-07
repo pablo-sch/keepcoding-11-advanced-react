@@ -1,15 +1,19 @@
 interface ErrorMessageProps {
   message: string | null;
-  className?: string;
+  onClick?: () => void;
 }
 
-export default function ErrorMessage({ message, className = "" }: ErrorMessageProps) {
+export default function ErrorMessage({ message, onClick }: ErrorMessageProps) {
   if (!message) return null;
 
   return (
-    <div role="alert" className={`text-red-600 text-sm font-medium my-1 flex items-center gap-2 ${className}`} aria-live="assertive">
-      <span aria-hidden="true">⚠️</span>
-      <span>{message}</span>
+    <div
+      role="alert"
+      className="mt-4 p-3 bg-red-100 text-red-700 border border-red-300 rounded cursor-pointer text-sm text-center"
+      aria-live="assertive"
+      onClick={onClick}
+    >
+      {"⚠️ " + message}
     </div>
   );
 }

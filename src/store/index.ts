@@ -44,11 +44,15 @@ const failureRedirects = (router: Router) => (store) => (next) => (action) => {
   }
 
   if (action.payload.status === 404) {
-    router.navigate("/404");
+    router.navigate("/not-found");
   }
 
   if (action.payload.status === 401) {
     router.navigate("/login");
+  }
+
+  if (action.payload.code === "ERR_NETWORK") {
+    router.navigate("/internal-server-error");
   }
 };
 

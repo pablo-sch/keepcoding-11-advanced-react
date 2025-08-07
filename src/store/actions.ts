@@ -176,7 +176,7 @@ export function authLogin(credentials: Credentials): AppThunk<Promise<void>> {
         dispatch(authLoginRejected(error));
       }
       console.log(error);
-      throw error;
+      //throw error;
     }
   };
 }

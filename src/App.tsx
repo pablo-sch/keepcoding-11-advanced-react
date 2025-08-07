@@ -9,7 +9,8 @@ const AdvertsPage = lazy(() => import("./pages/advert/adverts-page"));
 const AdvertPage = lazy(() => import("./pages/advert/advert-page"));
 const NewAdvertPage = lazy(() => import("./pages/advert/new-advert-page"));
 
-const NotFoundPage = lazy(() => import("./pages/not-found"));
+const NotFoundPage = lazy(() => import("./pages/HTTP-status-code/not-found"));
+const InternalServerError = lazy(() => import("./pages/HTTP-status-code/internal-server-error"));
 
 const Layout = lazy(() => import("./components/layout/layout"));
 
@@ -22,7 +23,7 @@ function App() {
           path="/adverts"
           element={
             <RequireAuth>
-              <Layout />{" "}
+              <Layout />
             </RequireAuth>
           }
         >
@@ -33,6 +34,7 @@ function App() {
         <Route path="/" element={<Navigate to="/adverts" />} />
         <Route path="/not-found" element={<NotFoundPage />} />
         <Route path="*" element={<Navigate to="/not-found" />} />
+        <Route path="/internal-server-error" element={<InternalServerError />} />
       </Routes>
     </Suspense>
   );

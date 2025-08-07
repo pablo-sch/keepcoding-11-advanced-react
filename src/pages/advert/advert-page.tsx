@@ -6,13 +6,19 @@ import { useState, useEffect } from "react";
 import Page from "../../components/layout/page";
 import { formatDate } from "../../utils/format-date";
 import Button from "../../components/ui/button";
+import ErrorMessage from "../../components/ui/error-message-props";
 
 //REDUX
 import { useAppDispatch, useAppSelector } from "../../store";
 import { getAdvert } from "../../store/selectors";
 import { advertsDelete, advertDetail } from "../../store/actions";
+import { getUi } from "../../store/selectors";
+import { useUiResetError } from "../../store/hooks";
 
 function AdvertPage() {
+  const { error } = useAppSelector(getUi);
+  const uiResetErrorAction = useUiResetError();
+
   const params = useParams();
   const advert = useAppSelector(getAdvert(params.advertId));
   const dispatch = useAppDispatch();
@@ -32,7 +38,6 @@ function AdvertPage() {
   // ................................................
   const handleDelete = async () => {
     if (!advert?.id) return;
-
     dispatch(advertsDelete(advert.id));
   };
 
@@ -49,6 +54,8 @@ function AdvertPage() {
               </p>
 
               <div className="pt-4 border-t border-gray-200">
+                {error && <ErrorMessage message={error.message} onClick={() => uiResetErrorAction()} />}
+
                 {!confirmDelete ? (
                   <Button $variant="danger" onClick={() => setConfirmDelete(true)}>
                     Delete Advert
@@ -81,7 +88,7 @@ function AdvertPage() {
                 }`}
               >
                 {advert?.sale ? "Sale" : "Purchase"}
-              </span>{" "}
+              </span>
               <p className="text-sm text-gray-500 text-center mt-4">Created at: {formatDate(advert?.createdAt || "")}</p>
             </div>
           </div>

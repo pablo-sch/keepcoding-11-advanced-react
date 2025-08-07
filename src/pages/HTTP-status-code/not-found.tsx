@@ -2,8 +2,8 @@
 import { Link } from "react-router-dom";
 
 //REACT
-import Page from "../components/layout/page";
-import Button from "../components/ui/button";
+import Page from "../../components/layout/page";
+import Button from "../../components/ui/button";
 
 export default function NotFoundPage() {
   return (

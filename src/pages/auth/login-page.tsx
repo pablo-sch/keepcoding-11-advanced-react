@@ -10,6 +10,7 @@ import Form from "../../components/ui/form";
 import { useLoginAction, useUiResetError } from "../../store/hooks";
 import { useAppSelector } from "../../store";
 import { getUi } from "../../store/selectors";
+import ErrorMessage from "../../components/ui/error-message-props";
 
 function LoginPage() {
   const loginAction = useLoginAction();
@@ -71,18 +72,10 @@ function LoginPage() {
           onChange={handleChange}
           id="password"
         />
-        <Button type="submit" disabled={isDisabled}>
+        <Button type="submit" className="w-full" disabled={isDisabled}>
           {isFetching ? "Logging in..." : "Log In"}
         </Button>
-        {error && (
-          <div
-            className="mt-4 p-3 bg-red-100 text-red-700 border border-red-300 rounded cursor-pointer text-sm text-center"
-            role="alert"
-            onClick={() => uiResetErrorAction()}
-          >
-            {error.message}
-          </div>
-        )}
+        {error && <ErrorMessage message={error.message} onClick={() => uiResetErrorAction()} />}
       </Form>
     </div>
   );

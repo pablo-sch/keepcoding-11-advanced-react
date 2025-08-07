@@ -14,10 +14,15 @@ import ErrorMessage from "../../components/ui/error-message-props";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { advertsCreate, tagsLoaded } from "../../store/actions";
 import { getTags } from "../../store/selectors";
+import { useUiResetError } from "../../store/hooks";
+import { getUi } from "../../store/selectors";
 
 //=======================================================================================================
 function NewAdvertPage() {
   const dispatch = useAppDispatch();
+
+  const { error } = useAppSelector(getUi);
+  const uiResetErrorAction = useUiResetError();
 
   const nameRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);
@@ -26,7 +31,6 @@ function NewAdvertPage() {
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [canSubmit, setCanSubmit] = useState(Boolean);
-  const [error, setError] = useState<string | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
   const PRICE_MAX = 25000;
@@ -80,7 +84,6 @@ function NewAdvertPage() {
   //-------------------------------------------------------------------------
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setError(null);
 
     const name = nameRef.current?.value.trim() ?? "";
     const price = Number(priceRef.current?.value) || 0;
@@ -114,7 +117,6 @@ function NewAdvertPage() {
       setPriceTooHigh(false);
       setPhotoPreview(null);
       setCanSubmit(false);
-      setError(null);
     } catch (err) {
       console.error("Error creating advert:", err);
     }
@@ -125,7 +127,16 @@ function NewAdvertPage() {
       <div className="new-advert">
         <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-6">
           <Form onSubmit={handleSubmit} layout="withPreview" previewSrc={photoPreview}>
-            <FormField id="name" name="name" placeholder="Name" type="text" maxLength={120} ref={nameRef} onInput={validateForm} required />
+            <FormField
+              id="name"
+              name="name"
+              placeholder="Name"
+              type="text"
+              maxLength={120}
+              ref={nameRef}
+              onInput={validateForm}
+              required
+            />
 
             <FormField id="price" name="price" placeholder="Price" type="number" ref={priceRef} onInput={validateForm} required />
 
@@ -178,7 +189,7 @@ function NewAdvertPage() {
             </div>
 
             <ErrorMessage message={priceTooHigh ? `Price cannot exceed €${PRICE_MAX}.` : null} />
-            <ErrorMessage message={error} />
+            {error && <ErrorMessage message={error.message} onClick={() => uiResetErrorAction()} />}
 
             <div className="pt-4">
               <Button className="w-full" type="submit" disabled={!canSubmit}>
