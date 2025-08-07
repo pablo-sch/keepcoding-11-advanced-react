@@ -4,7 +4,7 @@ import type { Advert } from "../pages/advert/types";
 // REDUX
 import { auth, adverts, tags, ui } from "../store/reducer";
 import type { Actions, ActionsRejected } from "../store/actions";
-import { mockedAdverts } from "./mockedAdverts";
+import { mockedAdverts } from "../utils/mockedAdverts";
 
 const advertMock: Advert = mockedAdverts[0];
 

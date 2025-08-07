@@ -1,6 +1,6 @@
 // REDUX
 import { getAdvert, getAdverts, getIsLogged, getTags, getUi } from "../store/selectors";
-import { mockedAdverts } from "./mockedAdverts";
+import { mockedAdverts } from "../utils/mockedAdverts";
 import type { RootState } from "../store";
 
 const state: RootState = {
