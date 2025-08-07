@@ -8,8 +8,7 @@ import type { Credentials } from "../pages/auth/types";
 //REDUX
 import { getAdvert } from "./selectors";
 
-//Acciones====================================================================================================================
-
+//Action Types================================================================================================================
 // AUTH............................................
 type AuthLoginPending = {
   type: "auth/login/pending";
@@ -85,8 +84,7 @@ type UiResetError = {
   type: "ui/reset-error";
 };
 
-//Acciones Sincrónicas============================================================================================================
-
+//Action Creator (Synchronized Actions)============================================================================================
 // AUTH............................................
 export const authLoginPending = (): AuthLoginPending => ({
   type: "auth/login/pending",
@@ -162,7 +160,7 @@ export const uiResetError = (): UiResetError => ({
   type: "ui/reset-error",
 });
 
-//Acciones Asíncronas (Thunks)=================================================================================================
+//Thunks (Asynchronous Actions)================================================================================================
 // AUTH............................................
 export function authLogin(credentials: Credentials): AppThunk<Promise<void>> {
   return async function (dispatch, _getState, { api, router }) {

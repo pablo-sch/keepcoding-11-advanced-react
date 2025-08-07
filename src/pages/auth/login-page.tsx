@@ -71,11 +71,7 @@ function LoginPage() {
           onChange={handleChange}
           id="password"
         />
-        <Button
-          type="submit"
-          disabled={isDisabled}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200"
-        >
+        <Button type="submit" disabled={isDisabled}>
           {isFetching ? "Logging in..." : "Log In"}
         </Button>
         {error && (
