@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "r
 //REACT
 import Button from "../../components/ui/button";
 import FormField from "../../components/ui/form-field";
-import Form from "../../components/ui/form"; // <-- aquí importas tu Form
+import Form from "../../components/ui/form";
 
 //REDUX
 import { useLoginAction, useUiResetError } from "../../store/hooks";
