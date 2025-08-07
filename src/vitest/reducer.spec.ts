@@ -1,15 +1,12 @@
-import { auth, adverts, tags, ui } from "../store/reducer";
-import type { Actions, ActionsRejected } from "../store/actions";
+// REACT
 import type { Advert } from "../pages/advert/types";
 
-const advertMock: Advert = {
-  id: "1",
-  name: "Test",
-  price: 100,
-  sale: true,
-  tags: ["tag1"],
-  createdAt: "2025-08-02T12:00:00Z",
-};
+// REDUX
+import { auth, adverts, tags, ui } from "../store/reducer";
+import type { Actions, ActionsRejected } from "../store/actions";
+import { mockedAdverts } from "./mockedAdverts";
+
+const advertMock: Advert = mockedAdverts[0];
 
 //AUTH REDUCER=================================================================================================================
 describe("auth reducer", () => {
