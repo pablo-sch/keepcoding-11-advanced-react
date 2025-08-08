@@ -1,6 +1,8 @@
 // REDUX
 import { getAdvert, getAdverts, getIsLogged, getTags, getUi } from "../store/selectors";
-import { mockedAdverts } from "../utils/mockedAdverts";
+import { mockedAdverts } from "../utils/mockAdverts";
+import { mockTags } from "./../utils/mockTags";
+
 import type { RootState } from "../store";
 
 const state: RootState = {
@@ -9,7 +11,7 @@ const state: RootState = {
     loaded: true,
     data: mockedAdverts,
   },
-  tags: ["tag1", "tag2"],
+  tags: [mockTags[0], mockTags[1]],
   ui: {
     pending: false,
     error: null,

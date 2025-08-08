@@ -1,4 +1,5 @@
 //DEPENDENCIES
+
 import type { AppThunk } from ".";
 
 //REACT
@@ -176,7 +177,7 @@ export function authLogin(credentials: Credentials): AppThunk<Promise<void>> {
         dispatch(authLoginRejected(error));
       }
       console.log(error);
-      //throw error;
+      throw error;
     }
   };
 }
@@ -215,7 +216,7 @@ export function advertDetail(advertId: string): AppThunk<Promise<void>> {
         dispatch(advertsDetailRejected(error));
       }
       console.log(error);
-      throw error;
+      //throw error;
     }
   };
 }

@@ -54,7 +54,7 @@ exports[`LoginPage > should render 1`] = `
         />
       </div>
       <button
-        class="sc-bRKDuR eYxMyf inline-flex items-center justify-center rounded-full px-6 py-2 font-semibold min-w-[72px] min-h-[36px] transition-colors duration-200 cursor-pointer bg-blue-500 text-white border border-blue-500 hover:bg-blue-600 opacity-50 pointer-events-none"
+        class="sc-bRKDuR eYxMyf inline-flex items-center justify-center rounded-full px-6 py-2 font-semibold min-w-[72px] min-h-[36px] transition-colors duration-200 cursor-pointer bg-blue-500 text-white border border-blue-500 hover:bg-blue-600 opacity-50 pointer-events-none w-full"
         disabled=""
         type="submit"
       >
@@ -119,17 +119,18 @@ exports[`LoginPage > should render error 1`] = `
         />
       </div>
       <button
-        class="sc-bRKDuR eYxMyf inline-flex items-center justify-center rounded-full px-6 py-2 font-semibold min-w-[72px] min-h-[36px] transition-colors duration-200 cursor-pointer bg-blue-500 text-white border border-blue-500 hover:bg-blue-600 opacity-50 pointer-events-none"
+        class="sc-bRKDuR eYxMyf inline-flex items-center justify-center rounded-full px-6 py-2 font-semibold min-w-[72px] min-h-[36px] transition-colors duration-200 cursor-pointer bg-blue-500 text-white border border-blue-500 hover:bg-blue-600 opacity-50 pointer-events-none w-full"
         disabled=""
         type="submit"
       >
         Log In
       </button>
       <div
+        aria-live="assertive"
         class="mt-4 p-3 bg-red-100 text-red-700 border border-red-300 rounded cursor-pointer text-sm text-center"
         role="alert"
       >
-        Wrong gmail/password
+        ⚠️ Wrong gmail/password
       </div>
     </form>
   </div>
