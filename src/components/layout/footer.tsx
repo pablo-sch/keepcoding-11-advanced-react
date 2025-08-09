@@ -9,7 +9,12 @@ function Footer() {
     >
       <p className="text-gray-400 text-sm">
         © 2025 —{" "}
-        <a href="https://github.com/pablo-sch" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 transition-colors duration-300 underline underline-offset-2">
+        <a
+          href="https://github.com/pablo-sch"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 transition-colors duration-300 underline underline-offset-2"
+        >
           GitHub Profile <span className="font-semibold">@pablo-sch</span>
         </a>
       </p>

@@ -5,23 +5,30 @@ import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "r
 import Button from "../../components/ui/button";
 import FormField from "../../components/ui/form-field";
 import Form from "../../components/ui/form";
+import ErrorMessage from "../../components/ui/error-message-props";
 
 //REDUX
 import { useLoginAction, useUiResetError } from "../../store/hooks";
 import { useAppSelector } from "../../store";
 import { getUi } from "../../store/selectors";
-import ErrorMessage from "../../components/ui/error-message-props";
 
+//=======================================================================================================
 function LoginPage() {
   const loginAction = useLoginAction();
+
   const uiResetErrorAction = useUiResetError();
   const { pending: isFetching, error } = useAppSelector(getUi);
+
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
   const timeoutRef = useRef<number | null>(null);
 
+  const { email, password } = credentials;
+  const isDisabled = !email || !password || isFetching;
+
+  //-------------------------------------------------------------------------
   useEffect(() => {
     timeoutRef.current = setTimeout(() => {
       console.log("Timeout", timeoutRef.current);
@@ -35,9 +42,7 @@ function LoginPage() {
     };
   }, []);
 
-  const { email, password } = credentials;
-  const isDisabled = !email || !password || isFetching;
-
+  //-------------------------------------------------------------------------
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
@@ -45,6 +50,7 @@ function LoginPage() {
     }));
   }
 
+  //-------------------------------------------------------------------------
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     await loginAction(credentials);
