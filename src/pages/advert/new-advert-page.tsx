@@ -1,236 +1,137 @@
 //DEPENDENCIES
-import { useState, useRef, useEffect, useCallback, type FormEvent } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 //REACT
-import Button from "../../components/ui/button";
-import Page from "../../components/layout/page";
-import FormField from "../../components/ui/form-field";
+import AdvertItem from "./advert-item";
 import Form from "../../components/ui/form";
 import Dropdown from "../../components/ui/drop-down";
-import ErrorMessage from "../../components/ui/error-message-props";
+import FormField from "../../components/ui/form-field";
+import Button from "../../components/ui/button";
+import Page from "../../components/layout/page";
 
 //REDUX
+import { advertsLoaded, tagsLoaded } from "../../store/actions";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { advertsCreate, tagsLoaded } from "../../store/actions";
-import { getTags, getUi } from "../../store/selectors";
-import { useUiResetError } from "../../store/hooks";
+import { getTags } from "../../store/selectors";
 
-//=======================================================================================================
-function NewAdvertPage() {
+// ................................................
+const EmptyList = () => (
+  <div className="flex flex-col items-center justify-center text-center bg-gray-100 rounded-lg p-8 mt-8 shadow-md">
+    <img src="/empty-box.webp" alt="No adverts" className="w-24 h-24 mb-4 opacity-70" />
+    <h2 className="text-xl font-semibold text-gray-700 mb-2">No adverts found</h2>
+    <p className="text-gray-500 mb-6">It looks like there are no adverts matching your filters. Be the first to create one!</p>
+    <Link to="/adverts/new">
+      <Button $variant="secondary">Create New Advert</Button>
+    </Link>
+  </div>
+);
+
+// =======================================================================================================================================================
+function AdvertsPage() {
   const dispatch = useAppDispatch();
-  const { error, pending: isFetching } = useAppSelector(getUi);
   const tags = useAppSelector(getTags);
-  const uiResetErrorAction = useUiResetError();
+  const adverts = useAppSelector((state) => state.adverts.data || []);
 
-  const nameRef = useRef<HTMLInputElement>(null);
-  const priceRef = useRef<HTMLInputElement>(null);
-  const photoRef = useRef<HTMLInputElement>(null);
-
-  const [formData, setFormData] = useState({
-    selectedTags: [] as string[],
-    sale: "true",
-    photoPreview: null as string | null,
+  const [filters, setFilters] = useState({
+    name: "",
+    price: "",
+    sale: "all",
+    tag: "all",
   });
 
-  const [errors, setErrors] = useState({ name: "", price: "", tags: "" });
-  const [touched, setTouched] = useState({ name: false, price: false, tags: false });
+  const tagOptions = tags.map((tag) => ({ value: tag, label: tag }));
 
-  const PRICE_MAX = 25000;
-  const tagOptions = [{ value: "", label: "Select a tag" }, ...tags.map((tag: string) => ({ value: tag, label: tag }))];
+  const saleOptions = [
+    { value: "true", label: "Sale" },
+    { value: "false", label: "Purchase" },
+  ];
 
   //-------------------------------------------------------------------------
   useEffect(() => {
-    nameRef.current?.focus();
+    dispatch(advertsLoaded());
     if (tags.length === 0) dispatch(tagsLoaded());
-  }, [tags, dispatch]);
+  }, [dispatch, tags]);
 
   //-------------------------------------------------------------------------
-  useEffect(
-    () => () => {
-      if (formData.photoPreview) URL.revokeObjectURL(formData.photoPreview);
-    },
-    [formData.photoPreview]
-  );
+  const filteredAdverts = adverts.filter((ad) => {
+    const { name, price, sale, tag } = filters;
+
+    return (
+      ad.name.toLowerCase().includes(name.toLowerCase()) &&
+      (price === "" || ad.price <= Number(price)) &&
+      (sale === "all" || ad.sale === (sale === "true")) &&
+      (tag === "all" || ad.tags.includes(tag))
+    );
+  });
 
   //-------------------------------------------------------------------------
-  const validateForm = useCallback(() => {
-    const name = nameRef.current?.value.trim() ?? "";
-    const price = Number(priceRef.current?.value) || 0;
-    const { selectedTags } = formData;
-
-    const newErrors = {
-      name: !name ? "Name is required" : "",
-      price: price <= 0 ? "Price must be greater than 0" : price > PRICE_MAX ? `Price cannot exceed €${PRICE_MAX}` : "",
-      tags: selectedTags.length === 0 ? "Please select at least one tag" : "",
-    };
-
-    setErrors(newErrors);
-  }, [formData, PRICE_MAX]);
-
-  //-------------------------------------------------------------------------
-  const canSubmit = (() => {
-    const name = nameRef.current?.value.trim() ?? "";
-    const price = Number(priceRef.current?.value) || 0;
-    const hasNoErrors = !Object.values(errors).some((error) => error);
-    const hasValidData = name && price > 0 && price <= PRICE_MAX && formData.selectedTags.length > 0;
-
-    return hasNoErrors && hasValidData && !isFetching;
-  })();
-
-  //-------------------------------------------------------------------------
-  useEffect(() => {
-    validateForm();
-  }, [validateForm]);
-
-  //-------------------------------------------------------------------------
-  const touchField = useCallback((field: keyof typeof touched) => {
-    setTouched((prev) => ({ ...prev, [field]: true }));
-  }, []);
-
-  //-------------------------------------------------------------------------
-  const handlePhotoChange = useCallback(() => {
-    const file = photoRef.current?.files?.[0];
-    if (formData.photoPreview) URL.revokeObjectURL(formData.photoPreview);
-    setFormData((prev) => ({ ...prev, photoPreview: file ? URL.createObjectURL(file) : null }));
-  }, [formData.photoPreview]);
-
-  //-------------------------------------------------------------------------
-  const handleTagChange = useCallback(
-    (value: string) => {
-      touchField("tags");
-      setFormData((prev) => ({ ...prev, selectedTags: value ? [value] : [] }));
-    },
-    [touchField]
-  );
-
-  //-------------------------------------------------------------------------
-  const resetForm = useCallback(() => {
-    [nameRef, priceRef, photoRef].forEach((ref) => {
-      if (ref.current) ref.current.value = "";
-    });
-
-    if (formData.photoPreview) URL.revokeObjectURL(formData.photoPreview);
-    setFormData({ selectedTags: [], sale: "true", photoPreview: null });
-    setErrors({ name: "", price: "", tags: "" });
-    setTouched({ name: false, price: false, tags: false });
-  }, [formData.photoPreview]);
-
-  //-------------------------------------------------------------------------
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    setTouched({ name: true, price: true, tags: true });
-
-    validateForm();
-
-    if (!canSubmit || isFetching) return;
-
-    const name = nameRef.current?.value.trim() ?? "";
-    const price = Number(priceRef.current?.value) || 0;
-    const { selectedTags, sale } = formData;
-    const photoFile = photoRef.current?.files?.[0];
-
-    const submitData = new FormData();
-    submitData.append("name", name);
-    submitData.append("price", price.toString());
-    submitData.append("sale", sale);
-    submitData.append("tags", selectedTags.join(","));
-    if (photoFile) submitData.append("photo", photoFile);
-
-    try {
-      await dispatch(advertsCreate(submitData));
-      resetForm();
-    } catch (err) {
-      console.error("Error creating advert:", err);
-    }
+  const updateFilter = (key: keyof typeof filters, value: string) => {
+    setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
   return (
-    <Page title="Create new advert">
-      <div className="new-advert">
-        <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-6">
-          <Form onSubmit={handleSubmit} layout="withPreview" previewSrc={formData.photoPreview}>
-            <FormField
-              id="name"
-              name="name"
-              label="Name"
-              placeholder="Enter product name"
-              type="text"
-              maxLength={120}
-              ref={nameRef}
-              onInput={validateForm}
-              onBlur={() => touchField("name")}
-              error={errors.name}
-              touched={touched.name}
-              required
-            />
+    <Page title="Available Adverts">
+      <div className="adverts-page">
+        <div className="max-w-screen-xl mx-auto space-y-8">
+          <Form variant="search">
+            <div className="flex flex-wrap gap-4">
+              <FormField
+                id="name"
+                name="name"
+                type="text"
+                placeholder="Name"
+                value={filters.name}
+                onChange={(e) => updateFilter("name", e.target.value)}
+              />
 
-            <FormField
-              id="price"
-              name="price"
-              label="Price (€)"
-              placeholder="Enter price"
-              type="number"
-              maxValue={PRICE_MAX}
-              ref={priceRef}
-              onInput={validateForm}
-              onBlur={() => touchField("price")}
-              error={errors.price}
-              touched={touched.price}
-              required
-            />
+              <FormField
+                id="price"
+                name="price"
+                type="number"
+                placeholder="Max price"
+                value={filters.price}
+                onChange={(e) => updateFilter("price", e.target.value)}
+              />
 
-            <Dropdown
-              name="sale"
-              label="Type"
-              value={formData.sale}
-              onChange={(val: string) => setFormData((prev) => ({ ...prev, sale: val }))}
-              options={[
-                { value: "true", label: "Sale" },
-                { value: "false", label: "Purchase" },
-              ]}
-            />
-
-            <div>
               <Dropdown
-                name="tags"
-                label="Tags"
-                value={formData.selectedTags[0] || ""}
+                name="sale"
+                value={filters.sale}
+                onChange={(value) => updateFilter("sale", value)}
+                options={saleOptions}
+                placeholder="All types"
+                className="flex-1"
+                isOptional={true}
+              />
+
+              <Dropdown
+                name="tag"
+                value={filters.tag}
+                onChange={(value) => updateFilter("tag", value)}
                 options={tagOptions}
-                onChange={handleTagChange}
+                placeholder="All tags"
+                isOptional={true}
               />
-              {touched.tags && errors.tags && <p className="mt-1 text-sm text-red-600">{errors.tags}</p>}
-            </div>
-
-            <div>
-              <label htmlFor="photo" className="block text-sm font-medium text-gray-700 mb-1">
-                Photo
-              </label>
-              <input
-                id="photo"
-                type="file"
-                name="photo"
-                accept="image/*"
-                ref={photoRef}
-                onChange={handlePhotoChange}
-                className="w-full px-3 py-2 rounded-md bg-gray-100 text-sm border border-gray-300 
-                 focus:outline-none focus:ring-2 focus:ring-blue-500 
-                 hover:cursor-pointer hover:border-gray-400 transition-colors"
-              />
-            </div>
-
-            {error && <ErrorMessage message={error.message} onClick={uiResetErrorAction} />}
-
-            <div className="pt-4">
-              <Button className="w-full" type="submit" disabled={!canSubmit}>
-                {isFetching ? "Creating Advert..." : "Create Advert"}
-              </Button>
             </div>
           </Form>
+
+          {filteredAdverts.length ? (
+            <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredAdverts.map((ad) => (
+                <li key={ad.id}>
+                  <Link to={`/adverts/${ad.id}`}>
+                    <AdvertItem advert={ad} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <EmptyList />
+          )}
         </div>
       </div>
     </Page>
   );
 }
 
-export default NewAdvertPage;
+export default AdvertsPage;

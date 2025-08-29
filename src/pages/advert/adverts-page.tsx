@@ -43,10 +43,11 @@ function AdvertsPage() {
   const tagOptions = [{ value: "all", label: "All Tags" }, ...tags.map((tag) => ({ value: tag, label: tag }))];
 
   const saleOptions = [
-    { value: "all", label: "All" },
+    { value: "all", label: "All types" },
     { value: "true", label: "Sale" },
     { value: "false", label: "Purchase" },
   ];
+
   //-------------------------------------------------------------------------
   useEffect(() => {
     dispatch(advertsLoaded());
@@ -100,9 +101,17 @@ function AdvertsPage() {
                 onChange={(value) => updateFilter("sale", value)}
                 options={saleOptions}
                 className="flex-1"
+                isOptional={true}
               />
 
-              <Dropdown name="tag" value={filters.tag} onChange={(value) => updateFilter("tag", value)} options={tagOptions} />
+              <Dropdown
+                name="tag"
+                value={filters.tag}
+                onChange={(value) => updateFilter("tag", value)}
+                options={tagOptions}
+                className="flex-1"
+                isOptional={true}
+              />
             </div>
           </Form>
 
