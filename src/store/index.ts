@@ -1,3 +1,7 @@
+//NATIVE
+import * as adverts from "../pages/advert/service";
+import * as auth from "../pages/auth/service";
+
 //DEPENDENCIES
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "@redux-devtools/extension";
@@ -5,15 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import type { createBrowserRouter } from "react-router";
 import * as thunk from "redux-thunk";
 
-//REACT
-import * as adverts from "../pages/advert/service";
-import * as auth from "../pages/auth/service";
-
-//REDUX
+//REACT-REDUX FILES
 import type { Actions } from "./actions";
 import * as reducers from "./reducer";
 
-// Combinación de reducers-------------------------------------------------------------------------------------------------------
+// Combination of reducers-------------------------------------------------------------------------------------------------------
 const rootReducer = combineReducers(reducers);
 type Router = ReturnType<typeof createBrowserRouter>;
 
@@ -56,7 +56,7 @@ const failureRedirects = (router: Router) => (store) => (next) => (action) => {
   }
 };
 
-// Configuración del store-----------------------------------------------------------------------------------------------------
+// Store configuration---------------------------------------------------------------------------------------------------------
 export default function configureStore(preloadedState: Partial<reducers.State>, router: Router) {
   const store = createStore(
     rootReducer,
@@ -79,15 +79,15 @@ export default function configureStore(preloadedState: Partial<reducers.State>, 
   return store;
 }
 
-// Tipos para TypeScript-------------------------------------------------------------------------------------------------------
+// Types for TypeScript--------------------------------------------------------------------------------------------------------
 export type AppStore = ReturnType<typeof configureStore>;
 export type AppGetState = AppStore["getState"];
 export type RootState = ReturnType<AppGetState>;
 export type AppDispatch = AppStore["dispatch"];
 
-// Hooks personalizados y tipados----------------------------------------------------------------------------------------------
+// Custom and typed hooks------------------------------------------------------------------------------------------------------
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 export const useAppSelector = useSelector.withTypes<RootState>();
 
-// Tipo AppThunk para acciones asíncronas---------------------------------------------------------------------------------------
+// AppThunk type for asynchronous actions---------------------------------------------------------------------------------------
 export type AppThunk<ReturnType = void> = thunk.ThunkAction<ReturnType, RootState, ExtraArgument, Actions>;

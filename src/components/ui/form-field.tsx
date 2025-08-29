@@ -1,11 +1,12 @@
+//DEPENDENCIES
 import { forwardRef, useCallback } from "react";
 
 interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
   id: string;
   name: string;
   type?: string;
   className?: string;
+  label?: string;
   maxValue?: number;
   error?: string;
   touched?: boolean;
@@ -54,6 +55,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
           </label>
         )}
         <input
+          id={id}
           ref={ref}
           type={type}
           inputMode={isNumber ? "numeric" : undefined}

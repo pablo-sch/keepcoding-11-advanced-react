@@ -7,7 +7,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest",
+    "test": "vitest -u",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {

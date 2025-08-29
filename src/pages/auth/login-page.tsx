@@ -1,13 +1,13 @@
-//DEPENDENCIES
-import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
-
-//REACT
+//NATIVE
 import Button from "../../components/ui/button";
 import FormField from "../../components/ui/form-field";
 import Form from "../../components/ui/form";
 import ErrorMessage from "../../components/ui/error-message-props";
 
-//REDUX
+//DEPENDENCIES
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
+
+//REACT-REDUX FILES
 import { useLoginAction, useUiResetError } from "../../store/hooks";
 import { useAppSelector } from "../../store";
 import { getUi } from "../../store/selectors";
@@ -61,22 +61,22 @@ function LoginPage() {
       <Form onSubmit={handleSubmit} layout="normal">
         <h1 className="text-2xl font-bold text-center text-gray-800">Log in to your account</h1>
         <FormField
+          id="email"
+          label="Email"
           type="email"
           name="email"
-          label="Email"
           placeholder="e.g. user@example.com"
           value={email}
           onChange={handleChange}
-          id="email"
         />
         <FormField
+          id="password"
+          label="Password"
           type="password"
           name="password"
-          label="Password"
           placeholder="Your password"
           value={password}
           onChange={handleChange}
-          id="password"
         />
         <Button type="submit" className="w-full" disabled={isDisabled}>
           {isFetching ? "Logging in..." : "Log In"}
