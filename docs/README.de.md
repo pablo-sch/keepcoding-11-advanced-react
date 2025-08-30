@@ -117,8 +117,11 @@ npm run lint
 # Zeige den Produktions-Build lokal an.
 npm run preview
 
-# Führe Prettier aus, um den Code zu formatieren.
-npm run format
+# Tests ausführen, Snapshots erstellen und aktualisieren.
+npm run test
+
+# Unit-Tests mit Abdeckungsbericht ausführen (erstellt den Ordner "coverage").
+npm run test:coverage
 ```
 
 ## Projektressourcen

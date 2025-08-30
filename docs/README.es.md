@@ -127,8 +127,11 @@ npm run lint
 # Previsualiza la compilación de producción localmente.
 npm run preview
 
-# Corre Prettier para que el código sea formateado.
-npm run format
+# Ejecuta pruebas, crear y actualiza snapshots.
+npm run test
+
+# Ejecuta pruebas unitarias con informe de cobertura (crea la carpeta coverage).
+npm run test:coverage
 ```
 
 <!-- ------------------------------------------------------------------------------------------- -->

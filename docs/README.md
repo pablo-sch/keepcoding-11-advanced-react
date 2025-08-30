@@ -117,8 +117,11 @@ npm run lint
 # Preview the production build locally.
 npm run preview
 
-# Run Prettier to format the code.
-npm run format
+# Run tests, create and update snapshots.
+npm run test
+
+# Run unit tests with coverage report (creates the coverage folder).
+npm run test:coverage
 ```
 
 ## Project Resources
